@@ -1,3 +1,13 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# SCons generated state
+.sconsign.dblite
+
+# C++ build outputs
+*.obj
+bin/*.dll
+bin/*.lib
+bin/*.exp
+bin/*.pdb

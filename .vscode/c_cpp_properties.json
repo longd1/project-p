@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Godot C++ MSVC x64",
+            "includePath": [
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/godot-cpp/include",
+                "${workspaceFolder}/godot-cpp/gen/include",
+                "${workspaceFolder}/godot-cpp/gdextension"
+            ],
+            "defines": [],
+            "compilerPath": "cl.exe",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}
