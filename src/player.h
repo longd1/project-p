@@ -1,11 +1,14 @@
 #pragma once
 
-#include <godot_cpp/classes/character_body2d.hpp>
+#include "actor.h"
 
 namespace godot {
 
-class Player : public CharacterBody2D {
-    GDCLASS(Player, CharacterBody2D)
+class Player : public Actor {
+    GDCLASS(Player, Actor)
+
+private:
+    float move_speed = 200.0f;
 
 protected:
     static void _bind_methods();
