@@ -1,6 +1,8 @@
 #include "register_types.h"
 #include "cpp_test.h"
+#include "actor.h"
 #include "player.h"
+//#include "enemy.h"
 
 #include <gdextension_interface.h>
 
@@ -16,7 +18,9 @@ void initialize_projectp_module(ModuleInitializationLevel p_level) {
     }
 
     GDREGISTER_CLASS(CppTest);
+    GDREGISTER_CLASS(Actor);
     GDREGISTER_CLASS(Player);
+    //GDREGISTER_CLASS(Enemy);
 }
 
 void uninitialize_projectp_module(ModuleInitializationLevel p_level) {

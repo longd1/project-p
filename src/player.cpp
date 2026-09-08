@@ -1,11 +1,12 @@
 #include "player.h"
 
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/input.hpp>
 
 using namespace godot;
 
 Player::Player() {
-    
+
 }
 
 Player::~Player() {
@@ -18,31 +19,10 @@ void Player::_ready() {
     UtilityFunctions::print("Player C++ loaded!");
 }
 
-
-
-//HÀM TÍNH SÁT THƯƠNG
-void Player::take_damage(int damage) {
-    health -= damage;
-
-    UtilityFunctions::print("Player took damage: ", damage);
-    UtilityFunctions::print("HP left: ", health);
-
-    if (health <= 0) {
-        health = 0;
-        die();
-    }
-}
-
-void Player::die() {
-    UtilityFunctions::print("Player died!");
-}
-
-
 void Player::_physics_process(double delta) {
 
-
-    //MOVEMENT CODE
-    Input *input = Input::get_singleton();
+    // MOVEMENT CODE
+    godot::Input *input = godot::Input::get_singleton();
 
     Vector2 direction(0, 0);
 
