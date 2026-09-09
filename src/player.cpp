@@ -2,6 +2,7 @@
 
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/input_map.hpp>
 
 using namespace godot;
 
@@ -17,6 +18,7 @@ void Player::_bind_methods() {
 
 void Player::_ready() {
     UtilityFunctions::print("Player C++ loaded!");
+    InputMap::get_singleton()->load_from_project_settings();
 }
 
 void Player::_physics_process(double delta) {
