@@ -9,7 +9,7 @@ class Actor : public CharacterBody2D {
 
 protected:
     int health;
-    int mana;
+    float move_speed = 200.0f;
 
     static void _bind_methods();
 

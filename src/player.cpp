@@ -7,7 +7,6 @@
 using namespace godot;
 
 Player::Player() {
-
 }
 
 Player::~Player() {

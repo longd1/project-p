@@ -8,7 +8,6 @@ class Player : public Actor {
     GDCLASS(Player, Actor)
 
 private:
-    float move_speed = 200.0f;
 
 protected:
     static void _bind_methods();
