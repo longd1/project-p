@@ -8,8 +8,9 @@ class Actor : public CharacterBody2D {
     GDCLASS(Actor, CharacterBody2D)
 
 protected:
-    int health;
-    float move_speed = 200.0f;
+    int health = 0;
+    int max_health = 0;
+    float move_speed = 0.0f;
 
     static void _bind_methods();
 
