@@ -217,7 +217,7 @@ sources/3 = SubResource("TileSetAtlasSource_v8hf3")
 size = Vector2(32, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s66pr"]
-size = Vector2(26.5, 30.5)
+size = Vector2(26.5, 37)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uuxlm"]
 size = Vector2(20.5, 38)
@@ -275,7 +275,7 @@ camera_target = NodePath("centre_to_room3_cam_marker")
 camera = NodePath("../../Camera2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/centre_to_room2"]
-position = Vector2(22.25, -2.75)
+position = Vector2(22.25, 0.5)
 shape = SubResource("RectangleShape2D_s66pr")
 
 [node name="centre_to_room3_player_marker" type="Marker2D" parent="tp_portal/centre_to_room2"]
