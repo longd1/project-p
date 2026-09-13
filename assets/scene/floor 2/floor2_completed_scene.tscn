@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://dmtr5f4gnqlmp"]
+[gd_scene load_steps=9 format=4 uid="uid://dce4wnljonjk3"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/john.tscn" id="1_npn6c"]
 [ext_resource type="Texture2D" uid="uid://cvvokrlib1qao" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="2_ipiuj"]
