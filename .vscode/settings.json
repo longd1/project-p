@@ -12,5 +12,6 @@
         }
     },
 
-    "terminal.integrated.defaultProfile.windows": "VS Developer PowerShell x64"
+    "terminal.integrated.defaultProfile.windows": "VS Developer PowerShell x64",
+    "cmake.sourceDirectory": "D:/devGameOOP/project-p/godot-cpp"
 }
