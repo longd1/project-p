@@ -279,7 +279,7 @@ position = Vector2(22.25, 0.5)
 shape = SubResource("RectangleShape2D_s66pr")
 
 [node name="centre_to_room3_player_marker" type="Marker2D" parent="tp_portal/centre_to_room2"]
-position = Vector2(518, 28)
+position = Vector2(517, 28)
 
 [node name="centre_to_room3_cam_marker" type="Marker2D" parent="tp_portal/centre_to_room2"]
 position = Vector2(652, 12)
