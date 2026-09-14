@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dgv41w4fboi42" path="res://assets/character/John/male_hero_free/male_hero.png" id="1_8ylcs"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ylcs"]
-radius = 8.0
+radius = 12.0
 height = 34.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8p5rd"]
@@ -88,7 +88,7 @@ animations = [{
 scale = Vector2(0.75, 0.75)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -17)
+position = Vector2(-1.3333334, -17.333334)
 shape = SubResource("CapsuleShape2D_8ylcs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

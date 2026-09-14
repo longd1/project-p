@@ -15,7 +15,7 @@ using namespace godot;
 Player::Player() {
     max_health = 100;
     health = max_health;
-    move_speed = 200.0f;
+    move_speed = 150.0f;
 }
 
 Player::~Player() {
