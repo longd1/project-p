@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=4 uid="uid://c15gogw8dfeip"]
+[gd_scene load_steps=16 format=4 uid="uid://c15gogw8dfeip"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/john.tscn" id="1_e1hom"]
 [ext_resource type="Texture2D" uid="uid://cvvokrlib1qao" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="2_6n2an"]
 [ext_resource type="Texture2D" uid="uid://p8lq3ixc5do2" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_walls_high-16x32.png" id="3_028ld"]
 [ext_resource type="TileSet" uid="uid://delvpm3fbgot0" path="res://assets/scene/tile_set.tres" id="4_tvjfl"]
-[ext_resource type="Script" uid="uid://dnc10w336wi76" path="res://assets/scene/floor 3/centre_to_room_2.gd" id="5_rnj8p"]
+[ext_resource type="Script" path="res://assets/scene/floor 3/centre_to_room_2.gd" id="5_rnj8p"]
+[ext_resource type="Script" uid="uid://k334l418dn6f" path="res://assets/scene/floor 3/room_2_to_centre.gd" id="6_7pquf"]
+[ext_resource type="Script" uid="uid://dghpcuaig71br" path="res://assets/scene/floor 3/centre_to_room_3.gd" id="7_g0jne"]
+[ext_resource type="Script" uid="uid://ga3xe5157pju" path="res://assets/scene/floor 3/room_3_to_centre.gd" id="8_wbw4i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_6n2an")
@@ -211,6 +214,15 @@ sources/3 = SubResource("TileSetAtlasSource_v8hf3")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7pquf"]
 size = Vector2(20, 52)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g0jne"]
+size = Vector2(14, 108)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wbw4i"]
+size = Vector2(31.75, 14.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1pyp"]
+size = Vector2(80.5, 32.5)
+
 [node name="floor 3" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -249,4 +261,55 @@ position = Vector2(676, 16)
 [node name="cam" type="Marker2D" parent="tp_portal/centre_to_room2"]
 position = Vector2(991, 32)
 
+[node name="room2_to_centre" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
+position = Vector2(652, 8)
+script = ExtResource("6_7pquf")
+player_target = NodePath("player")
+camera_target = NodePath("cam")
+camera = NodePath("../../Camera2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/room2_to_centre"]
+position = Vector2(1, -4)
+shape = SubResource("RectangleShape2D_g0jne")
+
+[node name="player" type="Marker2D" parent="tp_portal/room2_to_centre"]
+position = Vector2(-524, -47)
+
+[node name="cam" type="Marker2D" parent="tp_portal/room2_to_centre"]
+position = Vector2(-652, -42)
+
+[node name="centre_to_room3" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
+script = ExtResource("7_g0jne")
+player_target = NodePath("player")
+camera_target = NodePath("cam")
+camera = NodePath("../../Camera2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/centre_to_room3"]
+position = Vector2(0, -139)
+shape = SubResource("RectangleShape2D_wbw4i")
+
+[node name="player" type="Marker2D" parent="tp_portal/centre_to_room3"]
+position = Vector2(49, -399)
+
+[node name="cam" type="Marker2D" parent="tp_portal/centre_to_room3"]
+position = Vector2(65, -510)
+
+[node name="room3_to_centre" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
+script = ExtResource("8_wbw4i")
+player_target = NodePath("player")
+camera_target = NodePath("cam")
+camera = NodePath("../../Camera2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/room3_to_centre"]
+position = Vector2(55, -368.25)
+shape = SubResource("RectangleShape2D_p1pyp")
+
+[node name="player" type="Marker2D" parent="tp_portal/room3_to_centre"]
+position = Vector2(-1, -126)
+
+[node name="cam" type="Marker2D" parent="tp_portal/room3_to_centre"]
+position = Vector2(1, -33)
+
 [connection signal="body_entered" from="tp_portal/centre_to_room2" to="tp_portal/centre_to_room2" method="_on_body_entered"]
+[connection signal="body_entered" from="tp_portal/room2_to_centre" to="tp_portal/room2_to_centre" method="_on_body_entered"]
+[connection signal="body_entered" from="tp_portal/centre_to_room3" to="tp_portal/centre_to_room3" method="_on_body_entered"]
