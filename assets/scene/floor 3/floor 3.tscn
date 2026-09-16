@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://dghpcuaig71br" path="res://assets/scene/floor 3/centre_to_room_3.gd" id="7_g0jne"]
 [ext_resource type="Script" uid="uid://ga3xe5157pju" path="res://assets/scene/floor 3/room_3_to_centre.gd" id="8_wbw4i"]
 [ext_resource type="Script" uid="uid://dpxpwnnxmrm1r" path="res://assets/scene/floor 3/room_3_to_room_4.gd" id="9_p1pyp"]
-[ext_resource type="Script" uid="uid://cljwl8hjuk1bw" path="res://assets/scene/floor 3/room_4_to_room_3.gd" id="10_udf4t"]
+[ext_resource type="Script" path="res://assets/scene/floor 3/room_4_to_room_3.gd" id="10_udf4t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_6n2an")
@@ -300,7 +300,7 @@ shape = SubResource("RectangleShape2D_wbw4i")
 position = Vector2(55, -398)
 
 [node name="cam" type="Marker2D" parent="tp_portal/centre_to_room3"]
-position = Vector2(65, -510)
+position = Vector2(64, -512)
 
 [node name="room3_to_centre" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
 script = ExtResource("8_wbw4i")
@@ -329,10 +329,10 @@ position = Vector2(253, -535)
 shape = SubResource("RectangleShape2D_udf4t")
 
 [node name="player" type="Marker2D" parent="tp_portal/room3_to_room4"]
-position = Vector2(215, -539)
+position = Vector2(593, -521)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room3_to_room4"]
-position = Vector2(64, -529)
+position = Vector2(795, -526)
 
 [node name="room4_to_room3" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
 script = ExtResource("10_udf4t")
@@ -345,10 +345,10 @@ position = Vector2(568, -544)
 shape = SubResource("RectangleShape2D_f11iq")
 
 [node name="player" type="Marker2D" parent="tp_portal/room4_to_room3"]
-position = Vector2(611, -543)
+position = Vector2(223, -516)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room4_to_room3"]
-position = Vector2(801, -531)
+position = Vector2(64, -512)
 
 [node name="room4_to_room6" type="Area2D" parent="tp_portal"]
 
