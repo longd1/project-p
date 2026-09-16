@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://c15gogw8dfeip"]
+[gd_scene load_steps=20 format=4 uid="uid://c15gogw8dfeip"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/john.tscn" id="1_e1hom"]
 [ext_resource type="Texture2D" uid="uid://cvvokrlib1qao" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="2_6n2an"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dghpcuaig71br" path="res://assets/scene/floor 3/centre_to_room_3.gd" id="7_g0jne"]
 [ext_resource type="Script" uid="uid://ga3xe5157pju" path="res://assets/scene/floor 3/room_3_to_centre.gd" id="8_wbw4i"]
 [ext_resource type="Script" uid="uid://dpxpwnnxmrm1r" path="res://assets/scene/floor 3/room_3_to_room_4.gd" id="9_p1pyp"]
+[ext_resource type="Script" uid="uid://cljwl8hjuk1bw" path="res://assets/scene/floor 3/room_4_to_room_3.gd" id="10_udf4t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_6n2an")
@@ -227,6 +228,9 @@ size = Vector2(80.5, 32.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_udf4t"]
 size = Vector2(25.5, 48.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f11iq"]
+size = Vector2(21.5, 63.75)
+
 [node name="floor 3" type="Node2D"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -314,8 +318,11 @@ position = Vector2(0, -105)
 [node name="cam" type="Marker2D" parent="tp_portal/room3_to_centre"]
 position = Vector2(0, -34)
 
-[node name="room3_to_room4" type="Area2D" parent="tp_portal"]
+[node name="room3_to_room4" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
 script = ExtResource("9_p1pyp")
+player_target = NodePath("player")
+camera_target = NodePath("cam")
+camera = NodePath("../../Camera2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/room3_to_room4"]
 position = Vector2(253, -535)
@@ -327,7 +334,37 @@ position = Vector2(215, -539)
 [node name="cam" type="Marker2D" parent="tp_portal/room3_to_room4"]
 position = Vector2(64, -529)
 
+[node name="room4_to_room3" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
+script = ExtResource("10_udf4t")
+player_target = NodePath("player")
+camera_target = NodePath("cam")
+camera = NodePath("../../Camera2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/room4_to_room3"]
+position = Vector2(568, -544)
+shape = SubResource("RectangleShape2D_f11iq")
+
+[node name="player" type="Marker2D" parent="tp_portal/room4_to_room3"]
+position = Vector2(611, -543)
+
+[node name="cam" type="Marker2D" parent="tp_portal/room4_to_room3"]
+position = Vector2(801, -531)
+
+[node name="room4_to_room6" type="Area2D" parent="tp_portal"]
+
+[node name="room6_to_room4" type="Area2D" parent="tp_portal"]
+
+[node name="room2_to_room5" type="Area2D" parent="tp_portal"]
+
+[node name="room5_to_room2" type="Area2D" parent="tp_portal"]
+
+[node name="room5_to_room6" type="Area2D" parent="tp_portal"]
+
+[node name="room6_to_room5" type="Area2D" parent="tp_portal"]
+
 [connection signal="body_entered" from="tp_portal/centre_to_room2" to="tp_portal/centre_to_room2" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room2_to_centre" to="tp_portal/room2_to_centre" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/centre_to_room3" to="tp_portal/centre_to_room3" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room3_to_centre" to="tp_portal/room3_to_centre" method="_on_body_entered"]
+[connection signal="body_entered" from="tp_portal/room3_to_room4" to="tp_portal/room3_to_room4" method="_on_body_entered"]
+[connection signal="body_entered" from="tp_portal/room4_to_room3" to="tp_portal/room4_to_room3" method="_on_body_entered"]
