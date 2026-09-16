@@ -16,6 +16,7 @@ Player::Player() {
     max_health = 100;
     health = max_health;
     move_speed = 150.0f;
+    move_speed_negation = 1.0f;
 }
 
 Player::~Player() {
@@ -48,7 +49,6 @@ void Player::attack() {
 
 void Player::parry_start_up() {
 
-
     if (combat_state != CombatState::IDLE) {
         return;
     }
@@ -56,10 +56,11 @@ void Player::parry_start_up() {
     combat_state = CombatState::PARRY_START_UP;
 
     parry_timer = parry_duration;
-
 }
 
+
 void Player::parry() {
+
     combat_state = CombatState::PARRYING;
 
     UtilityFunctions::print("Parry window started!");
@@ -71,7 +72,6 @@ void Player::parry() {
 // ==================================================
 
 void Player::block() {
-
 
     UtilityFunctions::print("Attack blocked!");
 }
@@ -104,6 +104,22 @@ void Player::_physics_process(double delta) {
     }
 
     Input *input = Input::get_singleton();
+    
+    move_speed_negation = 1.0f;
+
+
+    // ==================================================
+    // STUNNED
+    // ==================================================
+
+    if (combat_state == CombatState::STUNNED) {
+
+        set_velocity(Vector2(0, 0));
+
+        move_and_slide();
+
+        return;
+    }
 
 
     // ==================================================
@@ -111,6 +127,8 @@ void Player::_physics_process(double delta) {
     // ==================================================
 
     if (combat_state == CombatState::ATTACKING) {
+
+        move_speed_negation = 0.45f;
 
         attack_timer -= delta;
 
@@ -122,29 +140,43 @@ void Player::_physics_process(double delta) {
 
 
     // ==================================================
-    // PARRY LOGIC
+    // PARRY STARTUP LOGIC
     // ==================================================
 
     else if (combat_state == CombatState::PARRY_START_UP) {
 
+        move_speed_negation = 0.45f;
+
         if (input->is_action_just_released("parry")) {
+
             parry_timer = 0.0f;
             combat_state = CombatState::IDLE;
         }
 
         else {
+
             parry_timer -= delta;
 
-            if (parry_timer <= parry_duration - pre_parry_duration) {
+            if (
+                parry_timer <=
+                parry_duration - pre_parry_duration
+            ) {
                 parry();
             }
         }
     }
 
 
+    // ==================================================
+    // PARRY WINDOW LOGIC
+    // ==================================================
+
     else if (combat_state == CombatState::PARRYING) {
 
+        move_speed_negation = 0.45f;
+
         parry_timer -= delta;
+
 
         if (parry_timer <= 0.0f) {
 
@@ -153,6 +185,7 @@ void Player::_physics_process(double delta) {
             if (input->is_action_pressed("parry")) {
                 combat_state = CombatState::BLOCKING;
             }
+
             else {
                 combat_state = CombatState::IDLE;
             }
@@ -165,6 +198,8 @@ void Player::_physics_process(double delta) {
     // ==================================================
 
     else if (combat_state == CombatState::BLOCKING) {
+
+        move_speed_negation = 0.45f;
 
         if (input->is_action_just_released("parry")) {
             combat_state = CombatState::IDLE;
@@ -211,6 +246,7 @@ void Player::_physics_process(double delta) {
         direction = direction.normalized();
     }
 
-    set_velocity(direction * move_speed);
+    set_velocity(direction * move_speed * move_speed_negation);
+
     move_and_slide();
 }

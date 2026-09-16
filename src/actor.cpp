@@ -4,6 +4,7 @@
 
 using namespace godot;
 
+
 Actor::Actor() {
 }
 
@@ -13,7 +14,13 @@ Actor::~Actor() {
 void Actor::_bind_methods() {
 }
 
+
+// ==========================================
+// DAMAGE
+// ==========================================
+
 void Actor::take_damage(int damage) {
+
     health -= damage;
 
     UtilityFunctions::print("Damage taken: ", damage);
@@ -25,6 +32,35 @@ void Actor::take_damage(int damage) {
     }
 }
 
+
+// ==========================================
+// DEATH
+// ==========================================
+
 void Actor::die() {
-    UtilityFunctions::print("Actor died!");
+    //UtilityFunctions::print("Actor died!");
+}
+
+
+// ==========================================
+// STUN
+// ==========================================
+
+void Actor::stun() {
+
+    combat_state = CombatState::STUNNED;
+
+    UtilityFunctions::print("Actor stunned!");
+}
+
+
+// ==========================================
+// RECOVER FROM STUN
+// ==========================================
+
+void Actor::recover_from_stun() {
+
+    if (combat_state == CombatState::STUNNED) {
+        combat_state = CombatState::IDLE;
+    }
 }
