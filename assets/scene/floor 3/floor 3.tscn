@@ -9,9 +9,6 @@
 [ext_resource type="Script" uid="uid://dghpcuaig71br" path="res://assets/scene/floor 3/centre_to_room_3.gd" id="7_g0jne"]
 [ext_resource type="Script" uid="uid://ga3xe5157pju" path="res://assets/scene/floor 3/room_3_to_centre.gd" id="8_wbw4i"]
 [ext_resource type="Script" uid="uid://dpxpwnnxmrm1r" path="res://assets/scene/floor 3/room_3_to_room_4.gd" id="9_p1pyp"]
-<<<<<<< HEAD
-[ext_resource type="Script" path="res://assets/scene/floor 3/room_4_to_room_3.gd" id="10_udf4t"]
-=======
 [ext_resource type="Script" uid="uid://cljwl8hjuk1bw" path="res://assets/scene/floor 3/room_4_to_room_3.gd" id="10_udf4t"]
 [ext_resource type="Script" uid="uid://ckujk0heq3txa" path="res://assets/scene/floor 3/room_4_to_room_6.gd" id="11_f11iq"]
 [ext_resource type="Script" uid="uid://c62am0bi8ger0" path="res://assets/scene/floor 3/room_6_to_room_4.gd" id="12_3vbby"]
@@ -19,7 +16,6 @@
 [ext_resource type="Script" uid="uid://cvve3ju2833id" path="res://assets/scene/floor 3/room_5_to_room_2.gd" id="14_gteek"]
 [ext_resource type="Script" uid="uid://bi11lg3bg568u" path="res://assets/scene/floor 3/room_5_to_room_6.gd" id="15_mc5cg"]
 [ext_resource type="Script" uid="uid://cn67vb2yi06ux" path="res://assets/scene/floor 3/room_6_to_room_5.gd" id="16_tfjoh"]
->>>>>>> 18b13e5 (completed floor 3)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_6n2an")
@@ -405,10 +401,10 @@ position = Vector2(1558.5, -560)
 shape = SubResource("RectangleShape2D_t4wmr")
 
 [node name="player" type="Marker2D" parent="tp_portal/room6_to_room4"]
-position = Vector2(992, -550)
+position = Vector2(1006, -533)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room6_to_room4"]
-position = Vector2(783, -529)
+position = Vector2(795, -526)
 
 [node name="room2_to_room5" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
 script = ExtResource("13_t4wmr")
@@ -421,10 +417,10 @@ position = Vector2(1337, -0.75)
 shape = SubResource("RectangleShape2D_gteek")
 
 [node name="player" type="Marker2D" parent="tp_portal/room2_to_room5"]
-position = Vector2(1795, 0)
+position = Vector2(1792, 28)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room2_to_room5"]
-position = Vector2(1941, 0)
+position = Vector2(1936, 15)
 
 [node name="room5_to_room2" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
 script = ExtResource("14_gteek")
@@ -437,7 +433,7 @@ position = Vector2(1767, 8)
 shape = SubResource("RectangleShape2D_mc5cg")
 
 [node name="player" type="Marker2D" parent="tp_portal/room5_to_room2"]
-position = Vector2(1266, 0)
+position = Vector2(1308, 15)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room5_to_room2"]
 position = Vector2(987, 0)
@@ -449,14 +445,14 @@ camera_target = NodePath("cam")
 camera = NodePath("../../Camera2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/room5_to_room6"]
-position = Vector2(1936, -122)
+position = Vector2(1936, -127)
 shape = SubResource("RectangleShape2D_tfjoh")
 
 [node name="player" type="Marker2D" parent="tp_portal/room5_to_room6"]
-position = Vector2(1787, -465)
+position = Vector2(1792, -444)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room5_to_room6"]
-position = Vector2(1785, -576)
+position = Vector2(1787, -560)
 
 [node name="room6_to_room5" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
 script = ExtResource("16_tfjoh")
@@ -469,10 +465,10 @@ position = Vector2(1792, -419.25)
 shape = SubResource("RectangleShape2D_ray2w")
 
 [node name="player" type="Marker2D" parent="tp_portal/room6_to_room5"]
-position = Vector2(1935, -96)
+position = Vector2(1935, -81)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room6_to_room5"]
-position = Vector2(1920, 1)
+position = Vector2(1936, 15)
 
 [connection signal="body_entered" from="tp_portal/centre_to_room2" to="tp_portal/centre_to_room2" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room2_to_centre" to="tp_portal/room2_to_centre" method="_on_body_entered"]

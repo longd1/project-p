@@ -1,5 +1,6 @@
 #include "player.h"
 
+#include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/input_map.hpp>
@@ -13,8 +14,10 @@ using namespace godot;
 // ==================================================
 
 Player::Player() {
+
     max_health = 100;
     health = max_health;
+
     move_speed = 150.0f;
     move_speed_negation = 1.0f;
 }
@@ -22,7 +25,79 @@ Player::Player() {
 Player::~Player() {
 }
 
+
+// ==================================================
+// BIND METHODS
+// ==================================================
+
 void Player::_bind_methods() {
+
+    ClassDB::bind_method(
+        D_METHOD("set_current_weapon", "weapon"),
+        &Player::set_current_weapon
+    );
+
+    ClassDB::bind_method(
+        D_METHOD("get_current_weapon"),
+        &Player::get_current_weapon
+    );
+
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::OBJECT,
+            "current_weapon",
+            PROPERTY_HINT_RESOURCE_TYPE,
+            "WeaponData"
+        ),
+        "set_current_weapon",
+        "get_current_weapon"
+    );
+}
+
+
+// ==================================================
+// WEAPON
+// ==================================================
+
+void Player::set_current_weapon(const Ref<WeaponData> &weapon) {
+
+    current_weapon = weapon;
+
+    if (current_weapon.is_valid()) {
+
+        UtilityFunctions::print(
+            "Equipped weapon: ",
+            current_weapon->get_weapon_name()
+        );
+    }
+}
+
+
+Ref<WeaponData> Player::get_current_weapon() const {
+
+    return current_weapon;
+}
+
+
+int Player::get_attack_damage() const {
+
+    if (current_weapon.is_valid()) {
+
+        return base_damage + current_weapon->get_damage();
+    }
+
+    return base_damage;
+}
+
+
+float Player::get_block_damage_negation() const {
+
+    if (current_weapon.is_valid()) {
+
+        return current_weapon->get_block_damage_negation();
+    }
+
+    return 0.0f;
 }
 
 
@@ -36,10 +111,18 @@ void Player::attack() {
         return;
     }
 
-    combat_state = CombatState::ATTACKING;
-    attack_timer = attack_duration;
+    if (!current_weapon.is_valid()) {
+        return;
+    }
 
-    UtilityFunctions::print("John attacks!");
+    combat_state = CombatState::ATTACKING;
+
+    attack_timer = current_weapon->get_attack_duration();
+
+    UtilityFunctions::print(
+        "John attacks! Damage: ",
+        get_attack_damage()
+    );
 }
 
 
@@ -53,9 +136,13 @@ void Player::parry_start_up() {
         return;
     }
 
+    if (!current_weapon.is_valid()) {
+        return;
+    }
+
     combat_state = CombatState::PARRY_START_UP;
 
-    parry_timer = parry_duration;
+    parry_timer = current_weapon->get_parry_duration();
 }
 
 
@@ -73,7 +160,10 @@ void Player::parry() {
 
 void Player::block() {
 
-    UtilityFunctions::print("Attack blocked!");
+    UtilityFunctions::print(
+        "Attack blocked! Negation: ",
+        get_block_damage_negation()
+    );
 }
 
 
@@ -104,7 +194,7 @@ void Player::_physics_process(double delta) {
     }
 
     Input *input = Input::get_singleton();
-    
+
     move_speed_negation = 1.0f;
 
 
@@ -133,7 +223,9 @@ void Player::_physics_process(double delta) {
         attack_timer -= delta;
 
         if (attack_timer <= 0.0f) {
+
             attack_timer = 0.0f;
+
             combat_state = CombatState::IDLE;
         }
     }
@@ -150,6 +242,7 @@ void Player::_physics_process(double delta) {
         if (input->is_action_just_released("parry")) {
 
             parry_timer = 0.0f;
+
             combat_state = CombatState::IDLE;
         }
 
@@ -159,7 +252,8 @@ void Player::_physics_process(double delta) {
 
             if (
                 parry_timer <=
-                parry_duration - pre_parry_duration
+                current_weapon->get_parry_duration()
+                - current_weapon->get_pre_parry_duration()
             ) {
                 parry();
             }
@@ -177,16 +271,17 @@ void Player::_physics_process(double delta) {
 
         parry_timer -= delta;
 
-
         if (parry_timer <= 0.0f) {
 
             parry_timer = 0.0f;
 
             if (input->is_action_pressed("parry")) {
+
                 combat_state = CombatState::BLOCKING;
             }
 
             else {
+
                 combat_state = CombatState::IDLE;
             }
         }
@@ -202,6 +297,7 @@ void Player::_physics_process(double delta) {
         move_speed_negation = 0.45f;
 
         if (input->is_action_just_released("parry")) {
+
             combat_state = CombatState::IDLE;
         }
     }
@@ -242,11 +338,15 @@ void Player::_physics_process(double delta) {
         direction.y += 1;
     }
 
+
     if (direction.length() > 0) {
         direction = direction.normalized();
     }
 
-    set_velocity(direction * move_speed * move_speed_negation);
+
+    set_velocity(
+        direction * move_speed * move_speed_negation
+    );
 
     move_and_slide();
 }
