@@ -1,0 +1,9 @@
+[gd_resource type="WeaponData" format=3 uid="uid://dq0blu7snexjm"]
+
+[resource]
+weapon_name = "broken sword"
+damage = 2
+block_damage_negation = 0.12
+attack_duration = 0.3
+parry_duration = 0.25
+pre_parry_duration = 0.05

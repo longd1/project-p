@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b3k6q274u6xjl"]
 
-[ext_resource type="Texture2D" uid="uid://yohgg0lmi1s8" path="res://assets/scene/pixel_art_top_down_rocks_pack/rocks/rocks.png" id="1_65er3"]
+[ext_resource type="Texture2D" uid="uid://yohgg0lmi1s8" path="res://assets/scene/floor 2/pixel_art_top_down_rocks_pack/rocks/rocks.png" id="1_65er3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ggcp2"]
 radius = 36.0
