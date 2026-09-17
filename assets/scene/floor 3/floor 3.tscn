@@ -353,7 +353,7 @@ position = Vector2(253, -535)
 shape = SubResource("RectangleShape2D_udf4t")
 
 [node name="player" type="Marker2D" parent="tp_portal/room3_to_room4"]
-position = Vector2(593, -521)
+position = Vector2(581, -516)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room3_to_room4"]
 position = Vector2(795, -526)
@@ -365,7 +365,7 @@ camera_target = NodePath("cam")
 camera = NodePath("../../Camera2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/room4_to_room3"]
-position = Vector2(568, -544)
+position = Vector2(555, -544)
 shape = SubResource("RectangleShape2D_f11iq")
 
 [node name="player" type="Marker2D" parent="tp_portal/room4_to_room3"]
@@ -381,7 +381,7 @@ camera_target = NodePath("cam")
 camera = NodePath("../../Camera2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/room4_to_room6"]
-position = Vector2(1033.5, -553.25)
+position = Vector2(1037, -553)
 shape = SubResource("RectangleShape2D_3vbby")
 
 [node name="player" type="Marker2D" parent="tp_portal/room4_to_room6"]
@@ -401,7 +401,7 @@ position = Vector2(1558.5, -560)
 shape = SubResource("RectangleShape2D_t4wmr")
 
 [node name="player" type="Marker2D" parent="tp_portal/room6_to_room4"]
-position = Vector2(1006, -533)
+position = Vector2(1010, -533)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room6_to_room4"]
 position = Vector2(795, -526)
