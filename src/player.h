@@ -2,6 +2,7 @@
 
 #include "actor.h"
 #include "weapon_data.h"
+#include <godot_cpp/classes/animated_sprite2d.hpp>
 
 namespace godot {
 
@@ -39,6 +40,8 @@ private:
     // ==========================================
 
     float parry_timer = 0.0f;
+
+    AnimatedSprite2D *animated_sprite = nullptr;
 
 
 protected:

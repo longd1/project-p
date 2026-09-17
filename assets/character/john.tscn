@@ -37,19 +37,19 @@ region = Rect2(384, 896, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_japif"]
 atlas = ExtResource("1_8ylcs")
-region = Rect2(0, 896, 128, 128)
+region = Rect2(384, 896, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rq4sq"]
 atlas = ExtResource("1_8ylcs")
-region = Rect2(128, 896, 128, 128)
+region = Rect2(256, 896, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t45wk"]
 atlas = ExtResource("1_8ylcs")
-region = Rect2(256, 896, 128, 128)
+region = Rect2(128, 896, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_085xx"]
 atlas = ExtResource("1_8ylcs")
-region = Rect2(384, 896, 128, 128)
+region = Rect2(0, 896, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8p5rd"]
 atlas = ExtResource("1_8ylcs")
@@ -155,7 +155,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_thvjk")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 12.0
 }, {
@@ -172,9 +172,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_085xx")
 }],
-"loop": true,
+"loop": false,
 "name": &"block",
-"speed": 5.0
+"speed": 24.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -260,5 +260,5 @@ position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_8p5rd")
 animation = &"block"
 autoplay = "idle"
-frame = 2
-frame_progress = 0.6596085
+frame = 3
+frame_progress = 1.0

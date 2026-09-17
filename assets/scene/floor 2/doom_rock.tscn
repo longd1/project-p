@@ -1,20 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3k6q274u6xjl"]
+[gd_scene load_steps=4 format=3 uid="uid://b3k6q274u6xjl"]
 
 [ext_resource type="Texture2D" uid="uid://yohgg0lmi1s8" path="res://assets/scene/floor 2/pixel_art_top_down_rocks_pack/rocks/rocks.png" id="1_65er3"]
+[ext_resource type="Script" uid="uid://bdfrl7yp77omn" path="res://assets/scene/floor 2/doom_rock.gd" id="1_ggcp2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ggcp2"]
 radius = 36.0
 height = 138.0
 
-[node name="AnimatableBody2D" type="AnimatableBody2D"]
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_ggcp2")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
 scale = Vector2(6.315065, -3.8000233)
 texture = ExtResource("1_65er3")
 flip_v = true
 region_enabled = true
 region_rect = Rect2(25.220436, 24.515099, 23.699799, 23.484901)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_ggcp2")

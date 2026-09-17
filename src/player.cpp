@@ -119,10 +119,10 @@ void Player::attack() {
 
     attack_timer = current_weapon->get_attack_duration();
 
-    UtilityFunctions::print(
-        "John attacks! Damage: ",
-        get_attack_damage()
-    );
+    // Đảm bảo attack luôn chạy xuôi.
+    animated_sprite->set_speed_scale(1.0f);
+
+    animated_sprite->play("attack");
 }
 
 
@@ -143,6 +143,10 @@ void Player::parry_start_up() {
     combat_state = CombatState::PARRY_START_UP;
 
     parry_timer = current_weapon->get_parry_duration();
+
+    animated_sprite->set_speed_scale(1.0f);
+
+    animated_sprite->play("block");
 }
 
 
@@ -177,9 +181,13 @@ void Player::_ready() {
         return;
     }
 
-    UtilityFunctions::print("Player C++ loaded!");
-
     InputMap::get_singleton()->load_from_project_settings();
+
+    animated_sprite = get_node<AnimatedSprite2D>(
+        NodePath("AnimatedSprite2D")
+    );
+
+    animated_sprite->play("idle");
 }
 
 
@@ -244,6 +252,19 @@ void Player::_physics_process(double delta) {
             parry_timer = 0.0f;
 
             combat_state = CombatState::IDLE;
+
+
+            if (animated_sprite->is_playing()) {
+
+                animated_sprite->set_speed_scale(-1.0f);
+            }
+
+            else {
+
+                animated_sprite->set_speed_scale(1.0f);
+
+                animated_sprite->play_backwards("block");
+            }
         }
 
         else {
@@ -283,6 +304,19 @@ void Player::_physics_process(double delta) {
             else {
 
                 combat_state = CombatState::IDLE;
+
+
+                if (animated_sprite->is_playing()) {
+
+                    animated_sprite->set_speed_scale(-1.0f);
+                }
+
+                else {
+
+                    animated_sprite->set_speed_scale(1.0f);
+
+                    animated_sprite->play_backwards("block");
+                }
             }
         }
     }
@@ -299,6 +333,19 @@ void Player::_physics_process(double delta) {
         if (input->is_action_just_released("parry")) {
 
             combat_state = CombatState::IDLE;
+
+
+            if (animated_sprite->is_playing()) {
+
+                animated_sprite->set_speed_scale(-1.0f);
+            }
+
+            else {
+
+                animated_sprite->set_speed_scale(1.0f);
+
+                animated_sprite->play_backwards("block");
+            }
         }
     }
 
@@ -339,10 +386,58 @@ void Player::_physics_process(double delta) {
     }
 
 
+    // ==================================================
+    // FLIP SPRITE
+    // ==================================================
+
+    if (direction.x < 0) {
+
+        animated_sprite->set_flip_h(true);
+    }
+
+    else if (direction.x > 0) {
+
+        animated_sprite->set_flip_h(false);
+    }
+
+
     if (direction.length() > 0) {
+
         direction = direction.normalized();
     }
 
+
+    // ==================================================
+    // MOVEMENT ANIMATION
+    // ==================================================
+
+    if (combat_state == CombatState::IDLE) {
+
+        bool animation_is_reversing =
+            animated_sprite->is_playing()
+            && animated_sprite->get_playing_speed() < 0.0f;
+
+
+        if (!animation_is_reversing) {
+
+            animated_sprite->set_speed_scale(1.0f);
+
+            if (direction.length() > 0) {
+
+                animated_sprite->play("run");
+            }
+
+            else {
+
+                animated_sprite->play("idle");
+            }
+        }
+    }
+
+
+    // ==================================================
+    // APPLY MOVEMENT
+    // ==================================================
 
     set_velocity(
         direction * move_speed * move_speed_negation
