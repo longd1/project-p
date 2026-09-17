@@ -436,7 +436,7 @@ shape = SubResource("RectangleShape2D_mc5cg")
 position = Vector2(1308, 15)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room5_to_room2"]
-position = Vector2(987, 0)
+position = Vector2(991, 32)
 
 [node name="room5_to_room6" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
 script = ExtResource("15_mc5cg")
