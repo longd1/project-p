@@ -39,6 +39,9 @@ public:
 
     void take_damage(int damage);
     void die();
+    
+    int get_health() const;
+    int get_max_health() const;
 
     void stun();
     void recover_from_stun();
