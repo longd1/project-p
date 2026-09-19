@@ -1,7 +1,8 @@
-[gd_scene load_steps=38 format=3 uid="uid://d1qhffe2px8k5"]
+[gd_scene load_steps=48 format=3 uid="uid://d1qhffe2px8k5"]
 
 [ext_resource type="WeaponData" uid="uid://dq0blu7snexjm" path="res://assets/weapons/broken_sword/broken_sword.tres" id="1_8p5rd"]
 [ext_resource type="Texture2D" uid="uid://dgv41w4fboi42" path="res://assets/character/John/male_hero_free/male_hero.png" id="1_8ylcs"]
+[ext_resource type="AudioStream" uid="uid://dt4winwepnb70" path="res://assets/character/John/sound/DeathSound.mp3" id="3_yhpr6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ylcs"]
 radius = 12.0
@@ -50,6 +51,42 @@ region = Rect2(128, 896, 128, 128)
 [sub_resource type="AtlasTexture" id="AtlasTexture_085xx"]
 atlas = ExtResource("1_8ylcs")
 region = Rect2(0, 896, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jq2n0"]
+atlas = ExtResource("1_8ylcs")
+region = Rect2(0, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yhpr6"]
+atlas = ExtResource("1_8ylcs")
+region = Rect2(128, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpwto"]
+atlas = ExtResource("1_8ylcs")
+region = Rect2(256, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wch8"]
+atlas = ExtResource("1_8ylcs")
+region = Rect2(384, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i475j"]
+atlas = ExtResource("1_8ylcs")
+region = Rect2(512, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_secto"]
+atlas = ExtResource("1_8ylcs")
+region = Rect2(640, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2pbs"]
+atlas = ExtResource("1_8ylcs")
+region = Rect2(768, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_in2hb"]
+atlas = ExtResource("1_8ylcs")
+region = Rect2(896, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0e77"]
+atlas = ExtResource("1_8ylcs")
+region = Rect2(1024, 512, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8p5rd"]
 atlas = ExtResource("1_8ylcs")
@@ -178,6 +215,38 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_jq2n0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yhpr6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpwto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wch8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i475j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_secto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2pbs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_in2hb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0e77")
+}],
+"loop": false,
+"name": &"die",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_8p5rd")
 }, {
 "duration": 1.0,
@@ -256,6 +325,7 @@ size = Vector2(33.333336, 44.666664)
 [node name="Player" type="Player"]
 current_weapon = ExtResource("1_8p5rd")
 scale = Vector2(0.75, 0.75)
+motion_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.3333334, -17.333334)
@@ -264,8 +334,10 @@ shape = SubResource("CapsuleShape2D_8ylcs")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_8p5rd")
-animation = &"run"
+animation = &"die"
 autoplay = "idle"
+frame = 8
+frame_progress = 1.0
 
 [node name="hurtbox" type="Node2D" parent="."]
 
@@ -286,3 +358,8 @@ collision_mask = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox/Area2D"]
 position = Vector2(31.333336, -21.666668)
 shape = SubResource("RectangleShape2D_yhpr6")
+
+[node name="sound" type="Node2D" parent="."]
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="sound"]
+stream = ExtResource("3_yhpr6")

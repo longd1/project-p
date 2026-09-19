@@ -5,6 +5,7 @@
 
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/area2d.hpp>
+#include <godot_cpp/classes/audio_stream_player2d.hpp>
 
 namespace godot {
 
@@ -12,8 +13,6 @@ class Player : public Actor {
     GDCLASS(Player, Actor)
 
 private:
-    int max_mana = 100;
-    int mana = max_mana;
     int base_damage = 5;
 
     Ref<WeaponData> current_weapon;
@@ -25,6 +24,7 @@ private:
 
     AnimatedSprite2D *animated_sprite = nullptr;
     Area2D *hitbox = nullptr;
+    AudioStreamPlayer2D *death_sound = nullptr;
 
 protected:
     static void _bind_methods();
@@ -41,6 +41,8 @@ public:
 
     int get_attack_damage() const;
     float get_block_damage_negation() const;
+
+    void die(bool play_sound = true) override;
 
     void attack();
     void parry();

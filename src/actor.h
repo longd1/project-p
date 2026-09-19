@@ -39,7 +39,10 @@ public:
     ~Actor();
 
     void take_damage(int damage);
-    void die();
+    virtual void die(bool play_sound);
+
+    int get_health() const;
+    int get_max_health() const;
 
     void stun();
     void recover_from_stun();

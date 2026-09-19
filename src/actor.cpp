@@ -12,6 +12,9 @@ Actor::~Actor() {
 }
 
 void Actor::_bind_methods() {
+
+    ClassDB::bind_method(D_METHOD("get_health"), &Actor::get_health);
+    ClassDB::bind_method(D_METHOD("get_max_health"), &Actor::get_max_health);
 }
 
 
@@ -32,8 +35,7 @@ void Actor::take_damage(int damage, float stun_scale, float knockback, Vector2 a
 // DEATH
 // ==========================================
 
-void Actor::die() {
-    //UtilityFunctions::print("Actor died!");
+void Actor::die(bool play_sound) {
 }
 
 
@@ -58,4 +60,14 @@ void Actor::recover_from_stun() {
     if (combat_state == CombatState::STUNNED) {
         combat_state = CombatState::IDLE;
     }
+}
+
+
+
+int Actor::get_health() const {
+    return health;
+}
+
+int Actor::get_max_health() const {
+    return max_health;
 }
