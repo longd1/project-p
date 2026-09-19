@@ -19,16 +19,11 @@ void Actor::_bind_methods() {
 // DAMAGE
 // ==========================================
 
-void Actor::take_damage(int damage) {
-
+void Actor::take_damage(int damage, float stun_scale, float knockback, Vector2 attacker_position) {
     health -= damage;
 
-    UtilityFunctions::print("Damage taken: ", damage);
-    UtilityFunctions::print("Health remaining: ", health);
-
-    if (health <= 0) {
+    if (health < 0) {
         health = 0;
-        die();
     }
 }
 

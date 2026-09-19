@@ -1,6 +1,7 @@
 #pragma once
 
 #include <godot_cpp/classes/character_body2d.hpp>
+#include <godot_cpp/variant/vector2.hpp>
 
 namespace godot {
 
@@ -42,6 +43,7 @@ public:
 
     void stun();
     void recover_from_stun();
+    virtual void take_damage(int damage, float stun_scale, float knockback, Vector2 attacker_position);
 };
 
 }
