@@ -1,6 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://dej1aheeawhfj"]
-
-[ext_resource type="Script" uid="uid://o5m8i3knbsef" path="res://assets/UI/HUD/hud.gd" id="1_g68q5"]
+[gd_scene format=3 uid="uid://bn7s43o6xjhqy"]
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -9,4 +7,42 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_g68q5")
+
+[node name="playerStatus" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.00086805556
+anchor_bottom = -0.012345679
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 320.0
+offset_bottom = 120.0
+metadata/_edit_use_anchors_ = true
+
+[node name="playerName" type="Label" parent="playerStatus"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 6.0
+offset_right = 61.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 18
+text = "John
+"
+
+[node name="HPBar" type="ProgressBar" parent="playerStatus"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 40.0
+offset_right = 275.0
+offset_bottom = 75.0
+value = 100.0
+
+[node name="HPText" type="Label" parent="playerStatus"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 38.0
+offset_right = 277.0
+offset_bottom = 73.0
+text = "100/100"
+horizontal_alignment = 1
+vertical_alignment = 1
