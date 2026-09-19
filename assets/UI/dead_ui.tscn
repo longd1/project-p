@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://pkdaq78a645p"]
+
+[node name="dead_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 151040.0
+offset_bottom = 60672.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="retry_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 65051.0
+offset_top = 31479.0
+offset_right = 74888.0
+offset_bottom = 38024.0
+text = "RETRY
+"
+
+[node name="main_menu_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 24448.0
+offset_top = 16384.0
+offset_right = 39816.0
+offset_bottom = 22408.0
+text = "MAIN MENU
+"
