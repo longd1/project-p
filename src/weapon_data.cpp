@@ -11,6 +11,7 @@ using namespace godot;
 
 void WeaponData::_bind_methods() {
 
+
     // WEAPON NAME
     ClassDB::bind_method(
         D_METHOD("set_weapon_name", "name"),
@@ -145,6 +146,46 @@ void WeaponData::_bind_methods() {
         "set_pre_parry_duration",
         "get_pre_parry_duration"
     );
+
+    // STUN SCALE/KNOCKBACK
+    ClassDB::bind_method(
+        D_METHOD("set_stun_scale", "value"),
+        &WeaponData::set_stun_scale
+    );
+
+    ClassDB::bind_method(
+        D_METHOD("get_stun_scale"),
+        &WeaponData::get_stun_scale
+    );
+
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::FLOAT,
+            "stun_scale"
+        ),
+        "set_stun_scale",
+        "get_stun_scale"
+    );
+
+    ClassDB::bind_method(
+        D_METHOD("set_knockback", "value"),
+        &WeaponData::set_knockback
+    );
+
+    ClassDB::bind_method(
+        D_METHOD("get_knockback"),
+        &WeaponData::get_knockback
+    );
+
+    ADD_PROPERTY(
+        PropertyInfo(
+            Variant::FLOAT,
+            "knockback"
+        ),
+        "set_knockback",
+        "get_knockback"
+    );
+
 }
 
 
@@ -224,3 +265,24 @@ void WeaponData::set_pre_parry_duration(float value) {
 float WeaponData::get_pre_parry_duration() const {
     return pre_parry_duration;
 }
+
+// ==================================================
+// STUN SCALE/KNOCKBACK
+// ==================================================
+
+    void WeaponData::set_stun_scale(float value) {
+        stun_scale = value;
+    }
+
+    float WeaponData::get_stun_scale() const {
+        return stun_scale;
+    }
+
+
+    void WeaponData::set_knockback(float value) {
+        knockback = value;
+    }
+
+    float WeaponData::get_knockback() const {
+        return knockback;
+    }

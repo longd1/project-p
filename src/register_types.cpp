@@ -3,6 +3,7 @@
 #include "player.h"
 //#include "enemy.h"
 #include "weapon_data.h"
+#include "mini_boss.h"
 
 #include <gdextension_interface.h>
 
@@ -20,6 +21,7 @@ void initialize_projectp_module(ModuleInitializationLevel p_level) {
     GDREGISTER_CLASS(Actor);
     GDREGISTER_CLASS(Player);
     GDREGISTER_CLASS(WeaponData);
+    GDREGISTER_CLASS(MiniBoss);
     //GDREGISTER_CLASS(Enemy);
 }
 

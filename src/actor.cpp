@@ -4,13 +4,6 @@
 
 using namespace godot;
 
-int Actor::get_health() const {
-    return health;
-}
-
-int Actor::get_max_health() const {
-    return max_health;
-}
 
 Actor::Actor() {
 }
@@ -19,15 +12,6 @@ Actor::~Actor() {
 }
 
 void Actor::_bind_methods() {
-     ClassDB::bind_method(
-        D_METHOD("get_health"),
-        &Actor::get_health
-    );
-
-    ClassDB::bind_method(
-        D_METHOD("get_max_health"),
-        &Actor::get_max_health
-    );
 }
 
 

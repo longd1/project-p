@@ -20,6 +20,9 @@ private:
     float parry_duration = 0.0f;
     float pre_parry_duration = 0.0f;
 
+    float stun_scale = 0.0f;
+    float knockback = 0.0f;
+
 
 protected:
     static void _bind_methods();
@@ -53,6 +56,12 @@ public:
 
     void set_pre_parry_duration(float value);
     float get_pre_parry_duration() const;
+
+    void set_stun_scale(float value);
+    float get_stun_scale() const;
+
+    void set_knockback(float value);
+    float get_knockback() const;
 };
 
 }
