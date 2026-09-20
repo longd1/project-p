@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://pkdaq78a645p"]
+[gd_scene load_steps=0 format=3 uid="uid://pkdaq78a645p"]
 
 [node name="dead_ui" type="Control"]
 layout_mode = 3

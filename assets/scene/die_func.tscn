@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cexmoautbah14"]
+
+[ext_resource type="Script" uid="uid://dsmwuf6d3qnew" path="res://assets/scene/die_func.gd" id="1_j6ouc"]
+[ext_resource type="Shader" uid="uid://0hn54ng1l7nd" path="res://assets/scene/die_func.gdshader" id="2_upnxa"]
+[ext_resource type="VideoStream" uid="uid://jktftwyy8hsh" path="res://assets/die-prompt.ogv" id="3_obc4d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6hvq7"]
+shader = ExtResource("2_upnxa")
+shader_parameter/key_color = Color(0, 1, 0, 1)
+shader_parameter/tolerance = 0.25
+shader_parameter/softness = 0.08
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_j6ouc")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+material = SubResource("ShaderMaterial_6hvq7")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("3_obc4d")
+expand = true

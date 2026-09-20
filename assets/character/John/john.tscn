@@ -328,18 +328,18 @@ scale = Vector2(0.75, 0.75)
 motion_mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-1.3333334, -17.333334)
 shape = SubResource("CapsuleShape2D_8ylcs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -16)
 sprite_frames = SubResource("SpriteFrames_8p5rd")
-animation = &"die"
+animation = &"idle"
 autoplay = "idle"
-frame = 8
-frame_progress = 1.0
 
 [node name="hurtbox" type="Node2D" parent="."]
+visible = false
 
 [node name="Area2D" type="Area2D" parent="hurtbox"]
 collision_layer = 8
@@ -350,6 +350,7 @@ position = Vector2(-1.3333335, -15.333334)
 shape = SubResource("RectangleShape2D_jq2n0")
 
 [node name="hitbox" type="Node2D" parent="."]
+visible = false
 
 [node name="Area2D" type="Area2D" parent="hitbox"]
 collision_layer = 0
@@ -363,3 +364,4 @@ shape = SubResource("RectangleShape2D_yhpr6")
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="sound"]
 stream = ExtResource("3_yhpr6")
+volume_db = 24.0
