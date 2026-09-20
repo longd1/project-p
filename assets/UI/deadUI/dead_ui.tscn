@@ -1,4 +1,6 @@
-[gd_scene load_steps=0 format=3 uid="uid://pkdaq78a645p"]
+[gd_scene load_steps=2 format=3 uid="uid://pkdaq78a645p"]
+
+[ext_resource type="Script" uid="uid://dello0uq48tap" path="res://assets/UI/deadUI/dead_ui.gd" id="1_2lnrh"]
 
 [node name="dead_ui" type="Control"]
 layout_mode = 3
@@ -7,32 +9,33 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_2lnrh")
 
 [node name="background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 151040.0
-offset_bottom = 60672.0
+offset_right = 82304.0
+offset_bottom = 52224.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="retry_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 65051.0
-offset_top = 31479.0
-offset_right = 74888.0
-offset_bottom = 38024.0
+offset_left = 31515.0
+offset_top = 32631.0
+offset_right = 47496.0
+offset_bottom = 39176.0
 text = "RETRY
 "
 
 [node name="main_menu_button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 24448.0
-offset_top = 16384.0
-offset_right = 39816.0
-offset_bottom = 22408.0
+offset_left = 31744.0
+offset_top = 20096.0
+offset_right = 47496.0
+offset_bottom = 26888.0
 text = "MAIN MENU
 "
