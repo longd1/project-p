@@ -46,7 +46,7 @@ public:
 
     void stun();
     void recover_from_stun();
-    virtual void take_damage(int damage, float stun_scale, float knockback, Vector2 attacker_position);
+    virtual void take_damage(int damage, float stun_scale, float knockback, Actor *attacker);
 };
 
 }

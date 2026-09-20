@@ -4,6 +4,7 @@
 
 #include <godot_cpp/variant/vector2.hpp>
 #include <godot_cpp/classes/animated_sprite2d.hpp>
+#include <godot_cpp/classes/area2d.hpp>
 
 namespace godot {
 
@@ -21,6 +22,12 @@ private:
 
     AnimatedSprite2D *animated_sprite = nullptr;
 
+    float attack_cooldown_timer = 2.0f;
+    bool attack_has_hit = false;
+
+    Area2D *hitbox = nullptr;
+
+
 protected:
     static void _bind_methods();
 
@@ -29,8 +36,9 @@ public:
     ~MiniBoss();
 
     void _ready() override;
-    void take_damage(int damage, float stun_scale, float knockback, Vector2 attacker_position) override;
+    void take_damage(int damage, float stun_scale, float knockback, Actor *attacker) override;
     void _physics_process(double delta) override;
+    void attack();
 };
 
 }

@@ -141,9 +141,6 @@ void Player::parry() {
 }
 
 
-void Player::block() {
-}
-
 
 void Player::_ready() {
     if (Engine::get_singleton()->is_editor_hint()) {
@@ -153,17 +150,33 @@ void Player::_ready() {
     InputMap::get_singleton()->load_from_project_settings();
 
     animated_sprite = get_node<AnimatedSprite2D>(NodePath("AnimatedSprite2D"));
+
     hitbox = get_node<Area2D>(NodePath("hitbox/Area2D"));
+    hurtbox = get_node<Area2D>(NodePath("hurtbox/Area2D"));
+
     death_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/DeathSound"));
+    effect = get_node<AnimatedSprite2D>(NodePath("effect"));
+
+
+
+    parry_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/ParrySound"));
+    block_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/BlockSound"));
+
+    effect->hide();
+
+
 
     hitbox->set_monitoring(false);
 
     animated_sprite->set_speed_scale(1.0f);
     animated_sprite->play("idle");
+
+    
 }
 
 void Player::die(bool play_sound) {
     hitbox->set_monitoring(false);
+    hurtbox->set_monitorable(false);
 
     set_velocity(Vector2(0, 0));
     set_physics_process(false);
@@ -180,6 +193,93 @@ void Player::die(bool play_sound) {
     }
 
     emit_signal("died");
+}
+
+void Player::take_damage(int damage, float stun_scale, float knockback, Actor *attacker) {
+    Vector2 knockback_direction = (get_global_position() - attacker->get_global_position()).normalized();
+
+
+
+    if (combat_state == CombatState::PARRYING) {
+        float parry_knockback = damage * knockback * 0.45f;
+        knockback_velocity = knockback_direction * parry_knockback;
+
+        parry_sound->play();
+
+        bool facing_left = animated_sprite->is_flipped_h();
+
+        effect->set_flip_h(facing_left);
+
+        Vector2 effect_position = effect->get_position();
+        float effect_offset_x = Math::abs(effect_position.x);
+        effect_position.x = facing_left ? -effect_offset_x : effect_offset_x;
+        effect->set_position(effect_position);
+
+        effect->show();
+        effect->stop();
+        effect->set_speed_scale(1.0f);
+        effect->play("parry");
+        effect->set_frame_and_progress(0, 0.0f);
+
+        UtilityFunctions::print("John parried | Damage taken: 0 | HP: ", health, "/", max_health);
+
+        return;
+    }
+
+
+
+    int final_damage = damage;
+
+    if (combat_state == CombatState::BLOCKING) {
+        final_damage = static_cast<int>(damage * (1.0f - get_block_damage_negation()));
+
+        block_sound->play();
+
+
+        bool facing_left = animated_sprite->is_flipped_h();
+
+        effect->set_flip_h(facing_left);
+
+        Vector2 effect_position = effect->get_position();
+        float effect_offset_x = Math::abs(effect_position.x);
+        effect_position.x = facing_left ? -effect_offset_x : effect_offset_x;
+        effect->set_position(effect_position);
+
+        effect->show();
+        effect->stop();
+        effect->set_speed_scale(1.0f);
+        effect->play("block");
+        effect->set_frame_and_progress(0, 0.0f);
+
+
+        UtilityFunctions::print("John blocked, took ", final_damage, " damage | HP: ", health, "/", max_health);
+    }
+
+
+
+    health -= final_damage;
+
+    if (health <= 0) {
+        health = 0;
+        die(true);
+        return;
+    }
+
+    UtilityFunctions::print("John took ", final_damage, " damage | HP: ", health, "/", max_health);
+
+
+    float final_knockback = damage * knockback;
+    knockback_velocity = knockback_direction * final_knockback;
+
+
+
+    float final_stun = damage * stun_scale;
+
+    if (combat_state != CombatState::BLOCKING && combat_state != CombatState::STUNNED && final_stun > 0.0f) {
+
+        stun_timer = final_stun;
+        stun();
+    }
 }
 
 
@@ -203,7 +303,16 @@ void Player::_physics_process(double delta) {
     if (combat_state == CombatState::STUNNED) {
         hitbox->set_monitoring(false);
 
-        set_velocity(Vector2(0, 0));
+        stun_timer -= delta;
+
+        if (stun_timer <= 0.0f) {
+            stun_timer = 0.0f;
+            recover_from_stun();
+        }
+
+        knockback_velocity = knockback_velocity.move_toward(Vector2(0, 0), 500.0f * delta);
+
+        set_velocity(knockback_velocity);
         move_and_slide();
 
         return;
@@ -235,7 +344,7 @@ void Player::_physics_process(double delta) {
                     Actor *actor = Object::cast_to<Actor>(target);
 
                     if (actor != nullptr && actor != this) {
-                        actor->take_damage(get_attack_damage(), current_weapon->get_stun_scale(), current_weapon->get_knockback(), get_global_position());
+                        actor->take_damage(get_attack_damage(), current_weapon->get_stun_scale(), current_weapon->get_knockback(), this);
 
                         attack_has_hit = true;
                         break;
@@ -401,7 +510,9 @@ void Player::_physics_process(double delta) {
     }
 
 
-    set_velocity(direction * move_speed * move_speed_negation);
+    knockback_velocity = knockback_velocity.move_toward(Vector2(0, 0), 500.0f * delta);
+
+    set_velocity(direction * move_speed * move_speed_negation + knockback_velocity);
 
     move_and_slide();
 }

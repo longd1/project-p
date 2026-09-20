@@ -6,6 +6,7 @@
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/area2d.hpp>
 #include <godot_cpp/classes/audio_stream_player2d.hpp>
+#include <godot_cpp/classes/gpu_particles2d.hpp>
 
 namespace godot {
 
@@ -21,10 +22,19 @@ private:
     bool attack_has_hit = false;
 
     float parry_timer = 0.0f;
+    float stun_timer = 0.0f;
+    Vector2 knockback_velocity = Vector2(0, 0);
+
 
     AnimatedSprite2D *animated_sprite = nullptr;
+    AnimatedSprite2D *effect = nullptr;
     Area2D *hitbox = nullptr;
+    Area2D *hurtbox = nullptr;
     AudioStreamPlayer2D *death_sound = nullptr;
+    AudioStreamPlayer2D *parry_sound = nullptr;
+    AudioStreamPlayer2D *block_sound = nullptr;
+
+    
 
 protected:
     static void _bind_methods();
@@ -47,7 +57,9 @@ public:
     void attack();
     void parry();
     void parry_start_up();
-    void block();
+
+
+    void take_damage(int damage, float stun_scale, float knockback, Actor *attacker) override;
 };
 
 }

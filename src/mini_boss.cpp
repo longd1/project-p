@@ -29,10 +29,13 @@ void MiniBoss::_ready() {
 
     animated_sprite->set_speed_scale(1.0f);
     animated_sprite->play("idle");
+
+    hitbox = get_node<Area2D>(NodePath("hitbox/Area2D"));
+    hitbox->set_monitoring(false);
 }
 
 
-void MiniBoss::take_damage(int damage, float stun_scale, float knockback, Vector2 attacker_position) {
+void MiniBoss::take_damage(int damage, float stun_scale, float knockback, Actor *attacker) {
     health -= damage;
 
     if (health < 0) {
@@ -41,7 +44,7 @@ void MiniBoss::take_damage(int damage, float stun_scale, float knockback, Vector
 
     float final_stun = damage * stun_scale * (1.0f - stun_negation);
     float final_knockback = damage * knockback * (1.0f - knockback_negation);
-    Vector2 knockback_direction = (get_global_position() - attacker_position).normalized();
+    Vector2 knockback_direction = (get_global_position() - attacker->get_global_position()).normalized();
 
     knockback_velocity = knockback_direction * final_knockback;
 
@@ -63,6 +66,25 @@ void MiniBoss::take_damage(int damage, float stun_scale, float knockback, Vector
         }
     }
 }
+
+void MiniBoss::attack() {
+    if (combat_state != CombatState::IDLE) {
+        return;
+    }
+
+    combat_state = CombatState::ATTACKING;
+    attack_has_hit = false;
+
+    animated_sprite->stop();
+    animated_sprite->set_speed_scale(1.0f);
+    animated_sprite->play("attack");
+    animated_sprite->set_frame_and_progress(0, 0.0f);
+}
+
+
+
+
+
 
 
 void MiniBoss::_physics_process(double delta) {
@@ -100,10 +122,54 @@ void MiniBoss::_physics_process(double delta) {
         }
     }
 
+    if (combat_state == CombatState::IDLE) {
+        attack_cooldown_timer -= delta;
+
+        if (attack_cooldown_timer <= 0.0f) {
+            attack();
+        }
+    }
+
     else if (combat_state == CombatState::ATTACKING) {
-        if (animated_sprite->get_animation() != StringName("attack")) {
-            animated_sprite->set_speed_scale(1.0f);
-            animated_sprite->play("attack");
+        int attack_frame = animated_sprite->get_frame();
+
+        if (attack_frame >= 9 && attack_frame <= 12) {
+            hitbox->set_monitoring(true);
+
+            TypedArray<Area2D> overlapping_areas = hitbox->get_overlapping_areas();
+
+            for (int i = 0; i < overlapping_areas.size(); i++) {
+                Area2D *area = Object::cast_to<Area2D>(overlapping_areas[i]);
+
+                if (area == nullptr || attack_has_hit) {
+                    continue;
+                }
+
+                Node *target = area;
+
+                while (target != nullptr) {
+                    Actor *actor = Object::cast_to<Actor>(target);
+
+                    if (actor != nullptr && actor != this) {
+                        actor->take_damage(15, 0.1f, 15.0f, this);
+
+                        attack_has_hit = true;
+                        break;
+                    }
+
+                    target = target->get_parent();
+                }
+            }
+        }
+        else {
+            hitbox->set_monitoring(false);
+        }
+
+        if (!animated_sprite->is_playing()) {
+            hitbox->set_monitoring(false);
+
+            combat_state = CombatState::IDLE;
+            attack_cooldown_timer = 2.0f;
         }
     }
 }

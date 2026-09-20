@@ -1,8 +1,11 @@
-[gd_scene load_steps=48 format=3 uid="uid://d1qhffe2px8k5"]
+[gd_scene load_steps=64 format=3 uid="uid://d1qhffe2px8k5"]
 
 [ext_resource type="WeaponData" uid="uid://dq0blu7snexjm" path="res://assets/weapons/broken_sword/broken_sword.tres" id="1_8p5rd"]
 [ext_resource type="Texture2D" uid="uid://dgv41w4fboi42" path="res://assets/character/John/male_hero_free/male_hero.png" id="1_8ylcs"]
 [ext_resource type="AudioStream" uid="uid://dt4winwepnb70" path="res://assets/character/John/sound/DeathSound.mp3" id="3_yhpr6"]
+[ext_resource type="AudioStream" uid="uid://2w8qwtf3184l" path="res://assets/character/John/sound/parry sound.mp3" id="4_4wch8"]
+[ext_resource type="Texture2D" uid="uid://d4eewaed46h1l" path="res://assets/character/John/effect/sprite-sheet.png" id="5_i475j"]
+[ext_resource type="AudioStream" uid="uid://bxaydwersj7dk" path="res://assets/character/John/sound/block sound.mp3" id="5_secto"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ylcs"]
 radius = 12.0
@@ -322,6 +325,103 @@ size = Vector2(18.666668, 30.666668)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yhpr6"]
 size = Vector2(33.333336, 44.666664)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wxm4"]
+atlas = ExtResource("5_i475j")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fde05"]
+atlas = ExtResource("5_i475j")
+region = Rect2(128, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j25uj"]
+atlas = ExtResource("5_i475j")
+region = Rect2(512, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ep7hw"]
+atlas = ExtResource("5_i475j")
+region = Rect2(0, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5dm5"]
+atlas = ExtResource("5_i475j")
+region = Rect2(128, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r843y"]
+atlas = ExtResource("5_i475j")
+region = Rect2(0, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awsr8"]
+atlas = ExtResource("5_i475j")
+region = Rect2(128, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n1tbc"]
+atlas = ExtResource("5_i475j")
+region = Rect2(256, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xkl6m"]
+atlas = ExtResource("5_i475j")
+region = Rect2(384, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mj87"]
+atlas = ExtResource("5_i475j")
+region = Rect2(512, 0, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1mvv"]
+atlas = ExtResource("5_i475j")
+region = Rect2(0, 64, 128, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_084ch"]
+atlas = ExtResource("5_i475j")
+region = Rect2(128, 64, 128, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q7kcg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wxm4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fde05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j25uj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ep7hw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y5dm5")
+}],
+"loop": false,
+"name": &"block",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r843y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awsr8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n1tbc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xkl6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mj87")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1mvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_084ch")
+}],
+"loop": false,
+"name": &"parry",
+"speed": 20.0
+}]
+
 [node name="Player" type="Player"]
 current_weapon = ExtResource("1_8p5rd")
 scale = Vector2(0.75, 0.75)
@@ -364,4 +464,19 @@ shape = SubResource("RectangleShape2D_yhpr6")
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="sound"]
 stream = ExtResource("3_yhpr6")
-volume_db = 24.0
+volume_db = 10.116
+
+[node name="ParrySound" type="AudioStreamPlayer2D" parent="sound"]
+stream = ExtResource("4_4wch8")
+
+[node name="BlockSound" type="AudioStreamPlayer2D" parent="sound"]
+stream = ExtResource("5_secto")
+
+[node name="effect" type="AnimatedSprite2D" parent="."]
+position = Vector2(20.000002, -19.999998)
+rotation = -0.55089784
+scale = Vector2(0.41547447, 0.7065061)
+sprite_frames = SubResource("SpriteFrames_q7kcg")
+animation = &"parry"
+frame = 6
+frame_progress = 1.0

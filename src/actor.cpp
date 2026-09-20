@@ -22,7 +22,7 @@ void Actor::_bind_methods() {
 // DAMAGE
 // ==========================================
 
-void Actor::take_damage(int damage, float stun_scale, float knockback, Vector2 attacker_position) {
+void Actor::take_damage(int damage, float stun_scale, float knockback, Actor *attacker) {
     health -= damage;
 
     if (health < 0) {
