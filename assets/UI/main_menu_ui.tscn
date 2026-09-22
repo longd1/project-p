@@ -1,0 +1,183 @@
+[gd_scene load_steps=10 format=3 uid="uid://xcq5vjitjo55"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t3vr2"]
+bg_color = Color(0.14117648, 0.09019608, 0.09803922, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lefed"]
+bg_color = Color(0.22745098, 0.105882354, 0.105882354, 1)
+border_color = Color(0.8392157, 0.27058825, 0.27058825, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0f56y"]
+bg_color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+border_color = Color(0.64705884, 0.16470589, 0.16470589, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3i5xq"]
+bg_color = Color(0.14117648, 0.09019608, 0.09803922, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ndum"]
+bg_color = Color(0.22745098, 0.105882354, 0.105882354, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8392157, 0.27058825, 0.27058825, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i5dhe"]
+bg_color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.64705884, 0.16470589, 0.16470589, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_naby5"]
+bg_color = Color(0.14117648, 0.09019608, 0.09803922, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slnxf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlpwj"]
+bg_color = Color(0.22745098, 0.105882354, 0.105882354, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8392157, 0.27058825, 0.27058825, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="main_menu_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.043137256, 0.03529412, 0.039215688, 1)
+
+[node name="background_shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="game_name" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 83.0
+offset_right = 280.0
+offset_bottom = 202.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9019608, 0.88235295, 0.8627451, 1)
+theme_override_font_sizes/font_size = 42
+text = "DUNGEON GAME
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="menu_panel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -154.0
+offset_top = -68.0
+offset_right = 146.0
+offset_bottom = 172.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="buttons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -45.0
+offset_right = 147.0
+offset_bottom = 152.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="start_button" type="Button" parent="buttons"]
+custom_minimum_size = Vector2(260, 55)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.88235295, 0.8627451, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_t3vr2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_lefed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0f56y")
+text = "PLAY GAME
+"
+
+[node name="guid_button" type="Button" parent="buttons"]
+custom_minimum_size = Vector2(260, 55)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.88235295, 0.8627451, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_3i5xq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4ndum")
+theme_override_styles/hover = SubResource("StyleBoxFlat_i5dhe")
+text = "GUIDE
+"
+
+[node name="option_button" type="Button" parent="buttons"]
+custom_minimum_size = Vector2(260, 55)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9019608, 0.88235295, 0.8627451, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_naby5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_slnxf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qlpwj")
+text = "OPTIONS
+"
