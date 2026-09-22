@@ -1,6 +1,60 @@
-[gd_scene load_steps=2 format=3 uid="uid://pkdaq78a645p"]
+[gd_scene load_steps=8 format=3 uid="uid://d2ulgv6818nvn"]
 
-[ext_resource type="Script" uid="uid://dello0uq48tap" path="res://assets/UI/deadUI/dead_ui.gd" id="1_2lnrh"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0gda0"]
+bg_color = Color(0.09019608, 0.07058824, 0.078431375, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2901961, 0.16078432, 0.16078432, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 8
+shadow_offset = Vector2(0, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2lnrh"]
+bg_color = Color(0.14117648, 0.09019608, 0.09803922, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dfsk5"]
+bg_color = Color(0.22745098, 0.105882354, 0.105882354, 1)
+border_color = Color(0.8392157, 0.27058825, 0.27058825, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqhuc"]
+bg_color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+border_color = Color(0.64705884, 0.16470589, 0.16470589, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wxmqb"]
+bg_color = Color(0.14117648, 0.09019608, 0.09803922, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vsc4c"]
+bg_color = Color(0.1254902, 0.11372549, 0.1254902, 1)
+border_color = Color(0.70980394, 0.6784314, 0.64705884, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qqann"]
+bg_color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+border_color = Color(0.64705884, 0.16470589, 0.16470589, 1)
 
 [node name="dead_ui" type="Control"]
 layout_mode = 3
@@ -9,33 +63,98 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_2lnrh")
 
 [node name="background" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 82304.0
-offset_bottom = 52224.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 1)
+color = Color(0.03137255, 0.03137255, 0.03137255, 0.78039217)
 
-[node name="retry_button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 31515.0
-offset_top = 32631.0
-offset_right = 47496.0
-offset_bottom = 39176.0
+[node name="dead_panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -215.0
+offset_right = 220.0
+offset_bottom = 215.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0gda0")
+
+[node name="dead_message" type="Label" parent="dead_panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -188.0
+offset_top = 61.0
+offset_right = 184.0
+offset_bottom = 142.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9019608, 0.88235295, 0.8627451, 1)
+theme_override_font_sizes/font_size = 28
+text = "YOUR JOURNEY HAS ENDED
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="divider" type="ColorRect" parent="dead_panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -146.0
+offset_top = -76.0
+offset_right = 154.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2901961, 0.16078432, 0.16078432, 1)
+
+[node name="retry_button" type="Button" parent="dead_panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -111.0
+offset_top = 214.0
+offset_right = 109.0
+offset_bottom = 269.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9019608, 0.88235295, 0.8627451, 1)
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_2lnrh")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dfsk5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dqhuc")
 text = "RETRY
 "
 
-[node name="main_menu_button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 31744.0
-offset_top = 20096.0
-offset_right = 47496.0
-offset_bottom = 26888.0
+[node name="main_menu_button" type="Button" parent="dead_panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.0
+offset_top = 296.0
+offset_right = 110.0
+offset_bottom = 351.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9019608, 0.88235295, 0.8627451, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_wxmqb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vsc4c")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qqann")
 text = "MAIN MENU
 "
