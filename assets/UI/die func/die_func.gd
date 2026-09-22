@@ -22,4 +22,4 @@ func _on_player_died() -> void:
 
 func _on_death_video_finished() -> void:
 	death_video.hide()
-	
+	get_tree().reload_current_scene()

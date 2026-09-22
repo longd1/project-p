@@ -6,6 +6,6 @@ damage = 3
 block_damage_negation = 0.12
 attack_duration = 0.3
 parry_duration = 0.25
-pre_parry_duration = 0.05
+pre_parry_duration = 0.06
 stun_scale = 0.01
 knockback = 5.0

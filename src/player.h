@@ -52,11 +52,14 @@ public:
     int get_attack_damage() const;
     float get_block_damage_negation() const;
 
+    int current_heal_flasks = 0;
+
     void die(bool play_sound = true) override;
 
     void attack();
     void parry();
     void parry_start_up();
+    void heal();
 
 
     void take_damage(int damage, float stun_scale, float knockback, Actor *attacker) override;

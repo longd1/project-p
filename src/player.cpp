@@ -142,6 +142,28 @@ void Player::parry() {
 
 
 
+void Player::heal() {
+    if (current_heal_flasks <= 0) {
+        return;
+    }
+
+
+    Node *global = get_node<Node>(NodePath("/root/Global"));
+    int heal_amount = static_cast<int>(global->get("heal_amount"));
+
+    health += heal_amount;
+
+    if (health > max_health) {
+        health = max_health;
+    }
+
+    current_heal_flasks--;
+
+    UtilityFunctions::print("John healed ", heal_amount, " HP | HP: ", health, "/", max_health, " | Flasks: ", current_heal_flasks);
+}
+
+
+
 void Player::_ready() {
     if (Engine::get_singleton()->is_editor_hint()) {
         return;
@@ -156,6 +178,9 @@ void Player::_ready() {
 
     death_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/DeathSound"));
     effect = get_node<AnimatedSprite2D>(NodePath("effect"));
+
+    Node *global = get_node<Node>(NodePath("/root/Global"));
+    current_heal_flasks = static_cast<int>(global->get("max_heal_flasks"));
 
 
 
@@ -459,6 +484,10 @@ void Player::_physics_process(double delta) {
 
     if (input->is_action_just_pressed("parry")) {
         parry_start_up();
+    }
+
+    if (input->is_action_just_pressed("heal")) {
+    heal();
     }
 
 
