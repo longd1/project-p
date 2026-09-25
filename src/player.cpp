@@ -182,6 +182,8 @@ void Player::_ready() {
     Node *global = get_node<Node>(NodePath("/root/Global"));
     current_heal_flasks = static_cast<int>(global->get("max_heal_flasks"));
 
+    hitbox = get_node<Area2D>(NodePath("hitbox/Area2D"));
+    hitbox_default_position = hitbox->get_position();
 
 
     parry_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/ParrySound"));
@@ -246,7 +248,6 @@ void Player::take_damage(int damage, float stun_scale, float knockback, Actor *a
         effect->play("parry");
         effect->set_frame_and_progress(0, 0.0f);
 
-        UtilityFunctions::print("John parried | Damage taken: 0 | HP: ", health, "/", max_health);
 
         return;
     }
@@ -277,7 +278,6 @@ void Player::take_damage(int damage, float stun_scale, float knockback, Actor *a
         effect->set_frame_and_progress(0, 0.0f);
 
 
-        UtilityFunctions::print("John blocked, took ", final_damage, " damage | HP: ", health, "/", max_health);
     }
 
 
@@ -289,8 +289,6 @@ void Player::take_damage(int damage, float stun_scale, float knockback, Actor *a
         die(true);
         return;
     }
-
-    UtilityFunctions::print("John took ", final_damage, " damage | HP: ", health, "/", max_health);
 
 
     float final_knockback = damage * knockback;
@@ -512,9 +510,15 @@ void Player::_physics_process(double delta) {
 
     if (direction.x < 0) {
         animated_sprite->set_flip_h(true);
+
+        Vector2 hitbox_position = hitbox_default_position;
+        hitbox_position.x = -hitbox_default_position.x;
+        hitbox->set_position(hitbox_position);
     }
     else if (direction.x > 0) {
         animated_sprite->set_flip_h(false);
+
+        hitbox->set_position(hitbox_default_position);
     }
 
 
