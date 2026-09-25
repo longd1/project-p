@@ -1,0 +1,121 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsaysrxayayjb"]
+
+[ext_resource type="Script" uid="uid://bdfvdwatidx4r" path="res://assets/UI/main_menu_ui/options_ui/options_ui.gd" id="1_cjbxj"]
+
+[node name="options_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cjbxj")
+
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12156863, 0.09019608, 0.09803922, 1)
+
+[node name="background_shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="options_title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -245.0
+offset_top = 92.0
+offset_right = 255.0
+offset_bottom = 162.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9098039, 0.84705883, 0.7647059, 1)
+theme_override_font_sizes/font_size = 48
+text = "OPTIONS"
+horizontal_alignment = 1
+
+[node name="title_line" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 458.0
+offset_top = 188.0
+offset_right = 708.0
+offset_bottom = 190.0
+color = Color(0.47843137, 0.14509805, 0.15686275, 1)
+
+[node name="options_content" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 276.0
+offset_right = 884.0
+offset_bottom = 419.0
+
+[node name="volume_row" type="HBoxContainer" parent="options_content"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="volume_text" type="Label" parent="options_content/volume_row"]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84705883, 0.8, 0.7607843, 1)
+theme_override_font_sizes/font_size = 18
+text = "VOLUME
+"
+
+[node name="volume_button" type="OptionButton" parent="options_content/volume_row"]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+alignment = 1
+selected = 1
+item_count = 2
+popup/item_0/text = "OFF"
+popup/item_0/id = 1
+popup/item_0/separator = true
+popup/item_1/text = "ON"
+popup/item_1/id = 0
+popup/item_1/separator = true
+
+[node name="gamemode_row" type="HBoxContainer" parent="options_content"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="gamemode_text" type="Label" parent="options_content/gamemode_row"]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.84705883, 0.8, 0.7607843, 1)
+theme_override_font_sizes/font_size = 18
+text = "GAME MODE
+"
+
+[node name="gamemode_button" type="OptionButton" parent="options_content/gamemode_row"]
+custom_minimum_size = Vector2(180, 45)
+layout_mode = 2
+alignment = 1
+selected = 1
+item_count = 3
+popup/item_0/text = "EASY"
+popup/item_0/id = 1
+popup/item_0/separator = true
+popup/item_1/text = "NORMAL"
+popup/item_1/id = 0
+popup/item_1/separator = true
+popup/item_2/text = "HARD"
+popup/item_2/id = 2
+popup/item_2/separator = true
+
+[node name="back_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 570.0
+offset_right = 105.0
+offset_bottom = 617.0
+text = "←"

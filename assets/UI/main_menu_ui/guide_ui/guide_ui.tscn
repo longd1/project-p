@@ -1,0 +1,205 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcqyyiu31wqs"]
+
+[ext_resource type="Script" uid="uid://bemthft1ku3tk" path="res://assets/UI/main_menu_ui/guide_ui/guide_ui.gd" id="1_iftrf"]
+
+[node name="guide_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iftrf")
+
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.043137256, 0.03529412, 0.039215688, 1)
+
+[node name="background_shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="guide_title" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -149.0
+offset_top = 54.0
+offset_right = 175.0
+offset_bottom = 191.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.9098039, 0.84705883, 0.7647059, 1)
+theme_override_font_sizes/font_size = 48
+text = "HOW TO PLAY
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="title_line" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 150.0
+offset_right = 766.0
+offset_bottom = 152.0
+color = Color(0.41960785, 0.1882353, 0.1882353, 1)
+
+[node name="guide_content" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -153.0
+offset_top = -120.0
+offset_right = 347.0
+offset_bottom = 437.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="movement_group" type="VBoxContainer" parent="guide_content"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_constants/separation = -35
+
+[node name="movement_title" type="Label" parent="guide_content/movement_group"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7058824, 0.2784314, 0.2784314, 1)
+theme_override_font_sizes/font_size = 18
+text = "MOVEMENT
+"
+
+[node name="w_row" type="HBoxContainer" parent="guide_content/movement_group"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="w_key" type="Label" parent="guide_content/movement_group/w_row"]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.84705883, 0.7647059, 1)
+text = "W"
+
+[node name="w_text" type="Label" parent="guide_content/movement_group/w_row"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78431374, 0.7647059, 0.74509805, 1)
+text = "
+           MOVE UP
+"
+
+[node name="a_row" type="HBoxContainer" parent="guide_content/movement_group"]
+layout_mode = 2
+
+[node name="a_key" type="Label" parent="guide_content/movement_group/a_row"]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.84705883, 0.7647059, 1)
+text = "A"
+
+[node name="a_text" type="Label" parent="guide_content/movement_group/a_row"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78431374, 0.7647059, 0.74509805, 1)
+text = "               
+               MOVE LEFT
+"
+
+[node name="s_row" type="HBoxContainer" parent="guide_content/movement_group"]
+layout_mode = 2
+
+[node name="s_key" type="Label" parent="guide_content/movement_group/s_row"]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.84705883, 0.7647059, 1)
+text = "S"
+
+[node name="a_text" type="Label" parent="guide_content/movement_group/s_row"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78431374, 0.7647059, 0.74509805, 1)
+text = "               
+               MOVE DOWN
+"
+
+[node name="d_row" type="HBoxContainer" parent="guide_content/movement_group"]
+layout_mode = 2
+
+[node name="d_key" type="Label" parent="guide_content/movement_group/d_row"]
+custom_minimum_size = Vector2(70, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.84705883, 0.7647059, 1)
+text = "D"
+
+[node name="d_text" type="Label" parent="guide_content/movement_group/d_row"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78431374, 0.7647059, 0.74509805, 1)
+text = "               
+               MOVE RIGHT
+"
+
+[node name="combat_group" type="VBoxContainer" parent="guide_content"]
+layout_mode = 2
+theme_override_constants/separation = -10
+
+[node name="combat_title" type="Label" parent="guide_content/combat_group"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7058824, 0.2784314, 0.2784314, 1)
+theme_override_font_sizes/font_size = 18
+text = "COMBAT
+"
+
+[node name="attack_row" type="HBoxContainer" parent="guide_content/combat_group"]
+layout_mode = 2
+
+[node name="attack_key" type="Label" parent="guide_content/combat_group/attack_row"]
+custom_minimum_size = Vector2(40, 25)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.84705883, 0.7647059, 1)
+text = "LEFT CLICK"
+
+[node name="attack_text" type="Label" parent="guide_content/combat_group/attack_row"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78431374, 0.7647059, 0.74509805, 1)
+text = "          DEAL DAMAGE"
+
+[node name="defense_row" type="HBoxContainer" parent="guide_content/combat_group"]
+layout_mode = 2
+
+[node name="defense_key" type="Label" parent="guide_content/combat_group/defense_row"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9098039, 0.84705883, 0.7647059, 1)
+text = "
+RIGHT CLICK"
+
+[node name="defense_text" type="Label" parent="guide_content/combat_group/defense_row"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78431374, 0.7647059, 0.74509805, 1)
+text = "      
+       PARRY/ BLOCK"
+
+[node name="parry_info" type="Label" parent="guide_content/combat_group"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.56078434, 0.53333336, 0.50980395, 1)
+theme_override_font_sizes/font_size = 14
+text = "
+FIRST 0.2s → PARRY
+THEN → BLOCK"
+
+[node name="back_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 570.0
+offset_right = 105.0
+offset_bottom = 617.0
+theme_override_colors/font_color = Color(0.9098039, 0.84705883, 0.7647059, 1)
+theme_override_font_sizes/font_size = 28
+text = "←"
