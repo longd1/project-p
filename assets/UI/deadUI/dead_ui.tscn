@@ -68,6 +68,7 @@ grow_vertical = 2
 script = ExtResource("1_2lnrh")
 
 [node name="background" type="ColorRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.61960787)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

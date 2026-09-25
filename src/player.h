@@ -24,6 +24,7 @@ private:
     float parry_timer = 0.0f;
     float stun_timer = 0.0f;
     Vector2 knockback_velocity = Vector2(0, 0);
+    Vector2 hitbox_default_position;
 
 
     AnimatedSprite2D *animated_sprite = nullptr;
