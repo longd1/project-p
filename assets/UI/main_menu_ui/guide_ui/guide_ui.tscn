@@ -186,14 +186,6 @@ theme_override_colors/font_color = Color(0.78431374, 0.7647059, 0.74509805, 1)
 text = "      
        PARRY/ BLOCK"
 
-[node name="parry_info" type="Label" parent="guide_content/combat_group"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.56078434, 0.53333336, 0.50980395, 1)
-theme_override_font_sizes/font_size = 14
-text = "
-FIRST 0.2s → PARRY
-THEN → BLOCK"
-
 [node name="back_button" type="Button" parent="."]
 layout_mode = 0
 offset_left = 45.0
