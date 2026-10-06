@@ -47,7 +47,6 @@ void Actor::stun() {
 
     combat_state = CombatState::STUNNED;
 
-    UtilityFunctions::print("Actor stunned!");
 }
 
 
