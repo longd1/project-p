@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=3 uid="uid://ddmejry2s178n"]
+[gd_scene load_steps=115 format=3 uid="uid://ddmejry2s178n"]
 
 [ext_resource type="Texture2D" uid="uid://b3je47bl3sjjw" path="res://assets/character/mini boss/op knight/2D_SL_Knight_v1.0/Attacks.png" id="1_uygd6"]
 [ext_resource type="Texture2D" uid="uid://qoo104nij0lr" path="res://assets/character/mini boss/op knight/2D_SL_Knight_v1.0/Hurt.png" id="2_2bphn"]
@@ -678,6 +678,12 @@ animations = [{
 "texture": SubResource("AtlasTexture_ml70l")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ml70l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kgf86")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_kgf86")
 }, {
 "duration": 1.0,
@@ -766,7 +772,13 @@ height = 48.0
 size = Vector2(32, 39.333336)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fe4wr"]
-size = Vector2(28.400007, 14.000002)
+size = Vector2(30.400005, 28.800003)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kf3ne"]
+size = Vector2(42.4, 34.799995)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1yqp"]
+size = Vector2(73.60001, 30.000004)
 
 [node name="MiniBoss" type="MiniBoss"]
 move_speed = 92.0
@@ -778,7 +790,7 @@ attack_stun_scale = 0.05
 attack_knockback = 20.0
 attack_cooldown = 0.8
 slide_speed = 150.0
-slide_stun_scale = 0.1
+slide_stun_scale = 0.03
 scale = Vector2(1.25, 1.25)
 motion_mode = 1
 
@@ -790,8 +802,10 @@ shape = SubResource("CapsuleShape2D_txvr7")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_knom6")
-animation = &"idle"
+animation = &"slide"
 autoplay = "idle"
+frame = 4
+frame_progress = 0.0806796
 
 [node name="hurtbox" type="Node2D" parent="."]
 visible = false
@@ -817,13 +831,38 @@ collision_mask = 8
 shape = SubResource("RectangleShape2D_pbc0d")
 
 [node name="slide_hitbox" type="Node2D" parent="."]
-visible = false
 
 [node name="Area2D" type="Area2D" parent="slide_hitbox"]
 collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="slide_hitbox/Area2D"]
-position = Vector2(16.999998, -6.599999)
+position = Vector2(15.999996, -11.199996)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_fe4wr")
+
+[node name="skill1_hitbox" type="Node2D" parent="."]
+visible = false
+
+[node name="Area2D" type="Area2D" parent="skill1_hitbox"]
+position = Vector2(31.999998, -25.599998)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="skill1_hitbox/Area2D"]
+position = Vector2(-4.39999, 7.3999977)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_kf3ne")
+
+[node name="skill2_hitbox" type="Node2D" parent="."]
+visible = false
+
+[node name="Area2D" type="Area2D" parent="skill2_hitbox"]
+position = Vector2(0.79999995, -10.4)
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="skill2_hitbox/Area2D"]
+position = Vector2(-1.5999997, 5.0000005)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_k1yqp")

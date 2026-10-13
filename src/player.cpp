@@ -26,6 +26,7 @@ Player::~Player() {
 void Player::_bind_methods() {
 
     ADD_SIGNAL(MethodInfo("died"));
+    ADD_SIGNAL(MethodInfo("normal_attack_started", PropertyInfo(Variant::BOOL, "facing_left")));
 
     ClassDB::bind_method(D_METHOD("set_current_weapon", "weapon"), &Player::set_current_weapon);
     ClassDB::bind_method(D_METHOD("get_current_weapon"), &Player::get_current_weapon);
@@ -72,6 +73,7 @@ float Player::get_block_damage_negation() const {
 
 
 void Player::attack() {
+    if (health <= 0) return;
     if (combat_state != CombatState::IDLE) {
         return;
     }
@@ -101,6 +103,7 @@ void Player::attack() {
     animated_sprite->play("attack");
     animated_sprite->set_frame_and_progress(0, 0.0f);
 
+    emit_signal("normal_attack_started", animated_sprite->is_flipped_h());
     hitbox->set_monitoring(true);
 }
 
@@ -202,8 +205,8 @@ void Player::_ready() {
 }
 
 void Player::die(bool play_sound) {
-    hitbox->set_monitoring(false);
-    hurtbox->set_monitorable(false);
+    hitbox->set_deferred("monitoring", false);
+    hurtbox->set_deferred("monitorable", false);
 
     set_velocity(Vector2(0, 0));
     set_physics_process(false);
@@ -223,6 +226,7 @@ void Player::die(bool play_sound) {
 }
 
 void Player::take_damage(int damage, float stun_scale, float knockback, Actor *attacker) {
+    if (health <= 0) return;
     Vector2 knockback_direction = (get_global_position() - attacker->get_global_position()).normalized();
 
 
@@ -508,14 +512,14 @@ void Player::_physics_process(double delta) {
     }
 
 
-    if (direction.x < 0) {
+    if (combat_state != CombatState::ATTACKING && direction.x < 0) {
         animated_sprite->set_flip_h(true);
 
         Vector2 hitbox_position = hitbox_default_position;
         hitbox_position.x = -hitbox_default_position.x;
         hitbox->set_position(hitbox_position);
     }
-    else if (direction.x > 0) {
+    else if (combat_state != CombatState::ATTACKING && direction.x > 0) {
         animated_sprite->set_flip_h(false);
 
         hitbox->set_position(hitbox_default_position);

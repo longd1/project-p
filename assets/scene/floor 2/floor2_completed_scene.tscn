@@ -241,9 +241,10 @@ zoom = Vector2(2, 2)
 
 [node name="Player" parent="." instance=ExtResource("1_npn6c")]
 z_index = 5
-position = Vector2(18, -2)
+position = Vector2(0, 26)
 
 [node name="MiniBoss" parent="." instance=ExtResource("2_y87st")]
+attack_cooldown = 1.0
 z_index = 5
 position = Vector2(88, 0)
 
