@@ -1,7 +1,7 @@
 #include "register_types.h"
 #include "actor.h"
 #include "player.h"
-//#include "enemy.h"
+#include "enemy.h"
 #include "weapon_data.h"
 #include "mini_boss.h"
 
@@ -22,7 +22,7 @@ void initialize_projectp_module(ModuleInitializationLevel p_level) {
     GDREGISTER_CLASS(Player);
     GDREGISTER_CLASS(WeaponData);
     GDREGISTER_CLASS(MiniBoss);
-    //GDREGISTER_CLASS(Enemy);
+    GDREGISTER_CLASS(Enemy);
 }
 
 void uninitialize_projectp_module(ModuleInitializationLevel p_level) {
