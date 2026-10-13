@@ -422,7 +422,7 @@ animations = [{
 "speed": 20.0
 }]
 
-[node name="Player" type="Player"]
+[node name="Player" type="Player" groups=["player"]]
 current_weapon = ExtResource("1_8p5rd")
 scale = Vector2(0.75, 0.75)
 motion_mode = 1

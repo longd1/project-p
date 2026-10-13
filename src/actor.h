@@ -20,13 +20,20 @@ protected:
     // ==========================================
 
     enum class CombatState {
-        IDLE,
-        ATTACKING,
-        PARRY_START_UP,
-        PARRYING,
-        BLOCKING,
-        STUNNED
-    };
+    IDLE,
+    MOVING,
+    ATTACKING,
+    SLIDING,
+    ROLLING,
+    USING_SKILL_1,
+    USING_SKILL_2,
+    BUFFING,
+    HEALING,
+    PARRY_START_UP,
+    PARRYING,
+    BLOCKING,
+    STUNNED
+};
 
     CombatState combat_state = CombatState::IDLE;
 
@@ -38,7 +45,6 @@ public:
     Actor();
     ~Actor();
 
-    void take_damage(int damage);
     virtual void die(bool play_sound);
 
     int get_health() const;
