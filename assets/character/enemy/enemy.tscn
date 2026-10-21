@@ -7,8 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://c1831q18rmknu" path="res://assets/character/enemy/swordSlash1.mp3" id="6_kaaam"]
 [ext_resource type="Texture2D" uid="uid://by58ehukp6lp1" path="res://assets/character/enemy/Knight 2D Pixel Art/Knight 2D Pixel Art/Sprites/without_outline/RUN.png" id="7_y4wys"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bmgq7"]
-size = Vector2(24, 29)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kaaam"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fslgt"]
 atlas = ExtResource("3_wcpsg")
@@ -298,10 +297,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jytxa"]
-size = Vector2(23, 33.5)
+size = Vector2(19, 29)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k482i"]
-size = Vector2(22, 31)
+size = Vector2(38, 51)
 
 [sub_resource type="GDScript" id="GDScript_kaaam"]
 script/source = "extends AudioStreamPlayer2D
@@ -318,12 +317,14 @@ func _ready() -> void:
 [node name="Enemy" type="Enemy"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(24, 2.5)
-shape = SubResource("RectangleShape2D_bmgq7")
+visible = false
+position = Vector2(1, 5)
+shape = SubResource("CapsuleShape2D_kaaam")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_45vim")
 animation = &"attack"
+frame = 2
 
 [node name="hurtbox" type="Node2D" parent="."]
 
@@ -333,7 +334,7 @@ collision_mask = 0
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox/Area2D"]
-position = Vector2(-1.5, 1.75)
+position = Vector2(1.5, 4.5)
 shape = SubResource("RectangleShape2D_jytxa")
 
 [node name="hitbox" type="Node2D" parent="."]
@@ -344,7 +345,7 @@ collision_mask = 8
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox/Area2D"]
-position = Vector2(23, 3.5)
+position = Vector2(15, -1.5)
 shape = SubResource("RectangleShape2D_k482i")
 
 [node name="sound" type="Node2D" parent="."]

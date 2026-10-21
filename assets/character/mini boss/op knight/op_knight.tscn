@@ -769,16 +769,16 @@ radius = 11.333333
 height = 48.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbc0d"]
-size = Vector2(32, 39.333336)
+size = Vector2(35.467003, 55.333664)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fe4wr"]
-size = Vector2(30.400005, 28.800003)
+size = Vector2(30.400011, 33.6)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kf3ne"]
-size = Vector2(42.4, 34.799995)
+size = Vector2(49.60001, 56.80001)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k1yqp"]
-size = Vector2(73.60001, 30.000004)
+size = Vector2(76.000015, 40.000008)
 
 [node name="MiniBoss" type="MiniBoss"]
 move_speed = 92.0
@@ -802,10 +802,9 @@ shape = SubResource("CapsuleShape2D_txvr7")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, -32)
 sprite_frames = SubResource("SpriteFrames_knom6")
-animation = &"slide"
+animation = &"skill_2"
 autoplay = "idle"
-frame = 4
-frame_progress = 0.0806796
+frame = 3
 
 [node name="hurtbox" type="Node2D" parent="."]
 visible = false
@@ -828,16 +827,19 @@ collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox/Area2D"]
+position = Vector2(1.7335014, 8.000159)
+scale = Vector2(0.9999998, 0.9999998)
 shape = SubResource("RectangleShape2D_pbc0d")
 
 [node name="slide_hitbox" type="Node2D" parent="."]
+visible = false
 
 [node name="Area2D" type="Area2D" parent="slide_hitbox"]
 collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="slide_hitbox/Area2D"]
-position = Vector2(15.999996, -11.199996)
+position = Vector2(15.999993, -8.799994)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_fe4wr")
 
@@ -850,12 +852,11 @@ collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="skill1_hitbox/Area2D"]
-position = Vector2(-4.39999, 7.3999977)
+position = Vector2(-7.9999905, 8.399998)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_kf3ne")
 
 [node name="skill2_hitbox" type="Node2D" parent="."]
-visible = false
 
 [node name="Area2D" type="Area2D" parent="skill2_hitbox"]
 position = Vector2(0.79999995, -10.4)
@@ -863,6 +864,6 @@ collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="skill2_hitbox/Area2D"]
-position = Vector2(-1.5999997, 5.0000005)
+position = Vector2(-1.1999977, 3.1999998)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_k1yqp")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://dce4wnljonjk3"]
+[gd_scene load_steps=23 format=4 uid="uid://dce4wnljonjk3"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_npn6c"]
 [ext_resource type="PackedScene" uid="uid://bn7s43o6xjhqy" path="res://assets/UI/HUD/hud.tscn" id="1_qsod8"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://dkudub72whd2k" path="res://assets/scene/floor 2/room_2_to_room_3.gd" id="9_rcbkj"]
 [ext_resource type="Script" uid="uid://dib2pj5q5ea3j" path="res://assets/scene/floor 2/room_3_to_room_2.gd" id="10_ojx5a"]
 [ext_resource type="PackedScene" uid="uid://cexmoautbah14" path="res://assets/UI/die func/die_func.tscn" id="12_6j0en"]
+[ext_resource type="PackedScene" uid="uid://cmp4w2q5j3gsy" path="res://assets/character/enemy/enemy.tscn" id="14_o7luv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_ipiuj")
@@ -341,6 +342,9 @@ position = Vector2(-1189, 599)
 
 [node name="CanvasLayer" parent="." instance=ExtResource("12_6j0en")]
 video_delay = 0.8
+
+[node name="Enemy" parent="." instance=ExtResource("14_o7luv")]
+position = Vector2(-1632, -159)
 
 [connection signal="body_entered" from="doom area" to="doom area" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/centre_to_room2" to="tp_portal/centre_to_room2" method="_on_body_entered"]
