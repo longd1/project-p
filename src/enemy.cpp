@@ -166,25 +166,20 @@ void Enemy::find_target() {
 }
 
 void Enemy::update_facing(float direction_x) {
-    if (animated_sprite == nullptr) {
-        return;
-    }
+    if (animated_sprite == nullptr || direction_x == 0.0f) return;
 
-    if (direction_x < 0.0f) {
-        animated_sprite->set_flip_h(true);
-    } else if (direction_x > 0.0f) {
-        animated_sprite->set_flip_h(false);
-    }
+    bool face_left = direction_x < 0.0f;
 
-    // Chỉ cập nhật hitbox nếu node tồn tại.
+    animated_sprite->set_flip_h(face_left);
+
     if (hitbox != nullptr) {
         Vector2 position = hitbox_default_position;
-
-        if (direction_x < 0.0f) {
-            position.x = -hitbox_default_position.x;
-        }
-
+        if (face_left) position.x = -position.x;
         hitbox->set_position(position);
+
+        Vector2 scale = hitbox->get_scale();
+        scale.x = Math::abs(scale.x) * (face_left ? -1.0f : 1.0f);
+        hitbox->set_scale(scale);
     }
 }
 
@@ -321,10 +316,10 @@ void Enemy::update_attack() {
     }
 
     const int frame = animated_sprite->get_frame();
-    const bool hit_window = (frame >= 2 && frame <= 3);
+    const bool hit_window = (frame >= 4 && frame <= 5);
 
     // Phát tiếng chém một lần trong mỗi đòn đánh.
-    if (frame >= 2 && !attack_sound_played) {
+    if (frame >= 4 && !attack_sound_played) {
         if (sword_slash_sound != nullptr &&
             sword_slash_sound->get_stream().is_valid()) {
             sword_slash_sound->play();
