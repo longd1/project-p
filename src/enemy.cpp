@@ -12,6 +12,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/variant/vector2.hpp>
 #include <godot_cpp/classes/audio_stream_player2d.hpp>
+#include <godot_cpp/classes/audio_stream.hpp>
 
 using namespace godot;
 
@@ -36,6 +37,26 @@ void Enemy::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_close_range", "value"), &Enemy::set_close_range);
     ClassDB::bind_method(D_METHOD("get_close_range"), &Enemy::get_close_range);
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "close_range", PROPERTY_HINT_RANGE, "0,1000,1"), "set_close_range", "get_close_range");
+
+    ClassDB::bind_method(
+    D_METHOD("set_attack_y_tolerance", "value"),
+    &Enemy::set_attack_y_tolerance
+    );
+    ClassDB::bind_method(
+    D_METHOD("get_attack_y_tolerance"),
+    &Enemy::get_attack_y_tolerance
+    );
+
+    ADD_PROPERTY(
+    PropertyInfo(
+        Variant::FLOAT,
+        "attack_y_tolerance",
+        PROPERTY_HINT_RANGE,
+        "0,200,1"
+    ),
+    "set_attack_y_tolerance",
+    "get_attack_y_tolerance"
+    );
 
     ClassDB::bind_method(D_METHOD("set_max_health", "value"), &Enemy::set_max_health);
     ClassDB::bind_method(D_METHOD("get_max_health"), &Enemy::get_max_health);
@@ -107,6 +128,30 @@ void Enemy::_ready() {
         animated_sprite->set_speed_scale(1.0f);
         animated_sprite->play("idle");
     }
+
+    if (animated_sprite == nullptr) {
+        UtilityFunctions::push_warning(
+        "Enemy: AnimatedSprite2D not found."
+        );
+    }
+
+    if (hitbox == nullptr) {
+        UtilityFunctions::push_warning(
+        "Enemy: hitbox/Area2D not found."
+        );
+    }
+
+    if (hurtbox == nullptr) {
+        UtilityFunctions::push_warning(
+        "Enemy: hurtbox/Area2D not found."
+        );
+    }
+
+    if (sword_slash_sound == nullptr) {
+        UtilityFunctions::push_warning(
+        "Enemy: sound/swordsplash not found."
+        );
+    }
 }
 
 
@@ -121,24 +166,37 @@ void Enemy::find_target() {
 }
 
 void Enemy::update_facing(float direction_x) {
-    if (animated_sprite == nullptr || hitbox == nullptr) {
+    if (animated_sprite == nullptr) {
         return;
     }
 
     if (direction_x < 0.0f) {
         animated_sprite->set_flip_h(true);
-        Vector2 position = hitbox_default_position;
-        position.x = -hitbox_default_position.x;
-        hitbox->set_position(position);
     } else if (direction_x > 0.0f) {
         animated_sprite->set_flip_h(false);
-        hitbox->set_position(hitbox_default_position);
+    }
+
+    // Chỉ cập nhật hitbox nếu node tồn tại.
+    if (hitbox != nullptr) {
+        Vector2 position = hitbox_default_position;
+
+        if (direction_x < 0.0f) {
+            position.x = -hitbox_default_position.x;
+        }
+
+        hitbox->set_position(position);
     }
 }
 
 void Enemy::attack() {
-    if (health <= 0 || combat_state == CombatState::ATTACKING ||
-        combat_state == CombatState::STUNNED || attack_cooldown_timer > 0.0f) {
+    if (health <= 0 ||
+        combat_state == CombatState::ATTACKING ||
+        combat_state == CombatState::STUNNED ||
+        attack_cooldown_timer > 0.0f) {
+        return;
+    }
+
+    if (animated_sprite == nullptr) {
         return;
     }
 
@@ -146,16 +204,17 @@ void Enemy::attack() {
     attack_has_hit = false;
     attack_sound_played = false;
 
+    set_velocity(Vector2());
+
+    // Theo dõi overlap từ đầu animation.
     if (hitbox != nullptr) {
-        hitbox->set_monitoring(false);
+        hitbox->set_monitoring(true);
     }
 
-    if (animated_sprite != nullptr) {
-        animated_sprite->stop();
-        animated_sprite->set_speed_scale(1.0f);
-        animated_sprite->play("attack");
-        animated_sprite->set_frame_and_progress(0, 0.0f);
-    }
+    animated_sprite->stop();
+    animated_sprite->set_speed_scale(1.0f);
+    animated_sprite->play("attack");
+    animated_sprite->set_frame_and_progress(0, 0.0f);
 }
 
 void Enemy::update_ai(double delta) {
@@ -164,6 +223,27 @@ void Enemy::update_ai(double delta) {
     }
 
     find_target();
+
+    // Xử lý stun trước khi kiểm tra target.
+   // Enemy vẫn phải hồi stun kể cả khi Player bị xóa khỏi scene.
+    if (combat_state == CombatState::STUNNED) {
+        stun_timer -= static_cast<float>(delta);
+
+        set_velocity(knockback_velocity);
+
+    if (stun_timer <= 0.0f) {
+        stun_timer = 0.0f;
+        combat_state = CombatState::IDLE;
+        set_velocity(Vector2());
+
+        if (animated_sprite != nullptr) {
+            animated_sprite->set_speed_scale(1.0f);
+            animated_sprite->play("idle");
+        }
+    }
+
+    return;
+}
 
     if (target == nullptr) {
         combat_state = CombatState::IDLE;
@@ -174,26 +254,15 @@ void Enemy::update_ai(double delta) {
         return;
     }
 
-    const Vector2 boss_position = get_global_position();
+    const Vector2 enemy_position = get_global_position();
     const Vector2 player_position = target->get_global_position();
-    const float distance = boss_position.distance_to(player_position);
-    const float direction_x = player_position.x - boss_position.x;
 
-    update_facing(direction_x);
+    const float delta_x = player_position.x - enemy_position.x;
+    const float delta_y = player_position.y - enemy_position.y;
 
-    if (combat_state == CombatState::STUNNED) {
-        stun_timer -= static_cast<float>(delta);
-        set_velocity(knockback_velocity);
-        if (stun_timer <= 0.0f) {
-            stun_timer = 0.0f;
-            combat_state = CombatState::IDLE;
-            if (animated_sprite != nullptr) {
-                animated_sprite->set_speed_scale(1.0f);
-                animated_sprite->play("idle");
-            }
-        }
-        return;
-    }
+    const float distance = enemy_position.distance_to(player_position);
+
+    update_facing(delta_x);
 
     if (combat_state == CombatState::ATTACKING) {
         set_velocity(Vector2());
@@ -210,19 +279,28 @@ void Enemy::update_ai(double delta) {
         return;
     }
 
-    if (distance <= close_range) {
-        set_velocity(Vector2());
-        if (attack_cooldown_timer <= 0.0f) {
-            attack();
+    const bool in_attack_range =
+    Math::abs(delta_x) <= close_range &&
+    Math::abs(delta_y) <= attack_y_tolerance;
+
+    if (in_attack_range) {
+       set_velocity(Vector2());
+
+       if (attack_cooldown_timer <= 0.0f) {
+           attack();
         } else if (animated_sprite != nullptr &&
-                   animated_sprite->get_animation() != StringName("idle")) {
-            animated_sprite->play("idle");
+               animated_sprite->get_animation() != StringName("idle")) {
+               animated_sprite->set_speed_scale(1.0f);
+               animated_sprite->play("idle");
         }
-        return;
+
+       return;
     }
 
     combat_state = CombatState::MOVING;
-    Vector2 direction = (player_position - boss_position).normalized();
+
+    Vector2 direction = (player_position - enemy_position).normalized();
+
     set_velocity(direction * move_speed);
 
     if (animated_sprite != nullptr && animated_sprite->get_animation() != StringName("run")) {
@@ -233,41 +311,60 @@ void Enemy::update_ai(double delta) {
 
 void Enemy::update_attack() {
     if (animated_sprite == nullptr || hitbox == nullptr) {
+        if (hitbox != nullptr) {
+            hitbox->set_monitoring(false);
+        }
+
         combat_state = CombatState::IDLE;
         attack_cooldown_timer = attack_cooldown;
         return;
     }
 
-    // Gây sát thương một lần trong khung hình 2–3 của animation attack.
     const int frame = animated_sprite->get_frame();
-    const bool hit_window = frame >= 2 && frame <= 3;
+    const bool hit_window = (frame >= 2 && frame <= 3);
 
-    // Phát tiếng chém khi bắt đầu vung kiếm.
+    // Phát tiếng chém một lần trong mỗi đòn đánh.
     if (frame >= 2 && !attack_sound_played) {
-        if (sword_slash_sound != nullptr) {
-           sword_slash_sound->play();
+        if (sword_slash_sound != nullptr &&
+            sword_slash_sound->get_stream().is_valid()) {
+            sword_slash_sound->play();
+        } else {
+            UtilityFunctions::push_warning(
+                "Enemy: sword slash sound node/stream is missing."
+            );
         }
 
-       attack_sound_played = true;
-   }
-    if (hit_window && !attack_has_hit) {
-        hitbox->set_monitoring(true);
+        attack_sound_played = true;
+    }
+
+    // Chỉ gây sát thương trong hit window.
+    if (hit_window && !attack_has_hit && target != nullptr) {
         TypedArray<Area2D> areas = hitbox->get_overlapping_areas();
 
         for (int i = 0; i < areas.size(); ++i) {
             Area2D *area = Object::cast_to<Area2D>(areas[i]);
+
             if (area == nullptr) {
                 continue;
             }
 
             Node *node = area;
+
             while (node != nullptr) {
                 Actor *actor = Object::cast_to<Actor>(node);
-                if (actor != nullptr && actor != this) {
-                    actor->take_damage(attack_damage, attack_stun_scale, attack_knockback, this);
+
+                if (actor == target && actor != this) {
+                    actor->take_damage(
+                        attack_damage,
+                        attack_stun_scale,
+                        attack_knockback,
+                        this
+                    );
+
                     attack_has_hit = true;
                     break;
                 }
+
                 node = node->get_parent();
             }
 
@@ -275,14 +372,15 @@ void Enemy::update_attack() {
                 break;
             }
         }
-    } else if (!hit_window) {
-        hitbox->set_monitoring(false);
     }
 
+    // Chỉ tắt hitbox khi animation thực sự kết thúc.
     if (!animated_sprite->is_playing()) {
         hitbox->set_monitoring(false);
+
         combat_state = CombatState::IDLE;
         attack_cooldown_timer = attack_cooldown;
+
         animated_sprite->set_speed_scale(1.0f);
         animated_sprite->play("idle");
     }
@@ -302,14 +400,23 @@ void Enemy::_physics_process(double delta) {
 
     update_ai(delta);
 
-    if (knockback_velocity.length() > 0.0f) {
-        knockback_velocity = knockback_velocity.move_toward(Vector2(), 500.0f * static_cast<float>(delta));
-        if (knockback_velocity.length() < 1.0f) {
-            knockback_velocity = Vector2();
-        }
+    // Khi không bị stun, cộng knockback vào vận tốc AI.
+    // Khi bị stun, update_ai() đã đặt velocity = knockback_velocity.
+    if (combat_state != CombatState::STUNNED &&
+        knockback_velocity.length() > 0.0f) {
+        set_velocity(get_velocity() + knockback_velocity);
     }
 
     move_and_slide();
+
+    // Giảm knockback sau khi đã sử dụng nó để di chuyển.
+    if (knockback_velocity.length() > 0.0f) {
+        knockback_velocity = knockback_velocity.move_toward(Vector2(), 500.0f * static_cast<float>(delta));
+
+    if (knockback_velocity.length() < 1.0f) {
+        knockback_velocity = Vector2();
+        }
+    }
 }
 
 void Enemy::take_damage(int damage, float stun_scale, float knockback, Actor *attacker) {
@@ -414,3 +521,11 @@ float Enemy::get_stun_negation() const { return stun_negation; }
 
 void Enemy::set_knockback_negation(float value) { knockback_negation = CLAMP(value, 0.0f, 1.0f); }
 float Enemy::get_knockback_negation() const { return knockback_negation; }
+
+void Enemy::set_attack_y_tolerance(float value) {
+    attack_y_tolerance = MAX(0.0f, value);
+}
+
+float Enemy::get_attack_y_tolerance() const {
+    return attack_y_tolerance;
+}

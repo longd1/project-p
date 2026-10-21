@@ -18,6 +18,7 @@ private:
     // Các thuộc tính có thể chỉnh trong Inspector.
     float detection_range = 300.0f;
     float close_range = 80.0f;
+    float attack_y_tolerance = 24.0f;
     int attack_damage = 15;
     float attack_stun_scale = 0.1f;
     float attack_knockback = 15.0f;
@@ -73,6 +74,9 @@ public:
     void set_close_range(float value);
     float get_close_range() const;
 
+    void set_attack_y_tolerance(float value);
+    float get_attack_y_tolerance() const;
+    
     void set_max_health(int value);
     int get_max_health() const;
 
