@@ -89,7 +89,7 @@ void Enemy::_ready() {
     );
 
     sword_slash_sound = Object::cast_to<AudioStreamPlayer2D>(
-    get_node_or_null(NodePath("sound/swordslash"))
+        get_node_or_null(NodePath("sound/swordslash"))
     );
 
     body_collision = Object::cast_to<CollisionShape2D>(

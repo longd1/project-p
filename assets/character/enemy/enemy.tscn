@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://cmp4w2q5j3gsy"]
+[gd_scene load_steps=49 format=3 uid="uid://cmp4w2q5j3gsy"]
 
 [ext_resource type="Texture2D" uid="uid://dhiffjmma2ik1" path="res://assets/character/enemy/Knight 2D Pixel Art/Knight 2D Pixel Art/Sprites/without_outline/IDLE.png" id="1_45br6"]
 [ext_resource type="Texture2D" uid="uid://vdnijkhloar2" path="res://assets/character/enemy/Knight 2D Pixel Art/Knight 2D Pixel Art/Sprites/without_outline/ATTACK 3.png" id="3_wcpsg"]
@@ -303,6 +303,18 @@ size = Vector2(23, 33.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k482i"]
 size = Vector2(22, 31)
 
+[sub_resource type="GDScript" id="GDScript_kaaam"]
+script/source = "extends AudioStreamPlayer2D
+
+func _ready() -> void:
+	if stream == null:
+		push_error(\"Chưa gán file âm thanh vào Stream!\")
+		return
+
+	play()
+	print(\"Đang thử phát âm thanh chém kiếm\")
+"
+
 [node name="Enemy" type="Enemy"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -312,8 +324,6 @@ shape = SubResource("RectangleShape2D_bmgq7")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_45vim")
 animation = &"attack"
-frame = 5
-frame_progress = 1.0
 
 [node name="hurtbox" type="Node2D" parent="."]
 
@@ -341,3 +351,4 @@ shape = SubResource("RectangleShape2D_k482i")
 
 [node name="swordslash" type="AudioStreamPlayer2D" parent="sound"]
 stream = ExtResource("6_kaaam")
+script = SubResource("GDScript_kaaam")

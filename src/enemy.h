@@ -5,7 +5,9 @@
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/area2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
+#include <godot_cpp/classes/audio_stream_player2d.hpp>
 #include <godot_cpp/variant/vector2.hpp>
+
 
 namespace godot {
 
@@ -24,12 +26,15 @@ private:
     float stun_negation = 0.5f;
     float knockback_negation = 0.5f;
 
+
     // Dữ liệu cần thiết khi chạy AI.
     Actor *target = nullptr;
     AnimatedSprite2D *animated_sprite = nullptr;
     Area2D *hitbox = nullptr;
     Area2D *hurtbox = nullptr;
     CollisionShape2D *body_collision = nullptr;
+    AudioStreamPlayer2D *sword_slash_sound = nullptr;
+    bool attack_sound_played = false;
 
     Vector2 hitbox_default_position = Vector2(0, 0);
     Vector2 knockback_velocity = Vector2(0, 0);
