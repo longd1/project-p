@@ -1,4 +1,4 @@
-#include "Enemy.h"
+#include "enemy.h"
 
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/area2d.hpp>
@@ -11,6 +11,7 @@
 #include <godot_cpp/variant/typed_array.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/variant/vector2.hpp>
+#include <godot_cpp/classes/audio_stream_player2d.hpp>
 
 using namespace godot;
 
@@ -87,6 +88,10 @@ void Enemy::_ready() {
         get_node_or_null(NodePath("hurtbox/Area2D"))
     );
 
+    sword_slash_sound = Object::cast_to<AudioStreamPlayer2D>(
+    get_node_or_null(NodePath("sound/swordslash"))
+    );
+
     body_collision = Object::cast_to<CollisionShape2D>(
         get_node_or_null(NodePath("CollisionShape2D"))
     );
@@ -139,6 +144,7 @@ void Enemy::attack() {
 
     combat_state = CombatState::ATTACKING;
     attack_has_hit = false;
+    attack_sound_played = false;
 
     if (hitbox != nullptr) {
         hitbox->set_monitoring(false);
@@ -232,10 +238,18 @@ void Enemy::update_attack() {
         return;
     }
 
-    // Gây sát thương một lần trong khung hình 6–7 của animation attack.
+    // Gây sát thương một lần trong khung hình 2–3 của animation attack.
     const int frame = animated_sprite->get_frame();
-    const bool hit_window = frame >= 6 && frame <= 7;
+    const bool hit_window = frame >= 2 && frame <= 3;
 
+    // Phát tiếng chém khi bắt đầu vung kiếm.
+    if (frame >= 2 && !attack_sound_played) {
+        if (sword_slash_sound != nullptr) {
+           sword_slash_sound->play();
+        }
+
+       attack_sound_played = true;
+   }
     if (hit_window && !attack_has_hit) {
         hitbox->set_monitoring(true);
         TypedArray<Area2D> areas = hitbox->get_overlapping_areas();
