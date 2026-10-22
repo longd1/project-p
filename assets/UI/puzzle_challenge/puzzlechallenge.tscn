@@ -1,0 +1,90 @@
+[gd_scene load_steps=2 format=3 uid="uid://j7aur638n1sg"]
+
+[ext_resource type="Script" uid="uid://cquo37e7b1mii" path="res://assets/UI/puzzle_challenge/puzzlechallenge.gd" id="1_vyqa3"]
+
+[node name="puzzlechallenge" type="CanvasLayer"]
+script = ExtResource("1_vyqa3")
+
+[node name="background" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="mainpanel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="title" type="Label" parent="mainpanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="questions" type="GridContainer" parent="mainpanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 3
+
+[node name="q1" type="Button" parent="mainpanel/questions"]
+layout_mode = 2
+
+[node name="q2" type="Button" parent="mainpanel/questions"]
+layout_mode = 2
+
+[node name="q3" type="Button" parent="mainpanel/questions"]
+layout_mode = 2
+
+[node name="q4" type="Button" parent="mainpanel/questions"]
+layout_mode = 2
+
+[node name="q5" type="Button" parent="mainpanel/questions"]
+layout_mode = 2
+
+[node name="q6" type="Button" parent="mainpanel/questions"]
+layout_mode = 2
+
+[node name="q7" type="Button" parent="mainpanel/questions"]
+layout_mode = 2
+
+[node name="q8" type="Button" parent="mainpanel/questions"]
+layout_mode = 2
+
+[node name="q9" type="Button" parent="mainpanel/questions"]
+layout_mode = 2
+
+[node name="score" type="Label" parent="mainpanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="questionpanel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="1question" type="Label" parent="questionpanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ans1" type="Button" parent="questionpanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="ans2" type="Button" parent="questionpanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="ans3" type="Button" parent="questionpanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="ans4" type="Button" parent="questionpanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="completepanel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
