@@ -212,16 +212,15 @@ func finish_challenge() -> void:
 
 	challenge_ended = true
 
-	# Ẩn giao diện làm câu hỏi.
 	main_panel.hide()
 	question_panel.hide()
 
 	if correct_count >= REQUIRED_CORRECT:
-		# Người chơi thắng: hiển thị bảng kết quả.
+		# Thắng: hiển thị bảng kết quả.
 		show_success_panel()
 	else:
-		# Người chơi thua: quay về Main Menu.
-		return_to_main_menu()
+		# Thua: báo cho puzzle_trigger chuyển về Main Menu.
+		challenge_finished.emit(false)
 
 
 func show_success_panel() -> void:
@@ -243,20 +242,24 @@ func show_success_panel() -> void:
 	continue_button.text = "CONTINUE EXPLORING"
 
 
+
+
 func _on_continue_pressed() -> void:
 	if not challenge_ended:
 		return
 
-	# Chỉ cho tiếp tục khi người chơi đã thắng.
+	# Chỉ tiếp tục nếu Player đã thắng.
 	if correct_count < REQUIRED_CORRECT:
 		return
 
-	# Báo cho puzzle_trigger rằng thử thách đã thành công.
+	# Báo thành công cho puzzle_trigger.
+	# puzzle_trigger sẽ ghi activated = true.
 	challenge_finished.emit(true)
 
-	# Đóng giao diện thử thách.
-	# Floor 4 vẫn được giữ nguyên.
+	# Đóng giao diện, không tải lại Floor 4.
 	queue_free()
+
+
 
 
 func return_to_main_menu() -> void:
