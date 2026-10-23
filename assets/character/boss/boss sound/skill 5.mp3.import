@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://hvwgbdmq7fva"
+path="res://.godot/imported/skill 5.mp3-bb54dcba76c7ef016e47ff27bfaaa32b.mp3str"
+
+[deps]
+
+source_file="res://assets/character/boss/boss sound/skill 5.mp3"
+dest_files=["res://.godot/imported/skill 5.mp3-bb54dcba76c7ef016e47ff27bfaaa32b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

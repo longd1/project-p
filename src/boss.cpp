@@ -182,6 +182,13 @@ void Boss::_ready() {
     parry_effect = get_node<AnimatedSprite2D>(NodePath("effects/parry"));
     parry_sound = get_node<Node>(NodePath("effects/ParrySound"));
 
+    attack_sound = get_node<AudioStreamPlayer2D>(NodePath("effects/attacksound/attack"));
+    skill1_sound = get_node<AudioStreamPlayer2D>(NodePath("effects/attacksound/skill1"));
+    skill2_sound = get_node<AudioStreamPlayer2D>(NodePath("effects/attacksound/skill2"));
+    skill3_sound = get_node<AudioStreamPlayer2D>(NodePath("effects/attacksound/skill3"));
+    skill4_sound = get_node<AudioStreamPlayer2D>(NodePath("effects/attacksound/skill4"));
+    skill5_sound = get_node<AudioStreamPlayer2D>(NodePath("effects/attacksound/skill5"));
+
     body_collision = get_node<CollisionShape2D>(NodePath("CollisionShape2D"));
 
     // ==========================================
@@ -501,12 +508,35 @@ void Boss::parry() {
 // ==========================================
 
 void Boss::take_damage(int damage, float stun_scale, float knockback, Actor *attacker) {
-    if (is_parrying) return;
+    if (health <= 0 || is_parrying) return;
 
     int final_damage = static_cast<int>(damage * (1.0f - damage_negation) + 0.5f);
 
     Actor::take_damage(final_damage, stun_scale, knockback, attacker);
+
+    if (health <= 0) die();
+
 }
+
+void Boss::die(bool play_sound) {
+    disable_attack_hitboxes();
+    hurtbox->set_deferred("monitorable", false);
+    body_collision->set_deferred("disabled", true);
+
+    is_parrying = false;
+    parry_effect->stop();
+    parry_effect->hide();
+
+    knockback_velocity = Vector2(0, 0);
+    set_velocity(Vector2(0, 0));
+    set_physics_process(false);
+
+    animated_sprite->stop();
+    animated_sprite->set_speed_scale(1.0f);
+    animated_sprite->play("die");
+    animated_sprite->set_frame_and_progress(0, 0.0f);
+}
+
 
 // ==========================================
 // NORMAL ATTACK
@@ -533,6 +563,8 @@ void Boss::attack() {
     animated_sprite->set_speed_scale(1.0f);
     animated_sprite->play("attack");
     animated_sprite->set_frame_and_progress(0, 0.0f);
+
+    if (attack_sound != nullptr) attack_sound->play();
 }
 
 
@@ -565,6 +597,8 @@ void Boss::skill_1() {
     animated_sprite->set_speed_scale(1.0f);
     animated_sprite->play("skill1");
     animated_sprite->set_frame_and_progress(0, 0.0f);
+
+    if (skill1_sound != nullptr) skill1_sound->play();
 }
 
 
@@ -594,6 +628,8 @@ void Boss::skill_2() {
     animated_sprite->set_speed_scale(1.0f);
     animated_sprite->play("skill2");
     animated_sprite->set_frame_and_progress(0, 0.0f);
+
+    if (skill2_sound != nullptr) skill2_sound->play();
 }
 
 
@@ -623,6 +659,8 @@ void Boss::skill_3() {
     animated_sprite->set_speed_scale(1.0f);
     animated_sprite->play("skill3");
     animated_sprite->set_frame_and_progress(0, 0.0f);
+
+    if (skill3_sound != nullptr) skill3_sound->play();
 }
 
 
@@ -653,6 +691,8 @@ void Boss::skill_4() {
     animated_sprite->set_speed_scale(1.0f);
     animated_sprite->play("skill4");
     animated_sprite->set_frame_and_progress(0, 0.0f);
+
+    if (skill4_sound != nullptr) skill4_sound->play();
 }
 
 
@@ -683,6 +723,8 @@ void Boss::skill_5() {
     animated_sprite->set_speed_scale(1.0f);
     animated_sprite->play("skill5");
     animated_sprite->set_frame_and_progress(0, 0.0f);
+
+    if (skill5_sound != nullptr) skill5_sound->play();
 }
 
 

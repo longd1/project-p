@@ -205,6 +205,7 @@ void Player::_ready() {
 
     parry_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/ParrySound"));
     block_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/BlockSound"));
+    damage_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/DamageSound"));
 
     effect->hide();
 
@@ -306,6 +307,10 @@ void Player::take_damage(int damage, float stun_scale, float knockback, Actor *a
 
 
     health -= final_damage;
+
+    if (final_damage > 0 && damage_sound != nullptr) {
+        damage_sound->play();
+    }
 
     if (health <= 0) {
         health = 0;

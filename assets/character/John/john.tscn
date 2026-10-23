@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://d1qhffe2px8k5"]
+[gd_scene load_steps=65 format=3 uid="uid://d1qhffe2px8k5"]
 
 [ext_resource type="WeaponData" uid="uid://dq0blu7snexjm" path="res://assets/weapons/broken_sword/broken_sword.tres" id="1_8p5rd"]
 [ext_resource type="Texture2D" uid="uid://dgv41w4fboi42" path="res://assets/character/John/male_hero_free/male_hero.png" id="1_8ylcs"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://2w8qwtf3184l" path="res://assets/character/John/sound/parry sound.mp3" id="4_4wch8"]
 [ext_resource type="Texture2D" uid="uid://d4eewaed46h1l" path="res://assets/character/John/effect/sprite-sheet.png" id="5_i475j"]
 [ext_resource type="AudioStream" uid="uid://bxaydwersj7dk" path="res://assets/character/John/sound/block sound.mp3" id="5_secto"]
+[ext_resource type="AudioStream" uid="uid://bp11jvy3l4c1f" path="res://assets/character/John/sound/characterDamage.mp3" id="6_secto"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8ylcs"]
 radius = 12.0
@@ -470,6 +471,9 @@ stream = ExtResource("4_4wch8")
 
 [node name="BlockSound" type="AudioStreamPlayer2D" parent="sound"]
 stream = ExtResource("5_secto")
+
+[node name="DamageSound" type="AudioStreamPlayer2D" parent="sound"]
+stream = ExtResource("6_secto")
 
 [node name="effect" type="AnimatedSprite2D" parent="."]
 position = Vector2(20.000002, -19.999998)

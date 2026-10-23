@@ -36,6 +36,7 @@ private:
     AudioStreamPlayer2D *death_sound = nullptr;
     AudioStreamPlayer2D *parry_sound = nullptr;
     AudioStreamPlayer2D *block_sound = nullptr;
+    AudioStreamPlayer2D *damage_sound = nullptr;
 
 protected:
     static void _bind_methods();

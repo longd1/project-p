@@ -2,7 +2,7 @@
 
 [resource]
 weapon_name = "broken sword"
-damage = 3
+damage = 300
 block_damage_negation = 0.12
 attack_duration = 0.3
 parry_duration = 0.25

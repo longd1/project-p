@@ -4,6 +4,7 @@
 
 #include <godot_cpp/classes/animated_sprite2d.hpp>
 #include <godot_cpp/classes/area2d.hpp>
+#include <godot_cpp/classes/audio_stream_player2d.hpp>
 #include <godot_cpp/classes/collision_shape2d.hpp>
 #include <godot_cpp/variant/string_name.hpp>
 #include <godot_cpp/variant/vector2.hpp>
@@ -106,7 +107,7 @@ private:
     float stun_negation = 0.7f;
     float knockback_negation = 0.7f;
 
-    int parry_chance = 100;
+    int parry_chance = 8;
     bool is_parrying = false;
 
     // ==========================================
@@ -144,6 +145,13 @@ private:
 
     AnimatedSprite2D *parry_effect = nullptr;
     Node *parry_sound = nullptr;
+
+    AudioStreamPlayer2D *attack_sound = nullptr;
+    AudioStreamPlayer2D *skill1_sound = nullptr;
+    AudioStreamPlayer2D *skill2_sound = nullptr;
+    AudioStreamPlayer2D *skill3_sound = nullptr;
+    AudioStreamPlayer2D *skill4_sound = nullptr;
+    AudioStreamPlayer2D *skill5_sound = nullptr;
 
     CollisionShape2D *body_collision = nullptr;
 
@@ -211,6 +219,7 @@ public:
     void skill_4();
     void skill_5();
     void parry();
+    void die(bool play_sound = true) override;
 
     void take_damage(int damage, float stun_scale, float knockback, Actor *attacker) override;
 

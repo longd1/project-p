@@ -1,4 +1,4 @@
-[gd_scene load_steps=162 format=3 uid="uid://bfmbxadb0umyf"]
+[gd_scene load_steps=168 format=3 uid="uid://bfmbxadb0umyf"]
 
 [ext_resource type="Texture2D" uid="uid://bbnpybyrkkvss" path="res://assets/character/boss/assets/atk2/atk1 (Custom).png" id="1_a534a"]
 [ext_resource type="Texture2D" uid="uid://b6yo5nswa5sw0" path="res://assets/character/boss/assets/atk2/atk3 (Custom).png" id="2_2aa21"]
@@ -96,10 +96,16 @@
 [ext_resource type="Texture2D" uid="uid://d4eewaed46h1l" path="res://assets/character/John/effect/sprite-sheet.png" id="121_qdhhb"]
 [ext_resource type="Texture2D" uid="uid://c7is2igi14xh8" path="res://assets/character/boss/assets/atk5/atk21 (Custom).png" id="122_0dppx"]
 [ext_resource type="AudioStream" uid="uid://2w8qwtf3184l" path="res://assets/character/John/sound/parry sound.mp3" id="122_ejwlg"]
+[ext_resource type="AudioStream" uid="uid://clm5uh6h7qu6x" path="res://assets/character/boss/boss sound/attack.mp3" id="122_fxxyj"]
 [ext_resource type="Texture2D" uid="uid://cwumo3x1ftnfi" path="res://assets/character/boss/assets/atk5/atk22 (Custom).png" id="123_t1dh3"]
+[ext_resource type="AudioStream" uid="uid://ch232oj1cwgb6" path="res://assets/character/boss/boss sound/skill 1.mp3" id="123_xgpk5"]
+[ext_resource type="AudioStream" uid="uid://um7ne50yqmwe" path="res://assets/character/boss/boss sound/skill 2.mp3" id="124_qaqci"]
 [ext_resource type="Texture2D" uid="uid://c66vm752plfwj" path="res://assets/character/boss/assets/atk5/atk23 (Custom).png" id="124_xa7br"]
 [ext_resource type="Texture2D" uid="uid://0vcmj6aafasy" path="res://assets/character/boss/assets/atk5/atk24 (Custom).png" id="125_6hukr"]
+[ext_resource type="AudioStream" uid="uid://d2nqrph4wyxal" path="res://assets/character/boss/boss sound/skill 3.mp3" id="125_885np"]
 [ext_resource type="Texture2D" uid="uid://00lq3vxdngyw" path="res://assets/character/boss/assets/atk5/atk25 (Custom).png" id="126_fogw5"]
+[ext_resource type="AudioStream" uid="uid://c4hi8jjyemy28" path="res://assets/character/boss/boss sound/skill 4.mp3" id="126_jcanb"]
+[ext_resource type="AudioStream" uid="uid://hvwgbdmq7fva" path="res://assets/character/boss/boss sound/skill 5.mp3" id="127_lmnxo"]
 [ext_resource type="Texture2D" uid="uid://543dmu3rv4bi" path="res://assets/character/boss/assets/atk5/atk26 (Custom).png" id="127_ypcbr"]
 [ext_resource type="Texture2D" uid="uid://nsc83axo1mxr" path="res://assets/character/boss/assets/atk5/atk27 (Custom).png" id="128_0atkc"]
 [ext_resource type="Texture2D" uid="uid://cd8nk64fau1ti" path="res://assets/character/boss/assets/atk5/atk28 (Custom).png" id="129_j2grs"]
@@ -852,16 +858,15 @@ shape = SubResource("CapsuleShape2D_5ul0a")
 position = Vector2(80, -61)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_i358n")
-animation = &"parry"
+animation = &"skill5"
 autoplay = "idle"
-frame = 5
-frame_progress = 1.0
 
 [node name="hurtbox" type="Node2D" parent="."]
 visible = false
 
 [node name="Area2D" type="Area2D" parent="hurtbox"]
 position = Vector2(-3, -35)
+collision_layer = 16
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtbox/Area2D"]
@@ -967,6 +972,7 @@ position = Vector2(59, -23.333332)
 shape = SubResource("RectangleShape2D_kh560")
 
 [node name="effects" type="Node2D" parent="."]
+visible = false
 
 [node name="parry" type="AnimatedSprite2D" parent="effects"]
 position = Vector2(32.666668, -36.666668)
@@ -974,7 +980,28 @@ rotation = -0.55089784
 scale = Vector2(0.38605508, 0.76213074)
 sprite_frames = SubResource("SpriteFrames_uooxw")
 animation = &"parry"
-frame = 2
+frame = 6
+frame_progress = 1.0
 
 [node name="ParrySound" type="AudioStreamPlayer2D" parent="effects"]
 stream = ExtResource("122_ejwlg")
+
+[node name="attacksound" type="Node2D" parent="effects"]
+
+[node name="attack" type="AudioStreamPlayer2D" parent="effects/attacksound"]
+stream = ExtResource("122_fxxyj")
+
+[node name="skill1" type="AudioStreamPlayer2D" parent="effects/attacksound"]
+stream = ExtResource("123_xgpk5")
+
+[node name="skill2" type="AudioStreamPlayer2D" parent="effects/attacksound"]
+stream = ExtResource("124_qaqci")
+
+[node name="skill3" type="AudioStreamPlayer2D" parent="effects/attacksound"]
+stream = ExtResource("125_885np")
+
+[node name="skill4" type="AudioStreamPlayer2D" parent="effects/attacksound"]
+stream = ExtResource("126_jcanb")
+
+[node name="skill5" type="AudioStreamPlayer2D" parent="effects/attacksound"]
+stream = ExtResource("127_lmnxo")
