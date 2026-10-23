@@ -1,7 +1,7 @@
 [gd_scene load_steps=40 format=4 uid="uid://c1v17pyqn6ojy"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_cqf36"]
-[ext_resource type="PackedScene" uid="uid://bn7s43o6xjhqy" path="res://assets/UI/HUD/hud.tscn" id="1_tqd34"]
+[ext_resource type="PackedScene" uid="uid://cj26vq7xkven1" path="res://assets/UI/HUD/playerhud/hud.tscn" id="1_tqd34"]
 [ext_resource type="Texture2D" uid="uid://cvvokrlib1qao" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="2_r8da7"]
 [ext_resource type="Texture2D" uid="uid://p8lq3ixc5do2" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_walls_high-16x32.png" id="3_jrb1a"]
 [ext_resource type="TileSet" uid="uid://delvpm3fbgot0" path="res://assets/scene/tile_set.tres" id="4_nbiaa"]
@@ -20,7 +20,7 @@
 [ext_resource type="Script" uid="uid://q8k8csjphken" path="res://assets/scene/floor 4/room_4_to_room_7.gd" id="17_65coe"]
 [ext_resource type="Script" uid="uid://d01ywngl2mmj1" path="res://assets/scene/floor 4/room_7_to_room_4.gd" id="18_nbiaa"]
 [ext_resource type="Script" uid="uid://cbcq3hrhbncrs" path="res://assets/scene/floor 4/puzzle_trigger.gd" id="19_xh8mo"]
-[ext_resource type="PackedScene" uid="uid://tvqtg1l2d5t2" path="res://assets/UI/puzzle_challenge/puzzle_challenge.tscn" id="20_4irnc"]
+[ext_resource type="PackedScene" path="res://assets/UI/puzzle_challenge/puzzle_challenge.tscn" id="20_4irnc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_r8da7")
