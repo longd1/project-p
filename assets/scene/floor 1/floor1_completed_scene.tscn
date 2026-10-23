@@ -1,7 +1,8 @@
-[gd_scene load_steps=24 format=4 uid="uid://usck0jtbghjk"]
+[gd_scene load_steps=25 format=4 uid="uid://usck0jtbghjk"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_jm218"]
 [ext_resource type="Texture2D" uid="uid://cvvokrlib1qao" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="1_kj7h1"]
+[ext_resource type="PackedScene" uid="uid://bn7s43o6xjhqy" path="res://assets/UI/HUD/hud.tscn" id="1_yrej3"]
 [ext_resource type="Texture2D" uid="uid://p8lq3ixc5do2" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_walls_high-16x32.png" id="3_s66pr"]
 [ext_resource type="TileSet" uid="uid://delvpm3fbgot0" path="res://assets/scene/tile_set.tres" id="4_s66pr"]
 [ext_resource type="Script" uid="uid://cxjfid3d860d8" path="res://assets/scene/floor 1/exit.gd" id="6_lkacb"]
@@ -245,6 +246,8 @@ z_index = 10
 position = Vector2(0, -48)
 zoom = Vector2(2, 2)
 
+[node name="HUD" parent="Camera2D" instance=ExtResource("1_yrej3")]
+
 [node name="Player" parent="." instance=ExtResource("1_jm218")]
 z_index = 5
 position = Vector2(-1, -55)
@@ -406,7 +409,6 @@ position = Vector2(-669, 48)
 
 [node name="Enemy" parent="enemy_spawn" instance=ExtResource("12_p1274")]
 detection_range = 200.0
-close_range = 30.0
 position = Vector2(840, -103)
 
 [connection signal="body_entered" from="tp_portal/exit" to="tp_portal/exit" method="_on_body_entered"]

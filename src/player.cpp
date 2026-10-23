@@ -55,11 +55,19 @@ Ref<WeaponData> Player::get_current_weapon() const {
 
 
 int Player::get_attack_damage() const {
+    int damage = base_damage;
+
     if (current_weapon.is_valid()) {
-        return base_damage + current_weapon->get_damage();
+        damage += current_weapon->get_damage();
     }
 
-    return base_damage;
+    float damage_multiplier = 1.0f;
+
+    if (global != nullptr) {
+        damage_multiplier = static_cast<float>(global->get("damage_multiplier"));
+    }
+
+    return static_cast<int>(damage * damage_multiplier + 0.5f);
 }
 
 
@@ -151,7 +159,8 @@ void Player::heal() {
     }
 
 
-    Node *global = get_node<Node>(NodePath("/root/Global"));
+    if (global == nullptr) return;
+
     int heal_amount = static_cast<int>(global->get("heal_amount"));
 
     health += heal_amount;
@@ -182,7 +191,12 @@ void Player::_ready() {
     death_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/DeathSound"));
     effect = get_node<AnimatedSprite2D>(NodePath("effect"));
 
-    Node *global = get_node<Node>(NodePath("/root/Global"));
+    global = get_node<Node>(NodePath("/root/Global"));
+
+    int bonus_max_health = static_cast<int>(global->get("bonus_max_health"));
+    max_health = 100 + bonus_max_health;
+    health = max_health;
+
     current_heal_flasks = static_cast<int>(global->get("max_heal_flasks"));
 
     hitbox = get_node<Area2D>(NodePath("hitbox/Area2D"));
@@ -227,7 +241,12 @@ void Player::die(bool play_sound) {
 
 void Player::take_damage(int damage, float stun_scale, float knockback, Actor *attacker) {
     if (health <= 0) return;
-    Vector2 knockback_direction = (get_global_position() - attacker->get_global_position()).normalized();
+
+    Vector2 knockback_direction = Vector2(0, 0);
+
+    if (attacker != nullptr) {
+        knockback_direction = (get_global_position() - attacker->get_global_position()).normalized();
+    }
 
 
 
