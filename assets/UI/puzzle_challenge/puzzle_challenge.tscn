@@ -1,0 +1,44 @@
+[gd_scene load_steps=0 format=3 uid="uid://tvqtg1l2d5t2"]
+
+[node name="puzzlechallenge" type="CanvasLayer"]
+
+[node name="background" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="mainpanel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="title" type="Label" parent="mainpanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="questions" type="GridContainer" parent="mainpanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="score" type="Label" parent="mainpanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="questionpanel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="1question" type="Label" parent="questionpanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Button" type="Button" parent="questionpanel"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="completepanel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0

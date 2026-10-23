@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [gd_scene load_steps=37 format=4 uid="uid://c1v17pyqn6ojy"]
+=======
+[gd_scene load_steps=39 format=4 uid="uid://c1v17pyqn6ojy"]
+>>>>>>> 339dacd569cc667f728fd6aac20013f7ae647ad5
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_cqf36"]
 [ext_resource type="PackedScene" uid="uid://bn7s43o6xjhqy" path="res://assets/UI/HUD/hud.tscn" id="1_tqd34"]
@@ -19,6 +23,8 @@
 [ext_resource type="Script" uid="uid://iqenk4e0flwk" path="res://assets/scene/floor 4/room_7_to_room_6.gd" id="16_u7bpw"]
 [ext_resource type="Script" uid="uid://q8k8csjphken" path="res://assets/scene/floor 4/room_4_to_room_7.gd" id="17_65coe"]
 [ext_resource type="Script" uid="uid://d01ywngl2mmj1" path="res://assets/scene/floor 4/room_7_to_room_4.gd" id="18_nbiaa"]
+[ext_resource type="Script" uid="uid://cbcq3hrhbncrs" path="res://assets/scene/floor 4/puzzle_trigger.gd" id="19_xh8mo"]
+[ext_resource type="PackedScene" uid="uid://tvqtg1l2d5t2" path="res://assets/UI/puzzle_challenge/puzzle_challenge.tscn" id="20_4irnc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_r8da7")
@@ -262,6 +268,9 @@ size = Vector2(62.5, 18.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tqd34"]
 size = Vector2(77.75, 15.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1ne4"]
+size = Vector2(243, 329)
 
 [node name="floor 4" type="Node2D"]
 
@@ -510,6 +519,14 @@ position = Vector2(768, -572)
 
 [node name="cam" type="Marker2D" parent="tp_portal/room7_to_room4"]
 position = Vector2(761, -468)
+
+[node name="puzzle_trigger" type="Area2D" parent="."]
+script = ExtResource("19_xh8mo")
+puzzle_scene = ExtResource("20_4irnc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="puzzle_trigger"]
+position = Vector2(23.5, -881.5)
+shape = SubResource("RectangleShape2D_h1ne4")
 
 [connection signal="body_entered" from="tp_portal/centre_to_room3" to="tp_portal/centre_to_room3" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room3_to_centre" to="tp_portal/room3_to_centre" method="_on_body_entered"]
