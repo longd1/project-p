@@ -133,11 +133,11 @@ offset_bottom = 230.0
 theme_override_colors/font_color = Color(0.3019608, 0.6509804, 0.6509804, 1)
 theme_override_font_sizes/font_size = 22
 text = "✦
-BATTLE-HARDENED
+BALANCED
 
 +8%
 
-+20"
++25"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -150,7 +150,7 @@ offset_bottom = 261.0
 text = "Damage
 
 
-Max Hp"
+Max HP"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -172,7 +172,7 @@ theme_override_font_sizes/font_size = 22
 text = "♥
 VITALITY
 
-+45"
++50"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -207,6 +207,6 @@ offset_right = 924.0
 offset_bottom = 52.976997
 theme_override_colors/font_color = Color(1, 1, 0.89411765, 1)
 theme_override_font_sizes/font_size = 18
-text = "Gain 2 healing potions, and healing effectiveness increases by 20 HP each floor."
+text = "Gain 2 healing flasks, and healing effectiveness increases by 20 HP each floor."
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -1,4 +1,4 @@
-[gd_resource type="WeaponData" load_steps=0 format=3 uid="uid://dq0blu7snexjm"]
+[gd_resource type="WeaponData" format=3 uid="uid://dq0blu7snexjm"]
 
 [resource]
 weapon_name = "starter sword"
