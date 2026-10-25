@@ -3,19 +3,19 @@ extends CanvasLayer
 
 var player: Node = null
 
+var full_hp_bar_scale: Vector2
+
 @onready var hp_background: Control = $hp_background
 @onready var hp_bar: Control = $hp_bar
-
-const BASE_MAX_HEALTH: float = 100.0
-
-const BASE_BACKGROUND_WIDTH: float = 175.0
-const BASE_HEALTHBAR_WIDTH: float = 169.0
 
 const HEALTH_LERP_SPEED: float = 10.0
 
 
 func _ready() -> void:
-	# Tìm Player trong scene Floor hiện tại.
+	# Lưu scale ban đầu của thanh máu.
+	full_hp_bar_scale = hp_bar.scale
+
+	# Tìm Player trong Floor hiện tại.
 	var current_scene: Node = get_tree().current_scene
 
 	if current_scene != null:
@@ -27,8 +27,7 @@ func _ready() -> void:
 
 	if not is_instance_valid(player):
 		push_warning(
-			"PlayerHUD: Không tìm thấy node Player "
-			+ "trong scene hiện tại."
+			"PlayerHUD: Không tìm thấy node Player."
 		)
 
 
@@ -50,45 +49,28 @@ func _process(delta: float) -> void:
 		player.get_health()
 	)
 
-	# Tránh chia cho 0.
 	if max_health <= 0.0:
-		hp_background.size.x = 0.0
-		hp_bar.size.x = 0.0
+		hp_bar.scale.x = 0.0
 		return
 
-	# Nền thanh máu thay đổi theo máu tối đa.
-	var max_health_ratio: float = (
-		max_health / BASE_MAX_HEALTH
-	)
-
-	hp_background.size.x = (
-		BASE_BACKGROUND_WIDTH * max_health_ratio
-	)
-
-	var max_healthbar_width: float = (
-		BASE_HEALTHBAR_WIDTH * max_health_ratio
-	)
-
-	# Tính lượng máu còn lại.
 	var health_ratio: float = clampf(
 		current_health / max_health,
 		0.0,
 		1.0
 	)
 
-	var target_width: float = (
-		max_healthbar_width * health_ratio
+	var target_scale_x: float = (
+		full_hp_bar_scale.x * health_ratio
 	)
 
-	# Giảm thanh máu mượt mà.
-	var lerp_weight: float = clampf(
+	var weight: float = clampf(
 		HEALTH_LERP_SPEED * delta,
 		0.0,
 		1.0
 	)
 
-	hp_bar.size.x = lerpf(
-		hp_bar.size.x,
-		target_width,
-		lerp_weight
+	hp_bar.scale.x = lerpf(
+		hp_bar.scale.x,
+		target_scale_x,
+		weight
 	)

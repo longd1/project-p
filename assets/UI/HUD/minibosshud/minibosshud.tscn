@@ -23,10 +23,10 @@ script = ExtResource("1_5aecr")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -528.0
-offset_top = 25.0
-offset_right = -30.0
-offset_bottom = 50.0
+offset_left = -464.0
+offset_top = 40.0
+offset_right = -32.0
+offset_bottom = 52.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cww5l")
 
@@ -34,9 +34,19 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_cww5l")
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -524.0
-offset_top = 30.0
+offset_left = -461.0
+offset_top = 42.0
 offset_right = -34.0
-offset_bottom = 45.0
+offset_bottom = 50.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_5aecr")
+
+[node name="minibossname" type="Label" parent="."]
+offset_left = 999.0
+offset_top = 56.0
+offset_right = 1127.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 12
+text = "Thy First Undoing"
+horizontal_alignment = 1
+vertical_alignment = 1

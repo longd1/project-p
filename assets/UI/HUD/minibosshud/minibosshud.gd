@@ -2,53 +2,47 @@
 extends CanvasLayer
 
 @export var miniboss_path: NodePath
-
-@export var bar_width: float = 300.0
-@export var bar_height: float = 16.0
 @export var health_lerp_speed: float = 8.0
-
-# Khoảng cách từ mép phải và mép trên màn hình.
-@export var margin_right: float = 20.0
-@export var top_offset: float = 50.0
 
 var miniboss: Node = null
 var preview_mode: bool = false
 
+var full_bar_scale: Vector2
+
 @onready var mnb_background: Panel = $mnb_background
 @onready var mnb_bar: Panel = $mnb_bar
+@onready var miniboss_name_label: Label = $minibossname
 
 
 func _ready() -> void:
-	_apply_styles()
-	_update_layout()
+	# Giữ nguyên scale được thiết kế trong scene.
+	full_bar_scale = mnb_bar.scale
 
-	# Ưu tiên đường dẫn được gán trong Inspector.
+	# Không thay đổi vị trí, kích thước, màu sắc
+	# hoặc nội dung của minibossname.
+
 	if not miniboss_path.is_empty():
 		miniboss = get_node_or_null(miniboss_path)
 
-	# Nếu chưa gán đường dẫn, tìm node tên MiniBoss.
 	if not is_instance_valid(miniboss):
-		var scene := get_tree().current_scene
+		var current_scene := get_tree().current_scene
 
-		if scene != null:
-			miniboss = scene.find_child(
+		if current_scene != null:
+			miniboss = current_scene.find_child(
 				"MiniBoss",
 				true,
 				false
 			)
 
-	# Hỗ trợ xem trước khi chạy riêng scene HUD.
 	if not is_instance_valid(miniboss):
-		var scene := get_tree().current_scene
-
-		if scene == self:
+		if get_tree().current_scene == self:
 			preview_mode = true
 			visible = true
-			mnb_bar.size.x = bar_width
+			mnb_bar.scale = full_bar_scale
 		else:
 			visible = false
 			push_warning(
-				"MiniBossHUD: Không tìm thấy MiniBoss. "
+				"MiniBossHUD: Không tìm thấy Mini Boss. "
 				+ "Hãy gán MiniBoss Path trong Inspector."
 			)
 
@@ -81,75 +75,24 @@ func _process(delta: float) -> void:
 
 	visible = true
 
-	# Tính tỷ lệ máu còn lại.
 	var health_ratio: float = clampf(
 		current_health / max_health,
 		0.0,
 		1.0
 	)
 
-	var target_width: float = (
-		bar_width * health_ratio
+	var target_scale_x: float = (
+		full_bar_scale.x * health_ratio
 	)
 
-	# Làm thanh máu giảm mượt.
 	var weight: float = clampf(
 		health_lerp_speed * delta,
 		0.0,
 		1.0
 	)
 
-	mnb_bar.size.x = lerpf(
-		mnb_bar.size.x,
-		target_width,
+	mnb_bar.scale.x = lerpf(
+		mnb_bar.scale.x,
+		target_scale_x,
 		weight
-	)
-
-
-func _update_layout() -> void:
-	var viewport_size: Vector2 = (
-		get_viewport().get_visible_rect().size
-	)
-
-	# Căn thanh máu về góc trên bên phải.
-	var start_x: float = (
-		viewport_size.x - bar_width - margin_right
-	)
-
-	mnb_background.position = Vector2(
-		start_x,
-		top_offset
-	)
-
-	mnb_background.size = Vector2(
-		bar_width,
-		bar_height
-	)
-
-	# Thanh máu bắt đầu trùng với nền.
-	mnb_bar.position = mnb_background.position
-	mnb_bar.size = mnb_background.size
-
-
-func _apply_styles() -> void:
-	# Nền đỏ sẫm.
-	var background_style := StyleBoxFlat.new()
-	background_style.bg_color = Color("#210D12")
-	background_style.border_color = Color("#5A2630")
-	background_style.set_border_width_all(1)
-	background_style.set_corner_radius_all(7)
-
-	mnb_background.add_theme_stylebox_override(
-		"panel",
-		background_style
-	)
-
-	# Thanh máu đỏ sáng.
-	var bar_style := StyleBoxFlat.new()
-	bar_style.bg_color = Color("#C91F2D")
-	bar_style.set_corner_radius_all(7)
-
-	mnb_bar.add_theme_stylebox_override(
-		"panel",
-		bar_style
 	)
