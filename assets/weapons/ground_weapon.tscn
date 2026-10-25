@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnvhiohvkq3nr"]
+
+[ext_resource type="Script" uid="uid://x655few8fly1" path="res://assets/weapons/ground_weapon.gd" id="1_fei7x"]
+[ext_resource type="WeaponData" uid="uid://dq0blu7snexjm" path="res://assets/weapons/broken_sword.tres" id="2_v85mm"]
+[ext_resource type="Texture2D" uid="uid://dqc4hfsdkrolc" path="res://assets/weapons/SwordBundle-Sheet.png" id="3_7cgn4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nmod1"]
+
+[node name="Area2D" type="Area2D"]
+script = ExtResource("1_fei7x")
+weapon = ExtResource("2_v85mm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_7cgn4")
+hframes = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(13, 13)
+shape = SubResource("RectangleShape2D_nmod1")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -306.0
+offset_top = -531.0
+offset_right = 183.0
+offset_bottom = -448.0
+theme_override_font_sizes/font_size = 60
+text = "[E] Swap weapon"
+horizontal_alignment = 1
+vertical_alignment = 1

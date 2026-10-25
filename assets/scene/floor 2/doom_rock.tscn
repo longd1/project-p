@@ -5,20 +5,19 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ggcp2"]
 radius = 36.0
-height = 138.0
+height = 124.0
 
-[node name="Node2D" type="Node2D"]
+[node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_ggcp2")
 
-[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 0)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_ggcp2")
 
-[node name="Sprite2D" type="Sprite2D" parent="AnimatableBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(6.315065, -3.8000233)
 texture = ExtResource("1_65er3")
 flip_v = true
 region_enabled = true
 region_rect = Rect2(25.220436, 24.515099, 23.699799, 23.484901)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_ggcp2")

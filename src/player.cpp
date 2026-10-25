@@ -31,6 +31,7 @@ void Player::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_current_weapon", "weapon"), &Player::set_current_weapon);
     ClassDB::bind_method(D_METHOD("get_current_weapon"), &Player::get_current_weapon);
     ClassDB::bind_method(D_METHOD("die", "play_sound"), &Player::die, DEFVAL(true));
+    ClassDB::bind_method(D_METHOD("apply_external_knockback", "force"), &Player::apply_external_knockback);
 
     ADD_PROPERTY(
         PropertyInfo(Variant::OBJECT, "current_weapon", PROPERTY_HINT_RESOURCE_TYPE, "WeaponData"),
@@ -238,6 +239,10 @@ void Player::die(bool play_sound) {
     }
 
     emit_signal("died");
+}
+
+void Player::apply_external_knockback(const Vector2 &force) {
+    knockback_velocity = force;
 }
 
 void Player::take_damage(int damage, float stun_scale, float knockback, Actor *attacker) {

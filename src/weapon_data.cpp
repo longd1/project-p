@@ -83,6 +83,11 @@ void WeaponData::_bind_methods() {
         &WeaponData::get_pre_parry_duration
     );
 
+    ClassDB::bind_method(D_METHOD("set_ground_sprite_frame", "value"), &WeaponData::set_ground_sprite_frame);
+    ClassDB::bind_method(D_METHOD("get_ground_sprite_frame"), &WeaponData::get_ground_sprite_frame);
+
+
+
 
     // ==================================================
     // PROPERTIES
@@ -97,6 +102,11 @@ void WeaponData::_bind_methods() {
         "get_weapon_name"
     );
 
+    ADD_PROPERTY(
+        PropertyInfo(Variant::INT, "ground_sprite_frame"),
+        "set_ground_sprite_frame",
+        "get_ground_sprite_frame"
+    );
 
     ADD_PROPERTY(
         PropertyInfo(

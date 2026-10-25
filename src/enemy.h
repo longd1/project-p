@@ -61,6 +61,7 @@ public:
 
     void take_damage(int damage, float stun_scale, float knockback, Actor *attacker) override;
     void die(bool play_sound) override;
+    void apply_external_knockback(const Vector2 &force);
 
     void attack();
 

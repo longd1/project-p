@@ -1,6 +1,6 @@
 [gd_scene load_steps=65 format=3 uid="uid://d1qhffe2px8k5"]
 
-[ext_resource type="WeaponData" uid="uid://dq0blu7snexjm" path="res://assets/weapons/broken_sword/broken_sword.tres" id="1_8p5rd"]
+[ext_resource type="WeaponData" uid="uid://dq0blu7snexjm" path="res://assets/weapons/broken_sword.tres" id="1_8p5rd"]
 [ext_resource type="Texture2D" uid="uid://dgv41w4fboi42" path="res://assets/character/John/male_hero_free/male_hero.png" id="1_8ylcs"]
 [ext_resource type="AudioStream" uid="uid://dt4winwepnb70" path="res://assets/character/John/sound/DeathSound.mp3" id="3_yhpr6"]
 [ext_resource type="AudioStream" uid="uid://2w8qwtf3184l" path="res://assets/character/John/sound/parry sound.mp3" id="4_4wch8"]

@@ -321,9 +321,9 @@ func _ready() -> void:
 "
 
 [node name="Enemy" type="Enemy"]
-detection_range = 150.0
+detection_range = 80.0
 close_range = 30.0
-attack_y_tolerance = 20.0
+max_health = 50
 attack_stun_scale = 0.01
 attack_cooldown = 1.0
 stun_negation = 0.2

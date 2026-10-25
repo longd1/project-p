@@ -1,18 +1,22 @@
-[gd_scene load_steps=25 format=4 uid="uid://usck0jtbghjk"]
+[gd_scene load_steps=29 format=4 uid="uid://usck0jtbghjk"]
 
+[ext_resource type="Script" uid="uid://bikvls8wqvpj2" path="res://assets/scene/floor 1/FloorManager1.gd" id="1_jdu8v"]
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_jm218"]
 [ext_resource type="Texture2D" uid="uid://cvvokrlib1qao" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="1_kj7h1"]
 [ext_resource type="PackedScene" uid="uid://cj26vq7xkven1" path="res://assets/UI/HUD/playerhud/hud.tscn" id="1_yrej3"]
 [ext_resource type="Texture2D" uid="uid://p8lq3ixc5do2" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_walls_high-16x32.png" id="3_s66pr"]
 [ext_resource type="TileSet" uid="uid://delvpm3fbgot0" path="res://assets/scene/tile_set.tres" id="4_s66pr"]
-[ext_resource type="Script" path="res://assets/scene/floor 1/exit.gd" id="6_lkacb"]
-[ext_resource type="Script" path="res://assets/scene/floor 1/centre_to_room_3.gd" id="6_v8hf3"]
-[ext_resource type="Script" path="res://assets/scene/floor 1/room_3_to_centre.gd" id="7_v8hf3"]
-[ext_resource type="Script" path="res://assets/scene/floor 1/room_3_to_room_4.gd" id="8_6jeyu"]
-[ext_resource type="Script" path="res://assets/scene/floor 1/room_4_to_room_3.gd" id="9_uuxlm"]
-[ext_resource type="Script" path="res://assets/scene/floor 1/room_4_to_exit.gd" id="10_x6b85"]
-[ext_resource type="Script" path="res://assets/scene/floor 1/exit_to_room_4.gd" id="11_ml3r5"]
+[ext_resource type="Script" uid="uid://cxjfid3d860d8" path="res://assets/scene/floor 1/exit.gd" id="6_lkacb"]
+[ext_resource type="Script" uid="uid://djrcjy1bhrobf" path="res://assets/scene/floor 1/centre_to_room_3.gd" id="6_v8hf3"]
+[ext_resource type="Script" uid="uid://qxn4edttmd18" path="res://assets/scene/floor 1/room_3_to_centre.gd" id="7_v8hf3"]
+[ext_resource type="Script" uid="uid://cdsc3ird2ba02" path="res://assets/scene/floor 1/room_3_to_room_4.gd" id="8_6jeyu"]
+[ext_resource type="Script" uid="uid://dbt7gygm6eirc" path="res://assets/scene/floor 1/room_4_to_room_3.gd" id="9_uuxlm"]
+[ext_resource type="Script" uid="uid://clgw8jj0bmgot" path="res://assets/scene/floor 1/room_4_to_exit.gd" id="10_x6b85"]
+[ext_resource type="Script" uid="uid://c8qk80wdn7slo" path="res://assets/scene/floor 1/exit_to_room_4.gd" id="11_ml3r5"]
 [ext_resource type="PackedScene" uid="uid://cmp4w2q5j3gsy" path="res://assets/character/enemy/enemy.tscn" id="12_p1274"]
+[ext_resource type="PackedScene" uid="uid://cexmoautbah14" path="res://assets/UI/die func/die_func.tscn" id="14_ytnge"]
+[ext_resource type="PackedScene" uid="uid://dnvhiohvkq3nr" path="res://assets/weapons/ground_weapon.tscn" id="15_7mwey"]
+[ext_resource type="WeaponData" uid="uid://cdkb6mdgw3e3t" path="res://assets/weapons/broad_sword.tres" id="16_7mwey"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("1_kj7h1")
@@ -215,9 +219,6 @@ texture = ExtResource("3_s66pr")
 sources/0 = SubResource("TileSetAtlasSource_lkacb")
 sources/3 = SubResource("TileSetAtlasSource_v8hf3")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8hf3"]
-size = Vector2(32, 28)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s66pr"]
 size = Vector2(26.5, 37)
 
@@ -239,7 +240,14 @@ size = Vector2(25, 44)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yrej3"]
 size = Vector2(20, 39)
 
-[node name="floor 1" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8hf3"]
+size = Vector2(32, 28)
+
+[node name="floor 1" type="Node2D" node_paths=PackedStringArray("reward_weapon", "exit_area", "exit_collision")]
+script = ExtResource("1_jdu8v")
+reward_weapon = NodePath("RewardWeapon")
+exit_area = NodePath("exit")
+exit_collision = NodePath("exit/CollisionShape2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 z_index = 10
@@ -263,13 +271,6 @@ tile_map_data = PackedByteArray("AAD5//b/AAABAAAAAAD5//f/AAABAAEAAAAGAPb/AAADAAA
 tile_set = ExtResource("4_s66pr")
 
 [node name="tp_portal" type="Node2D" parent="."]
-
-[node name="exit" type="Area2D" parent="tp_portal"]
-script = ExtResource("6_lkacb")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="tp_portal/exit"]
-position = Vector2(1588, -797)
-shape = SubResource("RectangleShape2D_v8hf3")
 
 [node name="centre_to_room2" type="Area2D" parent="tp_portal" node_paths=PackedStringArray("player_target", "camera_target", "camera")]
 position = Vector2(115, -62)
@@ -407,11 +408,51 @@ position = Vector2(-669, 48)
 
 [node name="enemy_spawn" type="Node2D" parent="."]
 
-[node name="Enemy" parent="enemy_spawn" instance=ExtResource("12_p1274")]
-detection_range = 200.0
-position = Vector2(840, -103)
+[node name="Enemy" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(855, -108)
 
-[connection signal="body_entered" from="tp_portal/exit" to="tp_portal/exit" method="_on_body_entered"]
+[node name="Enemy2" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(853, 15)
+
+[node name="Enemy3" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(700, -95)
+
+[node name="Enemy4" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(-86, -776)
+
+[node name="Enemy5" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(72, -776)
+
+[node name="Enemy6" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(3, -684)
+
+[node name="Enemy7" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(694, -760)
+
+[node name="Enemy8" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(692, -591)
+
+[node name="Enemy9" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(885, -593)
+
+[node name="Enemy10" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("12_p1274")]
+position = Vector2(885, -759)
+
+[node name="CanvasLayer" parent="." instance=ExtResource("14_ytnge")]
+video_delay = 0.8
+
+[node name="RewardWeapon" parent="." instance=ExtResource("15_7mwey")]
+position = Vector2(1585.9999, -725.99994)
+scale = Vector2(0.095, 0.095)
+weapon = ExtResource("16_7mwey")
+
+[node name="exit" type="Area2D" parent="."]
+script = ExtResource("6_lkacb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="exit"]
+position = Vector2(1588, -797)
+shape = SubResource("RectangleShape2D_v8hf3")
+
 [connection signal="body_entered" from="tp_portal/centre_to_room2" to="tp_portal/centre_to_room2" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room2_to_centre" to="tp_portal/room2_to_centre" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/centre_to_room3" to="tp_portal/centre_to_room3" method="_on_body_entered"]
@@ -420,3 +461,4 @@ position = Vector2(840, -103)
 [connection signal="body_entered" from="tp_portal/room4_to_room3" to="tp_portal/room4_to_room3" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room4_to_exit" to="tp_portal/room4_to_exit" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/exit_to_room4" to="tp_portal/exit_to_room4" method="_on_body_entered"]
+[connection signal="body_entered" from="exit" to="exit" method="_on_body_entered"]

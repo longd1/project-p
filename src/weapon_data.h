@@ -11,6 +11,8 @@ class WeaponData : public Resource {
 private:
     String weapon_name = "Weapon";
 
+    int ground_sprite_frame = 0;
+
     int damage = 0;
 
     float block_damage_negation = 0.0f;
@@ -62,6 +64,9 @@ public:
 
     void set_knockback(float value);
     float get_knockback() const;
+
+    void set_ground_sprite_frame(int value) { ground_sprite_frame = value; }
+    int get_ground_sprite_frame() const { return ground_sprite_frame; }
 };
 
 }

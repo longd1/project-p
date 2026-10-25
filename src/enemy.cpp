@@ -46,6 +46,10 @@ void Enemy::_bind_methods() {
     D_METHOD("get_attack_y_tolerance"),
     &Enemy::get_attack_y_tolerance
     );
+    ClassDB::bind_method(
+    D_METHOD("apply_external_knockback", "force"),
+    &Enemy::apply_external_knockback
+);
 
     ADD_PROPERTY(
     PropertyInfo(
@@ -87,6 +91,7 @@ void Enemy::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "knockback_negation", PROPERTY_HINT_RANGE, "0,1,0.01"), "set_knockback_negation", "get_knockback_negation");
 
     ClassDB::bind_method(D_METHOD("attack"), &Enemy::attack);
+    ADD_SIGNAL(MethodInfo("died"));
 }
 
 
@@ -128,30 +133,12 @@ void Enemy::_ready() {
         animated_sprite->set_speed_scale(1.0f);
         animated_sprite->play("idle");
     }
+}
 
-    if (animated_sprite == nullptr) {
-        UtilityFunctions::push_warning(
-        "Enemy: AnimatedSprite2D not found."
-        );
-    }
+void Enemy::apply_external_knockback(const Vector2 &force) {
+    if (health <= 0) return;
 
-    if (hitbox == nullptr) {
-        UtilityFunctions::push_warning(
-        "Enemy: hitbox/Area2D not found."
-        );
-    }
-
-    if (hurtbox == nullptr) {
-        UtilityFunctions::push_warning(
-        "Enemy: hurtbox/Area2D not found."
-        );
-    }
-
-    if (sword_slash_sound == nullptr) {
-        UtilityFunctions::push_warning(
-        "Enemy: sound/swordsplash not found."
-        );
-    }
+    knockback_velocity = force;
 }
 
 
@@ -323,11 +310,7 @@ void Enemy::update_attack() {
         if (sword_slash_sound != nullptr &&
             sword_slash_sound->get_stream().is_valid()) {
             sword_slash_sound->play();
-        } else {
-            UtilityFunctions::push_warning(
-                "Enemy: sword slash sound node/stream is missing."
-            );
-        }
+        } 
 
         attack_sound_played = true;
     }
@@ -395,14 +378,23 @@ void Enemy::_physics_process(double delta) {
 
     update_ai(delta);
 
-    // Khi không bị stun, cộng knockback vào vận tốc AI.
-    // Khi bị stun, update_ai() đã đặt velocity = knockback_velocity.
-    if (combat_state != CombatState::STUNNED &&
-        knockback_velocity.length() > 0.0f) {
+
+    if (combat_state != CombatState::STUNNED && knockback_velocity.length() > 0.0f) {
         set_velocity(get_velocity() + knockback_velocity);
     }
 
-    move_and_slide();
+    if (knockback_velocity.length() > 0.0f) {
+        knockback_velocity = knockback_velocity.move_toward(
+            Vector2(),
+            500.0f * static_cast<float>(delta)
+        );
+
+        if (knockback_velocity.length() < 1.0f) {
+            knockback_velocity = Vector2();
+        }
+    }
+
+move_and_slide();
 
     // Giảm knockback sau khi đã sử dụng nó để di chuyển.
     if (knockback_velocity.length() > 0.0f) {
@@ -477,7 +469,8 @@ void Enemy::die(bool play_sound) {
         queue_free();
     }
 
-    UtilityFunctions::print("Enemy died");
+
+    emit_signal("died");
 }
 
 // Setters / getters

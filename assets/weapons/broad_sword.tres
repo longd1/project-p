@@ -1,0 +1,12 @@
+[gd_resource type="WeaponData" format=3 uid="uid://cdkb6mdgw3e3t"]
+
+[resource]
+weapon_name = "broad sword"
+ground_sprite_frame = 1
+damage = 8
+block_damage_negation = 0.3
+attack_duration = 0.28
+parry_duration = 0.25
+pre_parry_duration = 0.06
+stun_scale = 0.08
+knockback = 7.0
