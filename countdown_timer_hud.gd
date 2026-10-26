@@ -22,11 +22,11 @@ signal time_up
 # ==========================================
 
 @onready var countdown: Timer = $countdown
-@onready var time_label: Label = $TimerUI/TimerPanel/TimeLabel
+@onready var time_label: Label = $Screen/TimerUI/TimerPanel/TimeLabel
+@onready var fail_video: VideoStreamPlayer = $Screen/FailVideo
 
 @onready var tick_sound: AudioStreamPlayer = $TickSound
 
-@onready var fail_video: VideoStreamPlayer = $FailVideo
 
 
 # ==========================================
@@ -42,6 +42,10 @@ var failure_started: bool = false
 # ==========================================
 
 func _ready() -> void:
+	$Screen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$Screen/TimerUI.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$Screen/FailVideo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
 	countdown.one_shot = true
 
 	fail_video.hide()

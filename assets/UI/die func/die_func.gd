@@ -7,8 +7,9 @@ extends CanvasLayer
 
 @export var video_delay: float = 0.0
 
-const FLOOR_1_PATH: String = \
-	"res://assets/scene/floor 1/floor1_completed_scene.tscn"
+const DEAD_UI_SCENE = preload(
+	"res://assets/UI/deadUI/dead_ui.tscn"
+)
 
 
 # ==========================================
@@ -16,7 +17,8 @@ const FLOOR_1_PATH: String = \
 # ==========================================
 
 @onready var player = get_tree().get_first_node_in_group("player")
-@onready var death_video: VideoStreamPlayer = $VideoStreamPlayer
+@onready var death_video: VideoStreamPlayer = $Screen/VideoStreamPlayer
+@onready var dead_ui = $Screen/DeadUI
 
 
 # ==========================================
@@ -31,6 +33,9 @@ var death_sequence_started: bool = false
 # ==========================================
 
 func _ready() -> void:
+	$Screen.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$Screen/VideoStreamPlayer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
 	death_video.hide()
 
 	if player != null:
@@ -82,8 +87,4 @@ func _on_death_video_started() -> void:
 func _on_death_video_finished() -> void:
 	death_video.hide()
 
-	Global.reset_progression()
-
-	get_tree().change_scene_to_file(
-		FLOOR_1_PATH
-	)
+	dead_ui.show_dead_ui()

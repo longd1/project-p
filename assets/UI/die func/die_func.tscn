@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cexmoautbah14"]
+[gd_scene load_steps=6 format=3 uid="uid://cexmoautbah14"]
 
 [ext_resource type="Script" uid="uid://dsmwuf6d3qnew" path="res://assets/UI/die func/die_func.gd" id="1_j6ouc"]
 [ext_resource type="Shader" uid="uid://0hn54ng1l7nd" path="res://assets/UI/die func/die_func.gdshader" id="2_upnxa"]
 [ext_resource type="VideoStream" uid="uid://jktftwyy8hsh" path="res://assets/die-prompt.ogv" id="3_obc4d"]
+[ext_resource type="PackedScene" uid="uid://d2ulgv6818nvn" path="res://assets/UI/deadUI/dead_ui.tscn" id="4_nbffx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6hvq7"]
 shader = ExtResource("2_upnxa")
@@ -12,15 +13,28 @@ shader_parameter/smoothness = 0.08
 shader_parameter/despill = 1.0
 
 [node name="CanvasLayer" type="CanvasLayer"]
+layer = 100
 script = ExtResource("1_j6ouc")
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+[node name="Screen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Screen"]
 material = SubResource("ShaderMaterial_6hvq7")
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stream = ExtResource("3_obc4d")
-volume_db = -10.949999
+volume_db = -10.949998
 expand = true
+
+[node name="DeadUI" parent="Screen" instance=ExtResource("4_nbffx")]
+layout_mode = 1

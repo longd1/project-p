@@ -3,7 +3,7 @@ extends Area2D
 @export var player_target: Marker2D
 @export var camera_target: Marker2D
 @export var camera: Camera2D
-@export var camera_zoom: Vector2 = Vector2(2.0, 2.0)
+@export var camera_zoom: Vector2 = Vector2(1.0, 1.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

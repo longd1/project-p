@@ -489,30 +489,32 @@ func show_success_panel() -> void:
 # ==================================================
 
 func _on_timer_time_up() -> void:
-	challenge_ended = true
+	if(correct_count < 4):
+		challenge_ended = true
 
 
-	main_panel.hide()
-	question_panel.hide()
-	complete_panel.hide()
-	feedback_panel.hide()
+		main_panel.hide()
+		question_panel.hide()
+		complete_panel.hide()
+		feedback_panel.hide()
 
 
 	# Báo challenge thất bại.
-	challenge_finished.emit(false)
-
+		challenge_finished.emit(false)
 
 	# ==========================================
 	# START DEATH SEQUENCE
 	# ==========================================
 
-	if death_handler != null:
-		death_handler.trigger_death_sequence()
+		if death_handler != null:
+			death_handler.trigger_death_sequence()
 
+		else:
+			push_error(
+				"PuzzleChallenge: Không tìm thấy death_handler."
+			)
 	else:
-		push_error(
-			"PuzzleChallenge: Không tìm thấy death_handler."
-		)
+		show_success_panel()
 
 
 # ==================================================

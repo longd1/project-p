@@ -429,6 +429,7 @@ position = Vector2(-1518, -379)
 roll_speed = 650.0
 shake_amount = 10.0
 rotation_speed = 25.0
+wait_time = 0.0
 
 [connection signal="body_entered" from="doom area" to="doom area" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/centre_to_room2" to="tp_portal/centre_to_room2" method="_on_body_entered"]
