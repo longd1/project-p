@@ -32,10 +32,8 @@ void Player::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_current_weapon"), &Player::get_current_weapon);
     ClassDB::bind_method(D_METHOD("die", "play_sound"), &Player::die, DEFVAL(true));
     ClassDB::bind_method(D_METHOD("apply_external_knockback", "force"), &Player::apply_external_knockback);
-    ClassDB::bind_method(
-    D_METHOD("refresh_progression"),
-    &Player::refresh_progression
-);
+    ClassDB::bind_method(D_METHOD("refresh_progression"), &Player::refresh_progression);
+    ClassDB::bind_method(D_METHOD("get_current_heal_flasks"), &Player::get_current_heal_flasks);
 
     ADD_PROPERTY(
         PropertyInfo(Variant::OBJECT, "current_weapon", PROPERTY_HINT_RESOURCE_TYPE, "WeaponData"),
@@ -73,6 +71,9 @@ Ref<WeaponData> Player::get_current_weapon() const {
     return current_weapon;
 }
 
+int Player::get_current_heal_flasks() const {
+    return current_heal_flasks;
+}
 
 int Player::get_attack_damage() const {
     int damage = base_damage;
