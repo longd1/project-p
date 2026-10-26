@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba7qt3hk4cpsd"]
+
+[ext_resource type="Script" uid="uid://44grdihlb106" path="res://countdown_timer_hud.gd" id="1_k7yg2"]
+[ext_resource type="AudioStream" uid="uid://bb0jhbd4qm3f5" path="res://assets/UI/tick.mp3" id="2_4ggu3"]
+[ext_resource type="VideoStream" uid="uid://bst1g71t1gt0m" path="res://assets/UI/fail_video.ogv" id="3_gpgwq"]
+
+[node name="CountdownTimerHUD" type="CanvasLayer"]
+script = ExtResource("1_k7yg2")
+duration = 45.0
+
+[node name="TimerUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TimerPanel" type="PanelContainer" parent="TimerUI"]
+layout_mode = 0
+offset_left = 551.0
+offset_top = 30.0
+offset_right = 641.0
+offset_bottom = 70.0
+
+[node name="TimeLabel" type="Label" parent="TimerUI/TimerPanel"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="countdown" type="Timer" parent="."]
+
+[node name="TickSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_4ggu3")
+
+[node name="FailVideo" type="VideoStreamPlayer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("3_gpgwq")
+volume_db = 23.999998

@@ -1,32 +1,4 @@
-
 extends CanvasLayer
-
-# ==================================================
-# SIGNALS
-# ==================================================
-
-# option_id: 0 = +12% damage
-# option_id: 1 = +8% damage, +20 Max HP
-# option_id: 2 = +45 Max HP
-signal reward_selected(
-	option_id: int,
-	damage_bonus_percent: float,
-	max_health_bonus: int
-)
-
-# Phần thưởng cố định sau mỗi Floor.
-signal floor_bonus_selected(
-	potions: int,
-	healing_bonus: int
-)
-
-
-# ==================================================
-# NEXT FLOOR
-# ==================================================
-
-# Chọn Floor tiếp theo trong Inspector.
-@export var next_floor_scene: PackedScene
 
 
 # ==================================================
@@ -58,7 +30,6 @@ var choice_made: bool = false
 
 # ==================================================
 # UI NODES
-# Đúng theo file floortransitui.tscn của cậu.
 # ==================================================
 
 @onready var title_label: Label = $title
@@ -86,13 +57,11 @@ var choice_made: bool = false
 # ==================================================
 
 func _ready() -> void:
-	# Nội dung tiêu đề.
-	title_label.text = "CHOOSE YOUR REWARD"
-	subtitle_label.text = (
-		"Choose one upgrade before descending deeper"
-	)
+	show()
 
-	# Nội dung ba lựa chọn.
+	title_label.text = "CHOOSE YOUR REWARD"
+	subtitle_label.text = "Choose one upgrade before descending deeper"
+
 	card_title_1.text = (
 		"⚔\nBERSERKER\n\n+%s%%"
 		% _format_number(damage_upgrade_1)
@@ -114,7 +83,6 @@ func _ready() -> void:
 	)
 	card_content_3.text = "Max HP"
 
-	# Phần thưởng cố định sau mỗi Floor.
 	bonus_label.text = "🎁 FLOOR BONUS"
 
 	bonus_content.text = (
@@ -125,7 +93,6 @@ func _ready() -> void:
 		healing_bonus_per_floor
 	]
 
-	# Cho phép click xuyên qua các Label nằm trong Button.
 	card_title_1.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card_content_1.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
@@ -135,89 +102,111 @@ func _ready() -> void:
 	card_title_3.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card_content_3.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-	# Kết nối sự kiện chọn card.
 	card_1.pressed.connect(_on_card_1_pressed)
 	card_2.pressed.connect(_on_card_2_pressed)
 	card_3.pressed.connect(_on_card_3_pressed)
 
 
 # ==================================================
-# CARD BUTTONS
+# CARD 1 - BERSERKER
+# +12% DAMAGE
 # ==================================================
 
 func _on_card_1_pressed() -> void:
 	_choose_reward(
-		0,
 		damage_upgrade_1,
 		0
 	)
 
 
+# ==================================================
+# CARD 2 - BATTLE-HARDENED
+# +8% DAMAGE
+# +20 MAX HP
+# ==================================================
+
 func _on_card_2_pressed() -> void:
 	_choose_reward(
-		1,
 		damage_upgrade_2,
 		health_upgrade_2
 	)
 
 
+# ==================================================
+# CARD 3 - VITALITY
+# +45 MAX HP
+# ==================================================
+
 func _on_card_3_pressed() -> void:
 	_choose_reward(
-		2,
 		0.0,
 		health_upgrade_3
 	)
 
 
 # ==================================================
-# APPLY SELECTION AND TRANSITION
+# APPLY REWARD
 # ==================================================
 
 func _choose_reward(
-	option_id: int,
 	damage_bonus_percent: float,
 	max_health_bonus: int
 ) -> void:
 	if choice_made:
 		return
 
-	# Không chuyển Floor nếu chưa cấu hình scene tiếp theo.
-	if next_floor_scene == null:
-		push_error(
-			"FloorTransitionUI: Chưa gán Next Floor Scene "
-			+ "trong Inspector."
-		)
-		return
-
 	choice_made = true
 
-	# Khóa các card để tránh chọn nhiều lần.
 	card_1.disabled = true
 	card_2.disabled = true
 	card_3.disabled = true
 
-	# Gửi thông tin nâng cấp cho Floor đang chạy.
-	reward_selected.emit(
-		option_id,
-		damage_bonus_percent,
-		max_health_bonus
-	)
 
-	# Gửi phần thưởng cố định của Floor.
-	floor_bonus_selected.emit(
-		bonus_potions,
-		healing_bonus_per_floor
-	)
+	# ==========================================
+	# DAMAGE
+	# ==========================================
 
-	# Chuyển sang Floor tiếp theo.
-	var error: Error = get_tree().change_scene_to_packed(
-		next_floor_scene
-	)
-
-	if error != OK:
-		push_error(
-			"FloorTransitionUI: Không thể chuyển sang Floor tiếp theo."
+	if damage_bonus_percent > 0.0:
+		Global.upgrade_damage(
+			damage_bonus_percent / 100.0
 		)
+
+
+	# ==========================================
+	# MAX HEALTH
+	# ==========================================
+
+	if max_health_bonus > 0:
+		Global.upgrade_health(
+			max_health_bonus
+		)
+
+
+	# ==========================================
+	# REFRESH CURRENT PLAYER
+	# ==========================================
+
+	var player = get_tree().get_first_node_in_group("player")
+
+	if player != null:
+		if player.has_method("refresh_progression"):
+			player.refresh_progression()
+
+
+	# ==========================================
+	# CLOSE UI
+	# ==========================================
+	print("BEFORE CLOSE UI")
+	print("UI path: ", get_path())
+
+	hide()
+
+	print("AFTER HIDE")
+	print("Visible: ", visible)
+
+	queue_free()
+
+	print("QUEUED: ", is_queued_for_deletion())
 
 
 # ==================================================

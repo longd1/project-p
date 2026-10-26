@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://c83p0lsclw1aj"]
+[gd_scene load_steps=5 format=3 uid="uid://c83p0lsclw1aj"]
+
+[ext_resource type="Script" uid="uid://cnjfmcqwndmcp" path="res://assets/UI/changesceneui/floortransitui.gd" id="1_6xsnu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajrpr"]
 bg_color = Color(0.101960786, 0.13725491, 0.19607843, 1)
@@ -37,6 +39,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [node name="floortransitui" type="CanvasLayer"]
+script = ExtResource("1_6xsnu")
 
 [node name="background" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -135,7 +138,7 @@ theme_override_font_sizes/font_size = 22
 text = "✦
 BALANCED
 
-+8%
++6%
 
 +25"
 horizontal_alignment = 1

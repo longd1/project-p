@@ -32,6 +32,10 @@ void Player::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_current_weapon"), &Player::get_current_weapon);
     ClassDB::bind_method(D_METHOD("die", "play_sound"), &Player::die, DEFVAL(true));
     ClassDB::bind_method(D_METHOD("apply_external_knockback", "force"), &Player::apply_external_knockback);
+    ClassDB::bind_method(
+    D_METHOD("refresh_progression"),
+    &Player::refresh_progression
+);
 
     ADD_PROPERTY(
         PropertyInfo(Variant::OBJECT, "current_weapon", PROPERTY_HINT_RESOURCE_TYPE, "WeaponData"),
@@ -46,6 +50,21 @@ void Player::set_current_weapon(const Ref<WeaponData> &weapon) {
 
     if (current_weapon.is_valid()) {
         UtilityFunctions::print("Equipped weapon: ", current_weapon->get_weapon_name());
+    }
+}
+
+void Player::refresh_progression() {
+    if (global == nullptr) return;
+
+    int bonus_max_health = static_cast<int>(global->get("bonus_max_health"));
+
+    int old_max_health = max_health;
+    max_health = 100 + bonus_max_health;
+
+    health += max_health - old_max_health;
+
+    if (health > max_health) {
+        health = max_health;
     }
 }
 
