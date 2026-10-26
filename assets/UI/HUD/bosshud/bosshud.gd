@@ -1,55 +1,69 @@
 
 extends CanvasLayer
 
+# Gán Boss trong Inspector nếu cần.
 @export var boss_path: NodePath
 
-@export var bar_width: float = 400.0
-@export var bar_height: float = 18.0
-@export var health_lerp_speed: float = 8.0
+# Tên hiển thị phía trên thanh máu.
+@export var boss_display_name: String = "Messmer"
 
-# Vị trí thanh máu trong viewport.
-@export var margin_left: float = 20.0
-@export var top_offset: float = 50.0
+# Tốc độ thanh máu chuyển động mượt.
+@export var health_lerp_speed: float = 8.0
 
 var boss: Node = null
 var preview_mode: bool = false
 
+# Lưu nguyên kích thước và scale đã thiết kế trong scene.
+var full_bar_size: Vector2
+var full_bar_scale: Vector2
+
+
 @onready var background: Panel = $background
 @onready var bar: Panel = $bar
+@onready var boss_name_label: Label = $bossname
 
 
 func _ready() -> void:
-	_apply_styles()
-	_update_layout()
+	# Lưu kích thước ban đầu, không tự đặt lại màu sắc.
+	full_bar_size = bar.size
+	full_bar_scale = bar.scale
 
-	# Tìm Boss theo đường dẫn được gán.
+	# Thu nhỏ thanh máu từ mép trái sang phải.
+	bar.pivot_offset = Vector2.ZERO
+
+	
+
+	# Tìm Boss theo NodePath được gán trong Inspector.
 	if not boss_path.is_empty():
 		boss = get_node_or_null(boss_path)
 
-	# Nếu chưa tìm thấy, tìm node tên Boss trong Floor.
+	# Nếu chưa gán NodePath, thử tìm node tên "Boss".
 	if not is_instance_valid(boss):
-		var scene := get_tree().current_scene
+		var current_scene := get_tree().current_scene
 
-		if scene != null:
-			boss = scene.find_child("Boss", true, false)
+		if current_scene != null:
+			boss = current_scene.find_child(
+				"Boss",
+				true,
+				false
+			)
 
-	# Chạy riêng bosshud.tscn: hiển thị đầy thanh để xem giao diện.
+	# Chạy riêng scene HUD để xem trước.
 	if not is_instance_valid(boss):
-		var scene := get_tree().current_scene
-
-		if scene == self:
+		if get_tree().current_scene == self:
 			preview_mode = true
 			visible = true
-			bar.size.x = bar_width
+			bar.scale = full_bar_scale
 		else:
 			visible = false
 			push_warning(
 				"BossHUD: Không tìm thấy Boss. "
-				+ "Hãy kiểm tra Boss Path."
+				+ "Hãy gán Boss Path trong Inspector."
 			)
 
 
 func _process(delta: float) -> void:
+	# Giữ thanh máu đầy khi xem trước scene.
 	if preview_mode:
 		return
 
@@ -66,6 +80,7 @@ func _process(delta: float) -> void:
 	var current_health: float = float(
 		boss.get_health()
 	)
+
 	var max_health: float = float(
 		boss.get_max_health()
 	)
@@ -76,72 +91,26 @@ func _process(delta: float) -> void:
 
 	visible = true
 
+	# Tính phần trăm máu còn lại.
 	var health_ratio: float = clampf(
 		current_health / max_health,
 		0.0,
 		1.0
 	)
 
-	var target_width: float = bar_width * health_ratio
+	var target_scale_x: float = (
+		full_bar_scale.x * health_ratio
+	)
+
+	# Làm thanh máu giảm dần, giữ nguyên kích thước gốc.
 	var weight: float = clampf(
 		health_lerp_speed * delta,
 		0.0,
 		1.0
 	)
 
-	bar.size.x = lerpf(
-		bar.size.x,
-		target_width,
+	bar.scale.x = lerpf(
+		bar.scale.x,
+		target_scale_x,
 		weight
-	)
-
-
-
-func _update_layout() -> void:
-	var viewport_size: Vector2 = (
-		get_viewport().get_visible_rect().size
-	)
-
-	# Căn thanh máu về phía bên phải màn hình.
-	var start_x: float = (
-		viewport_size.x - bar_width - margin_left
-	)
-
-	background.position = Vector2(
-		start_x,
-		top_offset
-	)
-
-	background.size = Vector2(
-		bar_width,
-		bar_height
-	)
-
-	# Thanh máu khớp với nền khi đầy máu.
-	bar.position = background.position
-	bar.size = background.size
-
-
-
-func _apply_styles() -> void:
-	# Nền đen đỏ.
-	var background_style := StyleBoxFlat.new()
-	background_style.bg_color = Color("#210D12")
-	background_style.border_color = Color("#5A2630")
-	background_style.set_border_width_all(1)
-	background_style.set_corner_radius_all(7)
-
-	background.add_theme_stylebox_override(
-		"panel",
-		background_style
-	)
-
-	# Phần máu hiện tại màu đỏ.
-	var bar_style := StyleBoxFlat.new()
-	bar_style.bg_color = Color("#C91F2D")
-	bar_style.set_corner_radius_all(7)
-
-	bar.add_theme_stylebox_override(
-		"panel",
-		bar_style
 	)
