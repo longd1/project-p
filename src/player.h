@@ -54,6 +54,7 @@ public:
     int get_attack_damage() const;
     float get_block_damage_negation() const;
 
+    int get_current_heal_flasks() const;
     int current_heal_flasks = 0;
 
     void die(bool play_sound = true) override;
