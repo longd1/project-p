@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://c15gogw8dfeip"]
+[gd_scene load_steps=39 format=4 uid="uid://c15gogw8dfeip"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_e1hom"]
 [ext_resource type="PackedScene" uid="uid://cj26vq7xkven1" path="res://assets/UI/HUD/playerhud/hud.tscn" id="1_ray2w"]
@@ -20,6 +20,8 @@
 [ext_resource type="PackedScene" uid="uid://cexmoautbah14" path="res://assets/UI/die func/die_func.tscn" id="18_erf74"]
 [ext_resource type="Script" uid="uid://de8f4n3ejglm8" path="res://assets/scene/floor 3/puzzle_trigger.gd" id="19_5f13y"]
 [ext_resource type="PackedScene" uid="uid://j7aur638n1sg" path="res://assets/UI/puzzle_challenge/puzzlechallenge.tscn" id="20_3fxpj"]
+[ext_resource type="PackedScene" uid="uid://cmp4w2q5j3gsy" path="res://assets/character/enemy/enemy.tscn" id="21_3fxpj"]
+[ext_resource type="PackedScene" uid="uid://ddmejry2s178n" path="res://assets/character/mini boss/op knight/op_knight.tscn" id="22_ieswb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_6n2an")
@@ -491,6 +493,43 @@ puzzle_scene = ExtResource("20_3fxpj")
 position = Vector2(-14, 0)
 scale = Vector2(13, 13)
 shape = SubResource("RectangleShape2D_ieswb")
+
+[node name="enemy" type="Node2D" parent="."]
+
+[node name="Enemy" parent="enemy" instance=ExtResource("21_3fxpj")]
+max_health = 70
+attack_damage = 25
+position = Vector2(-48, -577)
+
+[node name="Enemy2" parent="enemy" instance=ExtResource("21_3fxpj")]
+max_health = 70
+attack_damage = 25
+position = Vector2(-52, -463)
+
+[node name="Enemy3" parent="enemy" instance=ExtResource("21_3fxpj")]
+max_health = 70
+attack_damage = 25
+position = Vector2(145, -583)
+
+[node name="Enemy4" parent="enemy" instance=ExtResource("21_3fxpj")]
+max_health = 70
+attack_damage = 25
+position = Vector2(142, -444)
+
+[node name="Enemy5" parent="enemy" instance=ExtResource("21_3fxpj")]
+max_health = 70
+attack_damage = 25
+position = Vector2(1931, 16)
+
+[node name="Enemy6" parent="enemy" instance=ExtResource("21_3fxpj")]
+max_health = 70
+attack_damage = 25
+position = Vector2(1931, 16)
+
+[node name="MiniBoss" parent="." instance=ExtResource("22_ieswb")]
+max_health = 200
+attack_damage = 30
+position = Vector2(998.99994, 37.999996)
 
 [connection signal="body_entered" from="tp_portal/centre_to_room2" to="tp_portal/centre_to_room2" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room2_to_centre" to="tp_portal/room2_to_centre" method="_on_body_entered"]

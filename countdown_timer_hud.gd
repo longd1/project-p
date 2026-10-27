@@ -133,7 +133,11 @@ func update_display() -> void:
 # ==========================================
 
 func _on_timeout() -> void:
-	start_failure_sequence()
+	countdown.stop()
+	tick_sound.stop()
+	time_label.text = "00:00"
+
+	time_up.emit()
 
 
 # ==========================================

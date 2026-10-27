@@ -508,11 +508,8 @@ func _on_timer_time_up() -> void:
 
 		if death_handler != null:
 			death_handler.trigger_death_sequence()
-
 		else:
-			push_error(
-				"PuzzleChallenge: Không tìm thấy death_handler."
-			)
+			push_error("PuzzleChallenge: Không tìm thấy death_handler.")
 	else:
 		show_success_panel()
 
