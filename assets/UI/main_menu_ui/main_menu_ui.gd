@@ -3,6 +3,7 @@ extends Control
 
 const GUIDE_UI_SCENE := "res://assets/UI/main_menu_ui/guide_ui/guide_ui.tscn"
 const OPTIONS_UI_SCENE := "res://assets/UI/main_menu_ui/options_ui/options_ui.tscn"
+const FLOOR_1_PATH = "res://assets/scene/floor 1/floor1_completed_scene.tscn"
 
 
 @onready var start_button: Button = $buttons/start_button
@@ -42,4 +43,10 @@ func _on_options_pressed() -> void:
 # ==========================================
 
 func _on_start_pressed() -> void:
-	print("Start Game pressed")
+	var error = get_tree().change_scene_to_file(FLOOR_1_PATH)
+
+	if error != OK:
+		push_error(
+			"Không thể mở Floor 1. Hãy kiểm tra đường dẫn scene: "
+			+ FLOOR_1_PATH
+		)
