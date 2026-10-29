@@ -1,59 +1,94 @@
 extends Area2D
 
 
-# ==========================================
-# SCENES
-# ==========================================
+# ==================================================
+# SCENE PATHS
+# ==================================================
 
-const FLOOR_TRANSIT_UI = preload(
-	"res://assets/UI/changesceneui/floortransitui.tscn"
-)
-
-const NEXT_FLOOR_PATH: String = (
+const NEXT_FLOOR_PATH: String = \
 	"res://assets/scene/floor 2/floor2_completed_scene.tscn"
+
+const FLOOR_TRANSITION_UI: PackedScene = preload(
+	"res://assets/UI/floortransitui.tscn"
 )
 
 
-# ==========================================
+# ==================================================
 # STATE
-# ==========================================
+# ==================================================
 
 var triggered: bool = false
 
 
-# ==========================================
-# EXIT
-# ==========================================
+# ==================================================
+# READY
+# ==================================================
+
+func _ready() -> void:
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
+
+
+# ==================================================
+# PLAYER ENTER
+# ==================================================
 
 func _on_body_entered(body: Node2D) -> void:
 	if triggered:
 		return
 
-	if body is Player:
-		triggered = true
+	if not body is Player:
+		return
 
-		set_deferred("monitoring", false)
+	triggered = true
 
-		call_deferred("_change_floor")
+	call_deferred("_change_floor")
 
 
-# ==========================================
+# ==================================================
 # CHANGE FLOOR
-# ==========================================
+# ==================================================
 
 func _change_floor() -> void:
+	var tree: SceneTree = get_tree()
+
+	if tree == null:
+		triggered = false
+		return
+
+
+	# ==========================================
+	# CREATE UPGRADE UI
+	# ==========================================
+
+	var transition_ui = FLOOR_TRANSITION_UI.instantiate()
+
+	tree.root.add_child(
+		transition_ui
+	)
+
+
+	# ==========================================
+	# PROGRESSION
+	# ==========================================
+
 	Global.advance_floor()
 
-	var tree := get_tree()
 
-	var error := tree.change_scene_to_file(
+	# ==========================================
+	# LOAD FLOOR 2
+	# ==========================================
+
+	var error: Error = tree.change_scene_to_file(
 		NEXT_FLOOR_PATH
 	)
 
 	if error != OK:
-		push_error("Không thể load Floor tiếp theo.")
+		push_error(
+			"Floor 1 Exit: Không thể load Floor 2."
+		)
+
+		transition_ui.queue_free()
+
+		triggered = false
 		return
-
-	var transit_ui = FLOOR_TRANSIT_UI.instantiate()
-
-	tree.root.add_child(transit_ui)

@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=4 uid="uid://dce4wnljonjk3"]
+[gd_scene load_steps=35 format=4 uid="uid://dce4wnljonjk3"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_npn6c"]
 [ext_resource type="PackedScene" uid="uid://cj26vq7xkven1" path="res://assets/UI/HUD/playerhud/hud.tscn" id="1_o7luv"]
+[ext_resource type="Script" uid="uid://cqdrvbd8yioo4" path="res://assets/scene/floor 2/FloorManager2.gd" id="1_phlur"]
 [ext_resource type="Texture2D" uid="uid://cvvokrlib1qao" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="2_ipiuj"]
 [ext_resource type="Texture2D" uid="uid://p8lq3ixc5do2" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_walls_high-16x32.png" id="3_i6ncv"]
 [ext_resource type="TileSet" uid="uid://delvpm3fbgot0" path="res://assets/scene/tile_set.tres" id="4_njvuc"]
@@ -17,6 +18,9 @@
 [ext_resource type="Script" uid="uid://b0kfqqn8264c5" path="res://assets/scene/floor 2/room_4_to_room_5.gd" id="12_y4342"]
 [ext_resource type="Script" uid="uid://b0jj25ykeyo73" path="res://assets/scene/floor 2/room_5_to_room_4.gd" id="13_olx4n"]
 [ext_resource type="PackedScene" uid="uid://cmp4w2q5j3gsy" path="res://assets/character/enemy/enemy.tscn" id="14_o7luv"]
+[ext_resource type="PackedScene" uid="uid://dnvhiohvkq3nr" path="res://assets/weapons/ground_weapon.tscn" id="19_t8qeo"]
+[ext_resource type="WeaponData" uid="uid://bki4m6ly26lsi" path="res://assets/weapons/cutlass.tres" id="20_8ujes"]
+[ext_resource type="Script" uid="uid://bp7pwgnkr5ig3" path="res://assets/scene/floor 2/exit.gd" id="21_phlur"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_ipiuj")
@@ -246,7 +250,13 @@ size = Vector2(24, 46.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0x272"]
 size = Vector2(21, 48.75)
 
-[node name="floor2_completed_scene" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t8qeo"]
+
+[node name="floor2_completed_scene" type="Node2D" node_paths=PackedStringArray("reward_weapon", "exit_area", "exit_collision")]
+script = ExtResource("1_phlur")
+reward_weapon = NodePath("RewardWeapon")
+exit_area = NodePath("floor_exit")
+exit_collision = NodePath("floor_exit/CollisionShape2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 z_index = 10
@@ -410,7 +420,7 @@ position = Vector2(1089, -736)
 [node name="CanvasLayer" parent="." instance=ExtResource("12_6j0en")]
 video_delay = 0.8
 
-[node name="enemy_spawn" type="Node2D" parent="."]
+[node name="enemy_spawn" type="Node2D" parent="." groups=["enemy"]]
 
 [node name="Enemy" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
 detection_range = 50.0
@@ -420,73 +430,68 @@ attack_knockback = 30.0
 attack_cooldown = 0.8
 position = Vector2(-1632, -159)
 
-[node name="Enemy2" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
+[node name="Enemy2" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("14_o7luv")]
 detection_range = 50.0
 max_health = 60
 attack_damage = 18
 attack_cooldown = 0.8
 position = Vector2(-294, -900)
 
-[node name="Enemy3" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
+[node name="Enemy3" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("14_o7luv")]
 detection_range = 50.0
 max_health = 60
 attack_damage = 18
 attack_cooldown = 0.8
 position = Vector2(160, -900)
 
-[node name="Enemy4" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
+[node name="Enemy4" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("14_o7luv")]
 detection_range = 50.0
 max_health = 60
 attack_damage = 18
 attack_cooldown = 0.8
 position = Vector2(-215, -764)
 
-[node name="Enemy5" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
+[node name="Enemy5" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("14_o7luv")]
 detection_range = 50.0
 max_health = 60
 attack_damage = 18
 attack_cooldown = 0.8
 position = Vector2(-286, -646)
 
-[node name="Enemy6" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
+[node name="Enemy6" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("14_o7luv")]
 detection_range = 50.0
 max_health = 60
 attack_damage = 18
 attack_cooldown = 0.8
 position = Vector2(121, -769)
 
-[node name="Enemy7" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
+[node name="Enemy7" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("14_o7luv")]
 detection_range = 50.0
 max_health = 60
 attack_damage = 18
 attack_cooldown = 0.8
 position = Vector2(148, -639)
 
-[node name="Enemy8" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
+[node name="Enemy8" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("14_o7luv")]
 detection_range = 50.0
 max_health = 60
 attack_damage = 18
 attack_cooldown = 0.8
 position = Vector2(-54, -783)
 
-[node name="Enemy9" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
+[node name="Enemy9" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("14_o7luv")]
 detection_range = 50.0
 max_health = 60
 attack_damage = 18
 attack_cooldown = 0.8
 position = Vector2(1079, -777)
 
-[node name="Enemy10" parent="enemy_spawn" instance=ExtResource("14_o7luv")]
+[node name="Enemy10" parent="enemy_spawn" groups=["enemy"] instance=ExtResource("14_o7luv")]
 detection_range = 50.0
 max_health = 60
 attack_damage = 18
 attack_cooldown = 0.8
 position = Vector2(1077, -686)
-
-[node name="Player" parent="." instance=ExtResource("1_npn6c")]
-current_weapon = null
-z_index = 5
-position = Vector2(1, 1)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("5_cioc8")]
 position = Vector2(-1518, -379)
@@ -494,6 +499,21 @@ roll_speed = 650.0
 shake_amount = 10.0
 rotation_speed = 25.0
 wait_time = 0.0
+
+[node name="RewardWeapon" parent="." instance=ExtResource("19_t8qeo")]
+position = Vector2(1142, -180)
+scale = Vector2(0.15, 0.15)
+weapon = ExtResource("20_8ujes")
+
+[node name="Player" parent="." instance=ExtResource("1_npn6c")]
+
+[node name="floor_exit" type="Area2D" parent="."]
+position = Vector2(1136, -335)
+script = ExtResource("21_phlur")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor_exit"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_t8qeo")
 
 [connection signal="body_entered" from="doom area" to="doom area" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/centre_to_room2" to="tp_portal/centre_to_room2" method="_on_body_entered"]

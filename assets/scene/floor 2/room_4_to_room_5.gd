@@ -19,4 +19,4 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		body.global_position = player_target.global_position
 		camera.global_position = camera_target.global_position
-		camera.zoom = camera_zoom
+		#camera.zoom = camera_zoom

@@ -2,7 +2,7 @@
 
 [resource]
 weapon_name = "starter sword"
-damage = 100
+damage = 1000
 block_damage_negation = 0.25
 attack_duration = 0.3
 parry_duration = 0.25

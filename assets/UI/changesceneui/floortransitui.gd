@@ -1,6 +1,7 @@
 
 extends CanvasLayer
 
+
 # ==================================================
 # SIGNALS
 # ==================================================
@@ -10,19 +11,6 @@ signal reward_selected(
 	damage_bonus_percent: float,
 	max_health_bonus: int
 )
-
-signal floor_bonus_selected(
-	potions: int,
-	healing_bonus: int
-)
-
-
-# ==================================================
-# NEXT FLOOR
-# ==================================================
-
-# Chọn scene Floor tiếp theo trong Inspector.
-@export var next_floor_scene: PackedScene
 
 
 # ==================================================
@@ -40,10 +28,6 @@ signal floor_bonus_selected(
 @export_group("Card 3 - Vitality")
 @export var health_upgrade_3: int = 50
 
-@export_group("Floor Bonus")
-@export var bonus_potions: int = 2
-@export var healing_bonus_per_floor: int = 20
-
 
 # ==================================================
 # STATE
@@ -54,7 +38,6 @@ var choice_made: bool = false
 
 # ==================================================
 # UI NODES
-# Giữ đúng tên và cấu trúc trong scene của cậu.
 # ==================================================
 
 @onready var card_1: Button = $card1
@@ -73,11 +56,10 @@ var choice_made: bool = false
 
 # ==================================================
 # READY
-# Không ghi đè text, position, size, màu hoặc style.
 # ==================================================
 
 func _ready() -> void:
-	# Đảm bảo có thể bấm Button kể cả khi click lên Label.
+	# Label không được chặn click của Button.
 	title_1.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content_1.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
@@ -87,14 +69,23 @@ func _ready() -> void:
 	title_3.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content_3.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-	# Kết nối nút chọn card.
-	card_1.pressed.connect(_on_card_1_pressed)
-	card_2.pressed.connect(_on_card_2_pressed)
-	card_3.pressed.connect(_on_card_3_pressed)
+
+	# ==========================================
+	# CONNECT BUTTONS
+	# ==========================================
+
+	if not card_1.pressed.is_connected(_on_card_1_pressed):
+		card_1.pressed.connect(_on_card_1_pressed)
+
+	if not card_2.pressed.is_connected(_on_card_2_pressed):
+		card_2.pressed.connect(_on_card_2_pressed)
+
+	if not card_3.pressed.is_connected(_on_card_3_pressed):
+		card_3.pressed.connect(_on_card_3_pressed)
 
 
 # ==================================================
-# CARD BUTTONS
+# CARD 1 - BERSERKER
 # ==================================================
 
 func _on_card_1_pressed() -> void:
@@ -105,6 +96,10 @@ func _on_card_1_pressed() -> void:
 	)
 
 
+# ==================================================
+# CARD 2 - BALANCED
+# ==================================================
+
 func _on_card_2_pressed() -> void:
 	_choose_reward(
 		1,
@@ -112,6 +107,10 @@ func _on_card_2_pressed() -> void:
 		health_upgrade_2
 	)
 
+
+# ==================================================
+# CARD 3 - VITALITY
+# ==================================================
 
 func _on_card_3_pressed() -> void:
 	_choose_reward(
@@ -122,7 +121,7 @@ func _on_card_3_pressed() -> void:
 
 
 # ==================================================
-# CHOOSE REWARD AND CHANGE FLOOR
+# CHOOSE REWARD
 # ==================================================
 
 func _choose_reward(
@@ -133,45 +132,64 @@ func _choose_reward(
 	if choice_made:
 		return
 
-	if next_floor_scene == null:
-		push_error(
-			"FloorTransitionUI: Chưa gán Next Floor Scene "
-			+ "trong Inspector."
-		)
-		return
-
 	choice_made = true
 
-	# Ngăn Player chọn nhiều hơn một card.
+
+	# ==========================================
+	# DISABLE CARDS
+	# ==========================================
+
 	card_1.disabled = true
 	card_2.disabled = true
 	card_3.disabled = true
 
-	# Gửi phần thưởng đã chọn đến Floor hiện tại.
+
+	# ==========================================
+	# APPLY DAMAGE UPGRADE
+	# ==========================================
+
+	if damage_bonus_percent > 0.0:
+		Global.upgrade_damage(
+			damage_bonus_percent / 100.0
+		)
+
+
+	# ==========================================
+	# APPLY HEALTH UPGRADE
+	# ==========================================
+
+	if max_health_bonus > 0:
+		Global.upgrade_health(
+			max_health_bonus
+		)
+
+
+	# ==========================================
+	# NOTIFY OTHER SYSTEMS
+	# ==========================================
+
 	reward_selected.emit(
 		option_id,
 		damage_bonus_percent,
 		max_health_bonus
 	)
 
-	# Gửi phần thưởng cố định sau khi vượt qua Floor.
-	floor_bonus_selected.emit(
-		bonus_potions,
-		healing_bonus_per_floor
+
+	# ==========================================
+	# REFRESH PLAYER
+	# ==========================================
+
+	var player = get_tree().get_first_node_in_group(
+		"player"
 	)
 
-	# Chuyển sang Floor tiếp theo.
-	var error: Error = get_tree().change_scene_to_packed(
-		next_floor_scene
-	)
+	if player != null:
+		if player.has_method("refresh_progression"):
+			player.refresh_progression()
 
-	if error != OK:
-		choice_made = false
 
-		card_1.disabled = false
-		card_2.disabled = false
-		card_3.disabled = false
+	# ==========================================
+	# CLOSE UI
+	# ==========================================
 
-		push_error(
-			"FloorTransitionUI: Không thể chuyển sang Floor tiếp theo."
-		)
+	queue_free()

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://brwhyfgfvx4px"]
 
-[ext_resource type="Script" uid="uid://bjqwosp7fs8dv" path="res://assets/UI/floortransitui.gd" id="1_dqdkh"]
+[ext_resource type="Script" uid="uid://cnjfmcqwndmcp" path="res://assets/UI/changesceneui/floortransitui.gd" id="1_dqdkh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajrpr"]
 bg_color = Color(0.101960786, 0.13725491, 0.19607843, 1)

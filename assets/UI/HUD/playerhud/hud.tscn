@@ -42,19 +42,21 @@ offset_bottom = 50.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_g68q5")
 
 [node name="heal_flask_icon" type="TextureRect" parent="."]
-offset_left = 60.0
-offset_top = 510.0
-offset_right = 127.0
-offset_bottom = 567.0
+offset_left = 20.0
+offset_top = 507.0
+offset_right = 87.0
+offset_bottom = 564.0
+scale = Vector2(2, 2)
 texture = ExtResource("2_2ulik")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="heal_flask_count" type="Label" parent="."]
-offset_left = 75.0
-offset_top = 564.0
-offset_right = 115.0
-offset_bottom = 587.0
+offset_left = 110.0
+offset_top = 582.0
+offset_right = 150.0
+offset_bottom = 624.0
+theme_override_font_sizes/font_size = 30
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1

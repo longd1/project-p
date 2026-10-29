@@ -1,6 +1,7 @@
-[gd_scene load_steps=40 format=4 uid="uid://c1v17pyqn6ojy"]
+[gd_scene load_steps=42 format=4 uid="uid://c1v17pyqn6ojy"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_cqf36"]
+[ext_resource type="Script" uid="uid://cif102g8c02y2" path="res://assets/scene/floor 4/FloorManager4.gd" id="1_eat3k"]
 [ext_resource type="PackedScene" uid="uid://cj26vq7xkven1" path="res://assets/UI/HUD/playerhud/hud.tscn" id="1_tqd34"]
 [ext_resource type="Texture2D" uid="uid://cvvokrlib1qao" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_floor-16x16.png" id="2_r8da7"]
 [ext_resource type="Texture2D" uid="uid://p8lq3ixc5do2" path="res://assets/scene/0x72_DungeonTilesetII_v1.7/0x72_DungeonTilesetII_v1.7/atlas_walls_high-16x32.png" id="3_jrb1a"]
@@ -19,8 +20,9 @@
 [ext_resource type="Script" uid="uid://iqenk4e0flwk" path="res://assets/scene/floor 4/room_7_to_room_6.gd" id="16_u7bpw"]
 [ext_resource type="Script" uid="uid://q8k8csjphken" path="res://assets/scene/floor 4/room_4_to_room_7.gd" id="17_65coe"]
 [ext_resource type="Script" uid="uid://d01ywngl2mmj1" path="res://assets/scene/floor 4/room_7_to_room_4.gd" id="18_nbiaa"]
-[ext_resource type="Script" uid="uid://cbcq3hrhbncrs" path="res://assets/scene/floor 4/puzzle_trigger.gd" id="19_xh8mo"]
-[ext_resource type="PackedScene" path="res://assets/UI/puzzle_challenge/puzzle_challenge.tscn" id="20_4irnc"]
+[ext_resource type="PackedScene" uid="uid://cmp4w2q5j3gsy" path="res://assets/character/enemy/enemy.tscn" id="20_4irnc"]
+[ext_resource type="PackedScene" uid="uid://ddmejry2s178n" path="res://assets/character/mini boss/op knight/op_knight.tscn" id="21_h1ne4"]
+[ext_resource type="Script" uid="uid://bb2mdu2qvj1uv" path="res://assets/scene/floor 4/exit.gd" id="23_ivdlh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_r8da7")
@@ -265,10 +267,15 @@ size = Vector2(62.5, 18.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tqd34"]
 size = Vector2(77.75, 15.25)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1ne4"]
-size = Vector2(243, 329)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5fpos"]
+size = Vector2(105, 34)
 
-[node name="floor 4" type="Node2D"]
+[node name="floor 4" type="Node2D" node_paths=PackedStringArray("mini_boss_1", "mini_boss_2", "exit_area", "exit_collision")]
+script = ExtResource("1_eat3k")
+mini_boss_1 = NodePath("MiniBoss")
+mini_boss_2 = NodePath("MiniBoss2")
+exit_area = NodePath("floor_exit")
+exit_collision = NodePath("floor_exit/CollisionShape2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 z_index = 10
@@ -516,13 +523,84 @@ position = Vector2(768, -572)
 [node name="cam" type="Marker2D" parent="tp_portal/room7_to_room4"]
 position = Vector2(761, -468)
 
-[node name="puzzle_trigger" type="Area2D" parent="."]
-script = ExtResource("19_xh8mo")
-puzzle_scene = ExtResource("20_4irnc")
+[node name="enemy_spawn" type="Node2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="puzzle_trigger"]
-position = Vector2(23.5, -881.5)
-shape = SubResource("RectangleShape2D_h1ne4")
+[node name="Enemy" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(-144, -361)
+
+[node name="Enemy2" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(172, -359)
+
+[node name="Enemy3" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(-153, -518)
+
+[node name="Enemy4" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(168, -520)
+
+[node name="Enemy5" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(4, -431)
+
+[node name="Enemy6" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(-621, -316)
+
+[node name="Enemy7" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(-942, -317)
+
+[node name="Enemy8" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(-784, -309)
+
+[node name="Enemy9" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(-624, -517)
+
+[node name="Enemy10" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(-950, -507)
+
+[node name="Enemy11" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(-788, -423)
+
+[node name="Enemy12" parent="enemy_spawn" instance=ExtResource("20_4irnc")]
+max_health = 80
+attack_damage = 30
+position = Vector2(-684, -818)
+
+[node name="MiniBoss" parent="." instance=ExtResource("21_h1ne4")]
+max_health = 250
+attack_damage = 50
+position = Vector2(26.000004, -881)
+
+[node name="MiniBoss2" parent="." instance=ExtResource("21_h1ne4")]
+max_health = 350
+attack_damage = 75
+position = Vector2(762.99994, -443.0001)
+
+[node name="floor_exit" type="Area2D" parent="."]
+script = ExtResource("23_ivdlh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor_exit"]
+position = Vector2(720, -1042)
+shape = SubResource("RectangleShape2D_5fpos")
 
 [connection signal="body_entered" from="tp_portal/centre_to_room3" to="tp_portal/centre_to_room3" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room3_to_centre" to="tp_portal/room3_to_centre" method="_on_body_entered"]

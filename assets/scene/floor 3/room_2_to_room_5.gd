@@ -3,6 +3,7 @@ extends Area2D
 @export var player_target: Marker2D
 @export var camera_target: Marker2D
 @export var camera: Camera2D
+@export var camera_zoom: Vector2 = Vector2(2.0, 2.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,3 +19,4 @@ func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
 		body.global_position = player_target.global_position
 		camera.global_position = camera_target.global_position
+		camera.zoom = camera_zoom
