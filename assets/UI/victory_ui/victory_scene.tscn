@@ -1,0 +1,165 @@
+[gd_scene load_steps=10 format=3 uid="uid://mh0iupckxoxo"]
+
+[ext_resource type="Script" uid="uid://db5oikofsj7a4" path="res://assets/UI/victory_ui/victory_scene.gd" id="1_2twnj"]
+[ext_resource type="Texture2D" uid="uid://elcwmm5gh03n" path="res://assets/UI/victory_ui/ZcbbNVoR2Vy-XYku7W-1CHd60J0W2fvTtG9lurgf9OwJIe6NWmh1hcfL8HpnK4Wg3677jj9PL2KnNr2ZLhPeOO3AaH2K4-f9n0ifFTlyqx8Ljmg-CidtJwntLnaBySZxfLquZCssHEAKeTXZ6pb_sTLtfLxQoVhucy31CFA-3qs.jpg" id="1_wmg28"]
+[ext_resource type="PackedScene" uid="uid://usck0jtbghjk" path="res://assets/scene/floor 1/floor1_completed_scene.tscn" id="2_ov7xk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a7nt5"]
+bg_color = Color(0.13333334, 0.15686275, 0.19607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.46666667, 0.4509804, 0.41960785, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x6wj6"]
+bg_color = Color(0.13333334, 0.15686275, 0.19607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.46666667, 0.4509804, 0.41960785, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0uvnu"]
+bg_color = Color(0.13333334, 0.15686275, 0.19607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.46666667, 0.4509804, 0.41960785, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gtigb"]
+bg_color = Color(0.13333334, 0.15686275, 0.19607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.46666667, 0.4509804, 0.41960785, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l1iuy"]
+bg_color = Color(0.13333334, 0.15686275, 0.19607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.46666667, 0.4509804, 0.41960785, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_brjow"]
+bg_color = Color(0.13333334, 0.15686275, 0.19607843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.46666667, 0.4509804, 0.41960785, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="background" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_right = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.105882354, 0.1254902, 0.16078432, 1)
+script = ExtResource("1_2twnj")
+first_floor_scene = ExtResource("2_ov7xk")
+
+[node name="image" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 42.0
+offset_right = 1066.0
+offset_bottom = 335.0
+texture = ExtResource("1_wmg28")
+expand_mode = 1
+
+[node name="victory_title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 352.0
+offset_right = 666.0
+offset_bottom = 407.0
+theme_override_colors/font_color = Color(0.94509804, 0.8352941, 0.54509807, 1)
+theme_override_font_sizes/font_size = 40
+text = "VICTORY "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="description" type="Label" parent="."]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 417.0
+offset_right = 809.0
+offset_bottom = 460.0
+theme_override_colors/font_color = Color(0.9098039, 0.8784314, 0.8117647, 1)
+theme_override_font_sizes/font_size = 25
+text = "YOU HAVE CONQUERED ALL FIVE FLOORS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="completion_label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 294.0
+offset_top = 475.0
+offset_right = 842.0
+offset_bottom = 503.0
+theme_override_colors/font_color = Color(0.72156864, 0.69411767, 0.63529414, 1)
+theme_override_font_sizes/font_size = 20
+text = "Every trial has been overcome. Your journey is complete."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="separator" type="HSeparator" parent="."]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 521.0
+offset_right = 1060.0
+offset_bottom = 534.0
+
+[node name="playagain" type="Button" parent="."]
+layout_mode = 0
+offset_left = 297.0
+offset_top = 553.0
+offset_right = 502.0
+offset_bottom = 617.0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_a7nt5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_x6wj6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_0uvnu")
+text = "PLAY AGAIN"
+
+[node name="main_menu" type="Button" parent="."]
+layout_mode = 0
+offset_left = 647.0
+offset_top = 554.0
+offset_right = 852.0
+offset_bottom = 618.0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_gtigb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_l1iuy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_brjow")
+text = "MAIN MENU"
