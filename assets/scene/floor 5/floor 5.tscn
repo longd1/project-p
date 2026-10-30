@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://blsmqp14yeklp"]
+[gd_scene load_steps=24 format=4 uid="uid://blsmqp14yeklp"]
 
 [ext_resource type="PackedScene" uid="uid://cj26vq7xkven1" path="res://assets/UI/HUD/playerhud/hud.tscn" id="1_g8qar"]
 [ext_resource type="PackedScene" uid="uid://beghgr1a0l6to" path="res://assets/UI/HUD/bosshud/bosshud.tscn" id="2_83gc0"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c2nehv37ih8ok" path="res://assets/scene/floor 5/room_2_to_centre.gd" id="8_ccj4s"]
 [ext_resource type="AudioStream" uid="uid://rshc02ygu4tx" path="res://assets/UI/boss theme.mp3" id="12_g8qar"]
 [ext_resource type="PackedScene" uid="uid://cnyuxu6fyhbnf" path="res://assets/UI/genemy_die_func.tscn" id="12_nwgxy"]
+[ext_resource type="PackedScene" uid="uid://cexmoautbah14" path="res://assets/UI/die func/die_func.tscn" id="13_83gc0"]
 [ext_resource type="Script" uid="uid://b5oaxfu8fb7fv" path="res://assets/scene/floor 5/finish_portal.gd" id="13_bpupk"]
 [ext_resource type="Texture2D" uid="uid://ddbd1wipgmat7" path="res://assets/UI/Portal_sprite.png" id="14_ifq6k"]
 
@@ -326,5 +327,7 @@ frame_progress = 0.23170069
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_g8qar")
 volume_db = -2.537
+
+[node name="CanvasLayer2" parent="." instance=ExtResource("13_83gc0")]
 
 [connection signal="body_entered" from="tp_portal/room2_to_centre" to="tp_portal/room2_to_centre" method="_on_body_entered"]
