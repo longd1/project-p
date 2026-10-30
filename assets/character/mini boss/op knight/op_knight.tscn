@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=3 uid="uid://ddmejry2s178n"]
+[gd_scene load_steps=116 format=3 uid="uid://ddmejry2s178n"]
 
 [ext_resource type="Texture2D" uid="uid://b3je47bl3sjjw" path="res://assets/character/mini boss/op knight/2D_SL_Knight_v1.0/Attacks.png" id="1_uygd6"]
 [ext_resource type="Texture2D" uid="uid://qoo104nij0lr" path="res://assets/character/mini boss/op knight/2D_SL_Knight_v1.0/Hurt.png" id="2_2bphn"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dxn3uapsc6ivm" path="res://assets/character/mini boss/op knight/2D_SL_Knight_v1.0/Roll.png" id="8_kf3ne"]
 [ext_resource type="Texture2D" uid="uid://di2e0qauq8j5o" path="res://assets/character/mini boss/op knight/2D_SL_Knight_v1.0/attack_from_air.png" id="10_k1yqp"]
 [ext_resource type="Texture2D" uid="uid://bsvku62nqwxae" path="res://assets/character/mini boss/op knight/2D_SL_Knight_v1.0/Slide.png" id="11_dmkki"]
+[ext_resource type="PackedScene" uid="uid://w2v8ftot73y" path="res://assets/UI/HUD/minibosshud/minibosshud.tscn" id="12_kf3ne"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_txvr7"]
 radius = 12.0
@@ -786,9 +787,10 @@ close_range = 40.0
 mid_range = 150.0
 far_range = 200.0
 attack_damage = 10
-attack_stun_scale = 0.05
-attack_knockback = 20.0
+attack_stun_scale = 0.01
+attack_knockback = 3.0
 attack_cooldown = 0.8
+stun_negation = 0.7
 slide_speed = 150.0
 slide_stun_scale = 0.03
 scale = Vector2(1.25, 1.25)
@@ -867,3 +869,6 @@ collision_mask = 8
 position = Vector2(-1.1999977, 3.1999998)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_k1yqp")
+
+[node name="minibosshud" parent="." instance=ExtResource("12_kf3ne")]
+miniboss_path = NodePath("..")

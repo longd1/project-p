@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://c15gogw8dfeip"]
+[gd_scene load_steps=45 format=4 uid="uid://c15gogw8dfeip"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_e1hom"]
 [ext_resource type="Script" uid="uid://dy4g5bi5r4al6" path="res://assets/scene/floor 3/FloorManager3.gd" id="1_lmakd"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" uid="uid://ce7ruwoscsdih" path="res://assets/scene/floor 3/exit.gd" id="24_ucoin"]
 [ext_resource type="PackedScene" uid="uid://dnvhiohvkq3nr" path="res://assets/weapons/ground_weapon.tscn" id="25_8aifa"]
 [ext_resource type="WeaponData" uid="uid://d30nipene2als" path="res://assets/weapons/katana.tres" id="26_e4h5n"]
+[ext_resource type="PackedScene" uid="uid://cnyuxu6fyhbnf" path="res://assets/UI/genemy_die_func.tscn" id="27_ucoin"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_6n2an")
@@ -540,8 +541,8 @@ attack_damage = 25
 position = Vector2(2013, -7)
 
 [node name="MiniBoss" parent="." groups=["enemy"] instance=ExtResource("22_ieswb")]
-max_health = 200
-attack_damage = 30
+max_health = 220
+attack_damage = 35
 position = Vector2(998.99994, 37.999996)
 
 [node name="floor_exit" type="Area2D" parent="."]
@@ -552,9 +553,13 @@ script = ExtResource("24_ucoin")
 shape = SubResource("RectangleShape2D_c5qqg")
 
 [node name="RewardWeapon" parent="." instance=ExtResource("25_8aifa")]
-position = Vector2(1789, -562)
-scale = Vector2(0.15, 0.15)
+position = Vector2(1784, -563)
 weapon = ExtResource("26_e4h5n")
+
+[node name="CanvasLayer" parent="." instance=ExtResource("18_erf74")]
+
+[node name="CanvasLayer2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("27_ucoin")]
+target = NodePath("../MiniBoss")
 
 [connection signal="body_entered" from="tp_portal/centre_to_room2" to="tp_portal/centre_to_room2" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room2_to_centre" to="tp_portal/room2_to_centre" method="_on_body_entered"]

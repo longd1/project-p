@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://c1v17pyqn6ojy"]
+[gd_scene load_steps=47 format=4 uid="uid://c1v17pyqn6ojy"]
 
 [ext_resource type="PackedScene" uid="uid://d1qhffe2px8k5" path="res://assets/character/John/john.tscn" id="1_cqf36"]
 [ext_resource type="Script" uid="uid://cif102g8c02y2" path="res://assets/scene/floor 4/FloorManager4.gd" id="1_eat3k"]
@@ -23,6 +23,11 @@
 [ext_resource type="PackedScene" uid="uid://cmp4w2q5j3gsy" path="res://assets/character/enemy/enemy.tscn" id="20_4irnc"]
 [ext_resource type="PackedScene" uid="uid://ddmejry2s178n" path="res://assets/character/mini boss/op knight/op_knight.tscn" id="21_h1ne4"]
 [ext_resource type="Script" uid="uid://bb2mdu2qvj1uv" path="res://assets/scene/floor 4/exit.gd" id="23_ivdlh"]
+[ext_resource type="PackedScene" uid="uid://cexmoautbah14" path="res://assets/UI/die func/die_func.tscn" id="24_ivdlh"]
+[ext_resource type="PackedScene" uid="uid://cnyuxu6fyhbnf" path="res://assets/UI/genemy_die_func.tscn" id="25_5fpos"]
+[ext_resource type="PackedScene" uid="uid://dnvhiohvkq3nr" path="res://assets/weapons/ground_weapon.tscn" id="26_1mhor"]
+[ext_resource type="WeaponData" uid="uid://jot8c768xwg3" path="res://assets/weapons/katanav2.tres" id="27_oywg1"]
+[ext_resource type="WeaponData" uid="uid://cr2c1t7jwux4a" path="res://assets/weapons/butcher_machete.tres" id="28_y7vhu"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lkacb"]
 texture = ExtResource("2_r8da7")
@@ -585,15 +590,18 @@ max_health = 80
 attack_damage = 30
 position = Vector2(-684, -818)
 
-[node name="MiniBoss" parent="." instance=ExtResource("21_h1ne4")]
-max_health = 250
-attack_damage = 50
-position = Vector2(26.000004, -881)
-
 [node name="MiniBoss2" parent="." instance=ExtResource("21_h1ne4")]
-max_health = 350
-attack_damage = 75
-position = Vector2(762.99994, -443.0001)
+max_health = 450
+attack_damage = 40
+attack_stun_scale = 0.02
+position = Vector2(767, -443)
+
+[node name="MiniBoss" parent="." instance=ExtResource("21_h1ne4")]
+max_health = 400
+attack_damage = 32
+attack_stun_scale = 0.02
+attack_knockback = 4.0
+position = Vector2(26, -880.00006)
 
 [node name="floor_exit" type="Area2D" parent="."]
 script = ExtResource("23_ivdlh")
@@ -601,6 +609,20 @@ script = ExtResource("23_ivdlh")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="floor_exit"]
 position = Vector2(720, -1042)
 shape = SubResource("RectangleShape2D_5fpos")
+
+[node name="CanvasLayer" parent="." instance=ExtResource("24_ivdlh")]
+
+[node name="CanvasLayer2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("25_5fpos")]
+target = NodePath("../MiniBoss2")
+reward_type = 1
+weapon_drop_scene = ExtResource("26_1mhor")
+weapon_data = ExtResource("27_oywg1")
+
+[node name="CanvasLayer3" parent="." node_paths=PackedStringArray("target") instance=ExtResource("25_5fpos")]
+target = NodePath("../MiniBoss")
+reward_type = 1
+weapon_drop_scene = ExtResource("26_1mhor")
+weapon_data = ExtResource("28_y7vhu")
 
 [connection signal="body_entered" from="tp_portal/centre_to_room3" to="tp_portal/centre_to_room3" method="_on_body_entered"]
 [connection signal="body_entered" from="tp_portal/room3_to_centre" to="tp_portal/room3_to_centre" method="_on_body_entered"]

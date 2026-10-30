@@ -21,9 +21,6 @@ extends Node
 # STATE
 # ==================================================
 
-var required_kills: int = 0
-var kill_count: int = 0
-
 var floor_completed: bool = false
 
 
@@ -33,7 +30,6 @@ var floor_completed: bool = false
 
 func _ready() -> void:
 	_setup_exit()
-	_connect_enemies()
 	_connect_mini_bosses()
 
 
@@ -58,40 +54,7 @@ func _setup_exit() -> void:
 
 
 # ==================================================
-# NORMAL ENEMIES
-# ==================================================
-
-func _connect_enemies() -> void:
-	var enemies = get_tree().get_nodes_in_group(
-		"enemy"
-	)
-
-	for enemy in enemies:
-		if not enemy.has_signal("died"):
-			push_error(
-				"FloorManager4: "
-				+ enemy.name
-				+ " không có signal died."
-			)
-			continue
-
-		if not enemy.died.is_connected(
-			_on_enemy_died
-		):
-			enemy.died.connect(
-				_on_enemy_died
-			)
-
-		required_kills += 1
-
-	print(
-		"Floor 4 normal enemies: ",
-		enemies.size()
-	)
-
-
-# ==================================================
-# MINI BOSSES
+# CONNECT MINI BOSSES
 # ==================================================
 
 func _connect_mini_bosses() -> void:
@@ -113,8 +76,8 @@ func _connect_mini_boss(
 	if not mini_boss.has_signal("died"):
 		push_error(
 			"FloorManager4: "
-				+ mini_boss.name
-				+ " không có signal died."
+			+ mini_boss.name
+			+ " không có signal died."
 		)
 		return
 
@@ -125,44 +88,22 @@ func _connect_mini_boss(
 			_on_mini_boss_died
 		)
 
-	required_kills += 1
-
-
-# ==================================================
-# NORMAL ENEMY DIED
-# ==================================================
-
-func _on_enemy_died(_enemy = null) -> void:
-	_register_kill()
-
 
 # ==================================================
 # MINI BOSS DIED
 # ==================================================
 
-func _on_mini_boss_died(_mini_boss = null) -> void:
-	_register_kill()
-
-
-# ==================================================
-# REGISTER KILL
-# ==================================================
-
-func _register_kill() -> void:
+func _on_mini_boss_died(
+	_mini_boss = null
+) -> void:
 	if floor_completed:
 		return
 
-	kill_count += 1
-
 	print(
-		"Floor 4 defeated: ",
-		kill_count,
-		"/",
-		required_kills
+		"Floor 4: Một MiniBoss đã bị hạ."
 	)
 
-	if kill_count >= required_kills:
-		_complete_floor()
+	_complete_floor()
 
 
 # ==================================================
@@ -175,7 +116,9 @@ func _complete_floor() -> void:
 
 	floor_completed = true
 
-	print("Floor 4 completed!")
+	print(
+		"Floor 4 completed!"
+	)
 
 	_enable_exit()
 

@@ -1,73 +1,97 @@
 extends Node
 
 
-# ==========================================
-# FLOOR
-# ==========================================
+# ==================================================
+# SIGNALS
+# ==================================================
+
+signal weapon_changed(weapon)
+
+
+# ==================================================
+# PROGRESSION
+# ==================================================
 
 var current_floor: int = 1
 
-
-# ==========================================
-# PLAYER PROGRESSION
-# ==========================================
-
 var damage_multiplier: float = 1.0
 var bonus_max_health: int = 0
-
-
-# ==========================================
-# HEALING FLASK
-# ==========================================
 
 var max_heal_flasks: int = 3
 var heal_amount: int = 30
 
 
-# ==========================================
-# DAMAGE UPGRADE
-# ==========================================
+# ==================================================
+# EQUIPMENT
+# ==================================================
+
+var current_weapon = null
+
+
+# ==================================================
+# DAMAGE
+# ==================================================
 
 func upgrade_damage(amount: float) -> void:
 	damage_multiplier += amount
-	print("Current Floor: ", current_floor)
-	print("Damage Multiplier: ", damage_multiplier, "x")
-	print("Bonus Max HP: +", bonus_max_health)
 
 
-# ==========================================
-# HEALTH UPGRADE
-# ==========================================
+# ==================================================
+# HEALTH
+# ==================================================
 
 func upgrade_health(amount: int) -> void:
 	bonus_max_health += amount
-	print("Current Floor: ", current_floor)
-	print("Damage Multiplier: ", damage_multiplier, "x")
-	print("Bonus Max HP: +", bonus_max_health)
 
-# ==========================================
-# FLOOR BONUS
-# +2 flasks
-# +20 healing
-# ==========================================
+
+# ==================================================
+# FLASK
+# ==================================================
 
 func upgrade_flask() -> void:
-	max_heal_flasks += 2
+	max_heal_flasks += 1
 	heal_amount += 20
-	print("flasks upgraded")
 
-# ==========================================
-# ADVANCE FLOOR
-# ==========================================
+
+# ==================================================
+# WEAPON
+# ==================================================
+
+func set_current_weapon(weapon) -> void:
+	if weapon == null:
+		push_warning(
+			"Global: Tried to equip null weapon."
+		)
+		return
+
+	current_weapon = weapon
+
+	print(
+		"GLOBAL WEAPON UPDATED: ",
+		current_weapon
+	)
+
+	weapon_changed.emit(
+		current_weapon
+	)
+
+
+func get_current_weapon():
+	return current_weapon
+
+
+# ==================================================
+# FLOOR
+# ==================================================
 
 func advance_floor() -> void:
 	current_floor += 1
 	upgrade_flask()
 
 
-# ==========================================
+# ==================================================
 # RESET RUN
-# ==========================================
+# ==================================================
 
 func reset_progression() -> void:
 	current_floor = 1
@@ -77,3 +101,11 @@ func reset_progression() -> void:
 
 	max_heal_flasks = 3
 	heal_amount = 30
+
+	current_weapon = null
+
+	weapon_changed.emit(null)
+
+	print(
+		"GLOBAL WEAPON RESET"
+	)

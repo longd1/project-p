@@ -418,7 +418,6 @@ position = Vector2(1278, -767)
 position = Vector2(1089, -736)
 
 [node name="CanvasLayer" parent="." instance=ExtResource("12_6j0en")]
-video_delay = 0.8
 
 [node name="enemy_spawn" type="Node2D" parent="." groups=["enemy"]]
 
@@ -502,7 +501,6 @@ wait_time = 0.0
 
 [node name="RewardWeapon" parent="." instance=ExtResource("19_t8qeo")]
 position = Vector2(1142, -180)
-scale = Vector2(0.15, 0.15)
 weapon = ExtResource("20_8ujes")
 
 [node name="Player" parent="." instance=ExtResource("1_npn6c")]

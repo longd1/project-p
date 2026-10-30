@@ -166,6 +166,20 @@ void MiniBoss::_bind_methods() {
 
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "slide_knockback", PROPERTY_HINT_RANGE, "0,1000,1"), "set_slide_knockback", "get_slide_knockback");
 
+
+
+    // Emitted exactly once when the MiniBoss reaches 0 HP.
+
+    // GDScript can use this for floor progress, victory video, sound, weapon drops, etc.
+
+    ADD_SIGNAL(MethodInfo(
+
+        "died",
+
+        PropertyInfo(Variant::OBJECT, "boss")
+
+    ));
+
 }
 
 
@@ -600,7 +614,13 @@ void MiniBoss::apply_pending_slide_damage() {
 
     if (health <= 0 || target == nullptr || target->get_health() <= 0) return;
 
-    target->take_damage(slide_damage, slide_stun_scale, slide_knockback, this);
+    float effective_slide_knockback = std::min(slide_knockback, 5.0f);
+    target->take_damage(
+        slide_damage,
+        slide_stun_scale,
+        effective_slide_knockback,
+        this
+    );
 
 }
 
@@ -941,9 +961,19 @@ void MiniBoss::take_damage(int damage, float stun_scale, float knockback, Actor 
 
 void MiniBoss::die(bool play_sound) {
 
+    // The sound is intentionally handled outside C++ for now.
+
+    // Keep the parameter so the existing function signature does not change.
+
+    (void)play_sound;
+
+
+
     restore_roll_collision(true);
 
     roll_timer = 0.0f;
+
+
 
     slide_hitbox->set_deferred("monitoring", false);
 
@@ -954,6 +984,8 @@ void MiniBoss::die(bool play_sound) {
     slide_has_hit = false;
 
     slide_damage_pending = false;
+
+
 
     hitbox->set_deferred("monitoring", false);
 
@@ -982,6 +1014,16 @@ void MiniBoss::die(bool play_sound) {
     animated_sprite->play("die");
 
     animated_sprite->set_frame_and_progress(0, 0.0f);
+
+
+
+    // Notify Godot immediately.
+
+    // The MiniBoss remains in the tree until the death animation finishes,
+
+    // so connected GDScript handlers can safely read boss.global_position now.
+
+    emit_signal("died", this);
 
 
 
@@ -1175,45 +1217,17 @@ void MiniBoss::_physics_process(double delta) {
 
     if (health <= 0) {
 
+        set_velocity(Vector2(0, 0));
+
+
+
+        // Death is permanent. Once the death animation has finished,
+
+        // remove the MiniBoss from the scene.
+
         if (!animated_sprite->is_playing()) {
 
-            // DEBUG ONLY:
-
-            // Later replace this with:
-
-            // drop_item();
-
-            // queue_free();
-
-
-
-            health = max_health;
-
-            has_healed = false;
-
-
-
-            hurtbox->set_monitorable(true);
-
-            body_collision->set_deferred("disabled", false);
-
-
-
-            combat_state = CombatState::IDLE;
-
-            attack_cooldown_timer = 0.0f;
-
-            knockback_velocity = Vector2(0, 0);
-
-
-
-            animated_sprite->set_speed_scale(1.0f);
-
-            animated_sprite->play("idle");
-
-
-
-            UtilityFunctions::print("MiniBoss revived for debug | HP: ", health, "/", max_health);
+            queue_free();
 
         }
 
@@ -1705,21 +1719,84 @@ void MiniBoss::_physics_process(double delta) {
 
             if (animation == StringName("attack") && frame >= 6 && frame <= 7) {
 
-                apply_attack_hit(hitbox, attack_has_hit, attack_damage, attack_stun_scale, attack_knockback);
+                // Player::take_damage() multiplies damage * knockback.
+                // Cap the normal attack coefficient so its final force stays
+                // around 40-60 with the current MiniBoss damage range.
+                float effective_attack_knockback =
+                    std::min(attack_knockback, 0.7f);
+
+                apply_attack_hit(
+                    hitbox,
+                    attack_has_hit,
+                    attack_damage,
+                    attack_stun_scale,
+                    effective_attack_knockback
+                );
 
             }
-
             else if (animation == StringName("skill_1")) {
 
-                if (frame >= 4 && frame <= 5) apply_attack_hit(skill1_hitbox, skill_1_first_hit, skill_1_damage, skill_1_stun_scale, skill_1_knockback);
+                // Skill 1 hits twice. Each hit deals 50% of the current attack damage.
+                // Because this uses attack_damage directly, buffs also scale the skill.
+                int skill_1_hit_damage =
+                    static_cast<int>(attack_damage * 0.5f + 0.5f);
 
-                else if (frame >= 12 && frame <= 13) apply_attack_hit(skill1_hitbox, skill_1_second_hit, skill_1_damage, skill_1_stun_scale, skill_1_knockback);
+                // Skill 1 hits twice, so keep each stun very short.
+                // Player stun duration = damage * stun_scale.
+                // At attack_damage = 75, each hit is about 38 damage:
+                // 38 * 0.006 ~= 0.23 seconds of stun.
+                float effective_skill_1_stun_scale =
+                    std::min(skill_1_stun_scale, 0.006f);
+
+                float effective_skill_1_knockback =
+                    std::min(skill_1_knockback, 1.0f);
+
+                if (frame >= 4 && frame <= 5) {
+                    apply_attack_hit(
+                        skill1_hitbox,
+                        skill_1_first_hit,
+                        skill_1_hit_damage,
+                        effective_skill_1_stun_scale,
+                        effective_skill_1_knockback
+                    );
+                }
+                else if (frame >= 12 && frame <= 13) {
+                    apply_attack_hit(
+                        skill1_hitbox,
+                        skill_1_second_hit,
+                        skill_1_hit_damage,
+                        effective_skill_1_stun_scale,
+                        effective_skill_1_knockback
+                    );
+                }
 
             }
 
             else if (animation == StringName("skill_2") && frame >= 3 && frame <= 4) {
 
-                apply_attack_hit(skill2_hitbox, skill_2_has_hit, skill_2_damage, skill_2_stun_scale, skill_2_knockback);
+                // Skill 2 deals 75% of the current attack damage.
+                int skill_2_damage_scaled =
+                    static_cast<int>(attack_damage * 0.75f + 0.5f);
+
+                // Player::take_damage() calculates stun as:
+                // final_stun = damage * stun_scale.
+                // Cap Skill 2 so a heavy hit does not lock John for too long.
+                // Skill 2 is the heavier single hit, but should not
+                // stun-lock John. At ~56 damage this gives about
+                // 56 * 0.008 ~= 0.45 seconds of stun.
+                float effective_skill_2_stun_scale =
+                    std::min(skill_2_stun_scale, 0.008f);
+
+                float effective_skill_2_knockback =
+                    std::min(skill_2_knockback, 1.25f);
+
+                apply_attack_hit(
+                    skill2_hitbox,
+                    skill_2_has_hit,
+                    skill_2_damage_scaled,
+                    effective_skill_2_stun_scale,
+                    effective_skill_2_knockback
+                );
 
             }
 

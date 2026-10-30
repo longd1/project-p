@@ -43,12 +43,37 @@ void Player::_bind_methods() {
 }
 
 
-void Player::set_current_weapon(const Ref<WeaponData> &weapon) {
+void Player::set_current_weapon(
+    const Ref<WeaponData> &weapon
+) {
+    if (!weapon.is_valid()) {
+        return;
+    }
+
+    // Godot also calls this setter while deserializing the Player scene.
+    // At that time the node may not be inside the active SceneTree yet.
+    // Always keep the assigned weapon locally, but do not touch Global
+    // until _ready() has initialized the Global pointer.
     current_weapon = weapon;
 
-    if (current_weapon.is_valid()) {
-        UtilityFunctions::print("Equipped weapon: ", current_weapon->get_weapon_name());
+    if (!is_inside_tree()) {
+        return;
     }
+
+    if (global == nullptr) {
+        return;
+    }
+
+    // Runtime equipment change, e.g. picking up a new weapon.
+    global->call(
+        "set_current_weapon",
+        current_weapon
+    );
+
+    UtilityFunctions::print(
+        "PLAYER EQUIPPED WEAPON: ",
+        current_weapon->get_weapon_name()
+    );
 }
 
 void Player::refresh_progression() {
@@ -204,40 +229,137 @@ void Player::_ready() {
 
     InputMap::get_singleton()->load_from_project_settings();
 
-    animated_sprite = get_node<AnimatedSprite2D>(NodePath("AnimatedSprite2D"));
+    animated_sprite = get_node<AnimatedSprite2D>(
+        NodePath("AnimatedSprite2D")
+    );
 
-    hitbox = get_node<Area2D>(NodePath("hitbox/Area2D"));
-    hurtbox = get_node<Area2D>(NodePath("hurtbox/Area2D"));
+    hitbox = get_node<Area2D>(
+        NodePath("hitbox/Area2D")
+    );
 
-    death_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/DeathSound"));
-    effect = get_node<AnimatedSprite2D>(NodePath("effect"));
+    hurtbox = get_node<Area2D>(
+        NodePath("hurtbox/Area2D")
+    );
 
-    global = get_node<Node>(NodePath("/root/Global"));
+    death_sound = get_node<AudioStreamPlayer2D>(
+        NodePath("sound/DeathSound")
+    );
 
-    int bonus_max_health = static_cast<int>(global->get("bonus_max_health"));
-    max_health = 100 + bonus_max_health;
+    effect = get_node<AnimatedSprite2D>(
+        NodePath("effect")
+    );
+
+
+    // ==========================================
+    // GLOBAL
+    // ==========================================
+
+    global = get_node_or_null(
+        NodePath("/root/Global")
+    );
+
+    if (global == nullptr) {
+        UtilityFunctions::print(
+            "Player: Global singleton not found in _ready()."
+        );
+    }
+
+
+    // ==========================================
+    // LOAD / INITIALIZE PERSISTENT WEAPON
+    // ==========================================
+
+    if (global != nullptr) {
+        Variant saved_weapon_variant =
+            global->call(
+                "get_current_weapon"
+            );
+
+        Ref<WeaponData> saved_weapon =
+            saved_weapon_variant;
+
+        if (saved_weapon.is_valid()) {
+            // Global wins over the starter weapon stored in the new floor's
+            // Player scene.
+            current_weapon = saved_weapon;
+
+            UtilityFunctions::print(
+                "PLAYER LOADED GLOBAL WEAPON: ",
+                current_weapon->get_weapon_name()
+            );
+        }
+        else if (current_weapon.is_valid()) {
+            // New run: Global does not have a weapon yet, so persist the
+            // starter weapon assigned in the Player scene.
+            global->call(
+                "set_current_weapon",
+                current_weapon
+            );
+
+            UtilityFunctions::print(
+                "PLAYER SAVED STARTER WEAPON: ",
+                current_weapon->get_weapon_name()
+            );
+        }
+        else {
+            UtilityFunctions::print(
+                "Player: no saved weapon and no starter weapon."
+            );
+        }
+    }
+
+
+    // ==========================================
+    // LOAD PROGRESSION
+    // ==========================================
+
+    if (global != nullptr) {
+        int bonus_max_health =
+            static_cast<int>(
+                global->get("bonus_max_health")
+            );
+
+        max_health =
+            100 + bonus_max_health;
+
+        current_heal_flasks =
+            static_cast<int>(
+                global->get("max_heal_flasks")
+            );
+    }
+    else {
+        max_health = 100;
+        current_heal_flasks = 3;
+    }
+
     health = max_health;
 
-    current_heal_flasks = static_cast<int>(global->get("max_heal_flasks"));
 
-    hitbox = get_node<Area2D>(NodePath("hitbox/Area2D"));
-    hitbox_default_position = hitbox->get_position();
+    // ==========================================
+    // COMBAT NODES
+    // ==========================================
 
+    hitbox_default_position =
+        hitbox->get_position();
 
-    parry_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/ParrySound"));
-    block_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/BlockSound"));
-    damage_sound = get_node<AudioStreamPlayer2D>(NodePath("sound/DamageSound"));
+    parry_sound = get_node<AudioStreamPlayer2D>(
+        NodePath("sound/ParrySound")
+    );
+
+    block_sound = get_node<AudioStreamPlayer2D>(
+        NodePath("sound/BlockSound")
+    );
+
+    damage_sound = get_node<AudioStreamPlayer2D>(
+        NodePath("sound/DamageSound")
+    );
 
     effect->hide();
-
-
 
     hitbox->set_monitoring(false);
 
     animated_sprite->set_speed_scale(1.0f);
     animated_sprite->play("idle");
-
-    
 }
 
 void Player::die(bool play_sound) {

@@ -832,20 +832,26 @@ animations = [{
 }]
 
 [node name="Boss" type="Boss"]
-max_health = 700
+max_health = 850
+attack_damage = 42
 attack_stun_scale = 0.05
 attack_knockback = 15.0
 attack_cooldown = 1.2
+skill1_damage = 22
 skill1_stun_scale = 0.05
-skill2_damage = 15
+skill2_damage = 25
 skill2_stun_scale = 0.02
 skill2_knockback_multiplier = 0.5
+skill3_damage = 27
 skill3_stun_scale = 0.04
 skill3_knockback_multiplier = 0.5
+skill4_damage = 28
 skill4_stun_scale = 0.01
 skill4_knockback_multiplier = 0.5
+skill5_damage = 32
 skill5_stun_scale = 0.01
 skill5_knockback_multiplier = 1.4
+position = Vector2(5, -2)
 scale = Vector2(1.5, 1.5)
 motion_mode = 1
 
@@ -860,6 +866,8 @@ scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_i358n")
 animation = &"skill5"
 autoplay = "idle"
+frame = 20
+frame_progress = 1.0
 
 [node name="hurtbox" type="Node2D" parent="."]
 visible = false

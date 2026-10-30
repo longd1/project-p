@@ -325,6 +325,7 @@ detection_range = 80.0
 close_range = 30.0
 max_health = 50
 attack_stun_scale = 0.01
+attack_knockback = 5.0
 attack_cooldown = 1.0
 stun_negation = 0.2
 knockback_negation = 0.2

@@ -1,0 +1,12 @@
+[gd_resource type="WeaponData" format=3 uid="uid://cr2c1t7jwux4a"]
+
+[resource]
+weapon_name = "butcher machete"
+ground_sprite_frame = 4
+damage = 23
+block_damage_negation = 0.45
+attack_duration = 0.23
+parry_duration = 0.27
+pre_parry_duration = 0.05
+stun_scale = 0.1
+knockback = 8.0

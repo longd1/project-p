@@ -135,6 +135,15 @@ void Boss::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "close_range", PROPERTY_HINT_RANGE, "0,2000,1"), "set_close_range", "get_close_range");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "mid_range", PROPERTY_HINT_RANGE, "0,2000,1"), "set_mid_range", "get_mid_range");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "far_range", PROPERTY_HINT_RANGE, "0,2000,1"), "set_far_range", "get_far_range");
+    ADD_SIGNAL(MethodInfo(
+    "died",
+    PropertyInfo(
+        Variant::OBJECT,
+        "boss",
+        PROPERTY_HINT_NODE_TYPE,
+        "MiniBoss"
+    )
+));
 }
 
 
@@ -522,6 +531,10 @@ void Boss::die(bool play_sound) {
     disable_attack_hitboxes();
     hurtbox->set_deferred("monitorable", false);
     body_collision->set_deferred("disabled", true);
+    emit_signal(
+    "died",
+    this
+);
 
     is_parrying = false;
     parry_effect->stop();

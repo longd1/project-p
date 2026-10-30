@@ -1,0 +1,12 @@
+[gd_resource type="WeaponData" format=3 uid="uid://jot8c768xwg3"]
+
+[resource]
+weapon_name = "better katana"
+ground_sprite_frame = 3
+damage = 27
+block_damage_negation = 0.4
+attack_duration = 0.2
+parry_duration = 0.28
+pre_parry_duration = 0.03
+stun_scale = 0.08
+knockback = 7.0

@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://cnyuxu6fyhbnf"]
+
+[ext_resource type="Script" uid="uid://bvwtk1s2fjgwe" path="res://assets/UI/genemy_die_func.gd" id="1_sxpty"]
+[ext_resource type="Shader" uid="uid://0hn54ng1l7nd" path="res://assets/UI/die func/die_func.gdshader" id="2_sxpty"]
+[ext_resource type="VideoStream" uid="uid://b8bcitkh0ftjs" path="res://assets/UI/enemy_felled.ogv" id="3_sxpty"]
+[ext_resource type="AudioStream" uid="uid://ustgdi3wg7r" path="res://assets/UI/Dark Souls 3 _Heir Of Fire Destroyed_ Sound Effect [ur3q1AEHXNo].mp3" id="4_thpxi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6hvq7"]
+shader = ExtResource("2_sxpty")
+shader_parameter/key_color = Color(0, 1, 0, 1)
+shader_parameter/similarity = 0.12
+shader_parameter/smoothness = 0.08
+shader_parameter/despill = 1.0
+
+[node name="CanvasLayer" type="CanvasLayer"]
+layer = 80
+script = ExtResource("1_sxpty")
+video_delay = 5.1
+
+[node name="Screen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="EnemyFelledVideo" type="VideoStreamPlayer" parent="Screen"]
+material = SubResource("ShaderMaterial_6hvq7")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stream = ExtResource("3_sxpty")
+volume_db = -80.0
+expand = true
+
+[node name="DefeatSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_thpxi")
+volume_db = -0.355

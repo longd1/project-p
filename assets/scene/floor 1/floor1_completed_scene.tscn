@@ -440,7 +440,6 @@ position = Vector2(885, -593)
 position = Vector2(885, -759)
 
 [node name="CanvasLayer" parent="." instance=ExtResource("14_ytnge")]
-video_delay = 0.8
 
 [node name="RewardWeapon" parent="." instance=ExtResource("15_7mwey")]
 position = Vector2(1585.9999, -725.99994)
