@@ -64,16 +64,20 @@ theme_override_colors/font_color = Color(0.7647059, 0.78431374, 0.74509805, 1)
 theme_override_font_sizes/font_size = 14
 text = "PRESS RIGHT CLICK WHEN THE ATTACK ABOUT TO LANDS, SHALL YOU PARRY, NEGATING ALL THE DAMAGE
  AND STUNS. 
+
 IF YOU MISS THE TIMING, IT WILL COUNT AS BLOCK, YOU PARTIALLY NEGATE THE DAMAGE,
 YOU STILL TAKE A BIT DAMAGE AND STUN THOUGH, GIT GUD.
+
+CLICK R TO HEAL HP
+
 "
 
 [node name="parry_info2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 396.0
-offset_top = 326.0
-offset_right = 994.0
-offset_bottom = 394.0
+offset_left = 391.0
+offset_top = 407.0
+offset_right = 989.0
+offset_bottom = 475.0
 theme_override_colors/font_color = Color(0.7647059, 0.78431374, 0.74509805, 1)
 theme_override_font_sizes/font_size = 14
 text = "DIE ONCE, PLAY AGAIN"

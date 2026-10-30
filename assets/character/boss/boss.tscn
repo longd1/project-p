@@ -1,4 +1,4 @@
-[gd_scene load_steps=168 format=3 uid="uid://bfmbxadb0umyf"]
+[gd_scene load_steps=158 format=3 uid="uid://bfmbxadb0umyf"]
 
 [ext_resource type="Texture2D" uid="uid://bbnpybyrkkvss" path="res://assets/character/boss/assets/atk2/atk1 (Custom).png" id="1_a534a"]
 [ext_resource type="Texture2D" uid="uid://b6yo5nswa5sw0" path="res://assets/character/boss/assets/atk2/atk3 (Custom).png" id="2_2aa21"]
@@ -29,8 +29,12 @@
 [ext_resource type="Texture2D" uid="uid://cwacdlm6ifjwf" path="res://assets/character/boss/assets/die/dth23 (Custom).png" id="27_ra66i"]
 [ext_resource type="Texture2D" uid="uid://5q3ljalx5ckg" path="res://assets/character/boss/assets/die/dth24 (Custom).png" id="28_ve7qc"]
 [ext_resource type="Texture2D" uid="uid://b8d1icadu36oe" path="res://assets/character/boss/assets/die/dth25 (Custom).png" id="29_kl2fd"]
+[ext_resource type="Texture2D" path="res://assets/character/boss/assets/idle/idle1.png" id="30_jcanb"]
+[ext_resource type="Texture2D" path="res://assets/character/boss/assets/idle/idle2.png" id="31_lmnxo"]
 [ext_resource type="Texture2D" uid="uid://b32e87s2dnrdy" path="res://assets/character/boss/assets/parry/frame_1_delay-0.1s (Custom).png" id="31_mxf1b"]
 [ext_resource type="Texture2D" uid="uid://0el1l3i33suc" path="res://assets/character/boss/assets/parry/frame_2_delay-0.1s (Custom).png" id="32_qjg0f"]
+[ext_resource type="Texture2D" path="res://assets/character/boss/assets/idle/idle3.png" id="32_usykl"]
+[ext_resource type="Texture2D" path="res://assets/character/boss/assets/idle/idle4.png" id="33_dji4s"]
 [ext_resource type="Texture2D" uid="uid://beth0o33pm2bc" path="res://assets/character/boss/assets/parry/frame_3_delay-0.1s (Custom).png" id="33_xvafu"]
 [ext_resource type="Texture2D" uid="uid://bqj0llcw2w2qj" path="res://assets/character/boss/assets/parry/frame_4_delay-0.1s (Custom).png" id="34_dqpkt"]
 [ext_resource type="Texture2D" uid="uid://bu0xr4or1nlow" path="res://assets/character/boss/assets/parry/frame_5_delay-0.1s (Custom).png" id="35_qarop"]
@@ -38,11 +42,17 @@
 [ext_resource type="Texture2D" uid="uid://dll2h0ud3d7tt" path="res://assets/character/boss/assets/atk1/atk1 (Custom).png" id="37_kfj14"]
 [ext_resource type="Texture2D" uid="uid://b5sykefi453cy" path="res://assets/character/boss/assets/atk1/atk2 (Custom).png" id="38_aqak8"]
 [ext_resource type="Texture2D" uid="uid://s5bte4302623" path="res://assets/character/boss/assets/atk1/atk3 (Custom).png" id="39_olxca"]
+[ext_resource type="Texture2D" uid="uid://df01bb4p16bkj" path="res://assets/character/boss/assets/walk/walk1.png" id="40_ku4ue"]
 [ext_resource type="Texture2D" uid="uid://cwsd4kw03acbr" path="res://assets/character/boss/assets/atk1/atk4 (Custom).png" id="40_m8euo"]
 [ext_resource type="Texture2D" uid="uid://bkkjeg8g4w6mc" path="res://assets/character/boss/assets/atk1/atk5 (Custom).png" id="41_hotiw"]
+[ext_resource type="Texture2D" uid="uid://ddv5d4dqedrl1" path="res://assets/character/boss/assets/walk/walk2.png" id="41_jqa10"]
 [ext_resource type="Texture2D" uid="uid://dvwglnhrsj3b8" path="res://assets/character/boss/assets/atk1/atk6 (Custom).png" id="42_lcnix"]
+[ext_resource type="Texture2D" uid="uid://qunewsisec1k" path="res://assets/character/boss/assets/walk/walk3.png" id="42_u4b4g"]
 [ext_resource type="Texture2D" uid="uid://dvpootgbiq6f6" path="res://assets/character/boss/assets/atk1/atk7 (Custom).png" id="43_31rg4"]
+[ext_resource type="Texture2D" uid="uid://d1mssajreebqf" path="res://assets/character/boss/assets/walk/walk4.png" id="43_bsfdf"]
+[ext_resource type="Texture2D" uid="uid://bu76nar7bjxx1" path="res://assets/character/boss/assets/walk/walk5.png" id="44_6e33v"]
 [ext_resource type="Texture2D" uid="uid://k5kyqr3glp06" path="res://assets/character/boss/assets/atk1/atk8 (Custom).png" id="44_t1ebk"]
+[ext_resource type="Texture2D" uid="uid://dsel1yiap6876" path="res://assets/character/boss/assets/walk/walk6.png" id="45_3tlur"]
 [ext_resource type="Texture2D" uid="uid://dpwv8xfrigc2l" path="res://assets/character/boss/assets/atk1/atk9 (Custom).png" id="45_d8eai"]
 [ext_resource type="Texture2D" uid="uid://cervlq5uut1a" path="res://assets/character/boss/assets/atk1/atk10 (Custom).png" id="46_fyk85"]
 [ext_resource type="Texture2D" uid="uid://b8a5ctrdtivvn" path="res://assets/character/boss/assets/atk1/atk11 (Custom).png" id="47_fikpb"]
@@ -131,76 +141,6 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5ul0a"]
 radius = 14.0
 height = 64.0
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kc7du"]
-load_path = "res://.godot/imported/idle1.png-de49595b83bc22ba87f087e8911c84cd.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_320tq"]
-atlas = SubResource("CompressedTexture2D_kc7du")
-region = Rect2(0, 0, 640, 265)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nae23"]
-load_path = "res://.godot/imported/idle2.png-b4a86b111e54c783646d2b80b2f301f6.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bg34o"]
-atlas = SubResource("CompressedTexture2D_nae23")
-region = Rect2(0, 0, 640, 265)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q8bgk"]
-load_path = "res://.godot/imported/idle3.png-fa54f435aa365d2a63c688a1685cb38d.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ir6nj"]
-atlas = SubResource("CompressedTexture2D_q8bgk")
-region = Rect2(0, 0, 640, 265)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ffajq"]
-load_path = "res://.godot/imported/idle4.png-d7ee1adfc8ddc3e42864aecebd6a0d47.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6xgdp"]
-atlas = SubResource("CompressedTexture2D_ffajq")
-region = Rect2(0, 0, 640, 265)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_2c1f4"]
-load_path = "res://.godot/imported/walk1.png-4e58fa4e9f77ecba49a48b464c54a4ed.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vh456"]
-atlas = SubResource("CompressedTexture2D_2c1f4")
-region = Rect2(0, 0, 640, 265)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eib0n"]
-load_path = "res://.godot/imported/walk2.png-973af0d425ea1b8ac156e12ad04282a8.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_au7ii"]
-atlas = SubResource("CompressedTexture2D_eib0n")
-region = Rect2(0, 0, 640, 265)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_66lqk"]
-load_path = "res://.godot/imported/walk3.png-c18f775ffff40eae216183fd768ac42a.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r2dfo"]
-atlas = SubResource("CompressedTexture2D_66lqk")
-region = Rect2(0, 0, 640, 265)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bhjd4"]
-load_path = "res://.godot/imported/walk4.png-0b20d509b4691a60c0a101772185f509.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yvlrp"]
-atlas = SubResource("CompressedTexture2D_bhjd4")
-region = Rect2(0, 0, 640, 265)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7vfq4"]
-load_path = "res://.godot/imported/walk5.png-27cd1b1e3ee51e208339045c9b4d02d9.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_18uih"]
-atlas = SubResource("CompressedTexture2D_7vfq4")
-region = Rect2(0, 0, 640, 265)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8cpun"]
-load_path = "res://.godot/imported/walk6.png-a70f6c6aa13af1ef145a138a714370a2.ctex"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t6pk1"]
-atlas = SubResource("CompressedTexture2D_8cpun")
-region = Rect2(0, 0, 640, 265)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i358n"]
 animations = [{
@@ -312,16 +252,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_320tq")
+"texture": ExtResource("30_jcanb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bg34o")
+"texture": ExtResource("31_lmnxo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ir6nj")
+"texture": ExtResource("32_usykl")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6xgdp")
+"texture": ExtResource("33_dji4s")
 }],
 "loop": true,
 "name": &"idle",
@@ -352,22 +292,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vh456")
+"texture": ExtResource("40_ku4ue")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_au7ii")
+"texture": ExtResource("41_jqa10")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r2dfo")
+"texture": ExtResource("42_u4b4g")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yvlrp")
+"texture": ExtResource("43_bsfdf")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_18uih")
+"texture": ExtResource("44_6e33v")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t6pk1")
+"texture": ExtResource("45_3tlur")
 }],
 "loop": true,
 "name": &"run",
@@ -864,10 +804,9 @@ shape = SubResource("CapsuleShape2D_5ul0a")
 position = Vector2(80, -61)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_i358n")
-animation = &"skill5"
+animation = &"run"
 autoplay = "idle"
-frame = 20
-frame_progress = 1.0
+frame_progress = 0.8156811
 
 [node name="hurtbox" type="Node2D" parent="."]
 visible = false

@@ -1,4 +1,4 @@
-[gd_resource type="WeaponData" format=3 uid="uid://cr2c1t7jwux4a"]
+[gd_resource type="WeaponData" load_steps=0 format=3 uid="uid://cr2c1t7jwux4a"]
 
 [resource]
 weapon_name = "butcher machete"
